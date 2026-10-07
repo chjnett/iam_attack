@@ -1,0 +1,209 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "urn:flowgate:schema:model-output:v1",
+  "title": "FlowGate Model Output",
+  "description": "Exact output contract shared by the local and remote models. The response must contain only this JSON object.",
+  "type": "object",
+  "additionalProperties": false,
+  "required": [
+    "schema_version",
+    "episode_id",
+    "witness_digest",
+    "family",
+    "verdict",
+    "malicious_probability",
+    "candidate_path_assessment",
+    "cited_event_ids",
+    "signals",
+    "uncertainty_reasons",
+    "summary"
+  ],
+  "properties": {
+    "schema_version": {
+      "const": "1.0"
+    },
+    "episode_id": {
+      "type": "string",
+      "pattern": "^[A-Za-z0-9._-]{1,96}$"
+    },
+    "witness_digest": {
+      "type": "string",
+      "pattern": "^[a-f0-9]{64}$"
+    },
+    "family": {
+      "enum": [
+        "policy_attachment_abuse",
+        "role_trust_abuse",
+        "passrole_compute_abuse"
+      ]
+    },
+    "verdict": {
+      "enum": [
+        "attack",
+        "benign",
+        "abstain"
+      ]
+    },
+    "malicious_probability": {
+      "type": "number",
+      "minimum": 0,
+      "maximum": 1
+    },
+    "candidate_path_assessment": {
+      "enum": [
+        "supports_attack",
+        "supports_benign_explanation",
+        "insufficient"
+      ]
+    },
+    "cited_event_ids": {
+      "type": "array",
+      "maxItems": 32,
+      "uniqueItems": true,
+      "items": {
+        "type": "string",
+        "pattern": "^[A-Za-z0-9._-]{1,128}$"
+      }
+    },
+    "signals": {
+      "type": "array",
+      "maxItems": 10,
+      "uniqueItems": true,
+      "items": {
+        "enum": [
+          "capability_gain",
+          "sensitive_action_after_gain",
+          "observed_role_assumption",
+          "cross_service_chain",
+          "temporal_proximity",
+          "matched_administrative_pattern",
+          "missing_precondition",
+          "incomplete_observation",
+          "conflicting_evidence",
+          "no_attack_signal"
+        ]
+      }
+    },
+    "uncertainty_reasons": {
+      "type": "array",
+      "maxItems": 8,
+      "uniqueItems": true,
+      "items": {
+        "enum": [
+          "missing_state",
+          "missing_event",
+          "unknown_precondition",
+          "ambiguous_intent",
+          "conflicting_evidence",
+          "out_of_scope_pattern",
+          "none"
+        ]
+      }
+    },
+    "summary": {
+      "type": "string",
+      "minLength": 1,
+      "maxLength": 600
+    }
+  },
+  "allOf": [
+    {
+      "if": {
+        "properties": {
+          "verdict": {
+            "const": "attack"
+          }
+        },
+        "required": [
+          "verdict"
+        ]
+      },
+      "then": {
+        "properties": {
+          "malicious_probability": {
+            "minimum": 0.5
+          },
+          "candidate_path_assessment": {
+            "const": "supports_attack"
+          },
+          "cited_event_ids": {
+            "minItems": 1
+          }
+        }
+      }
+    },
+    {
+      "if": {
+        "properties": {
+          "verdict": {
+            "const": "benign"
+          }
+        },
+        "required": [
+          "verdict"
+        ]
+      },
+      "then": {
+        "properties": {
+          "malicious_probability": {
+            "maximum": 0.5
+          }
+        }
+      }
+    },
+    {
+      "if": {
+        "properties": {
+          "verdict": {
+            "const": "abstain"
+          }
+        },
+        "required": [
+          "verdict"
+        ]
+      },
+      "then": {
+        "properties": {
+          "candidate_path_assessment": {
+            "const": "insufficient"
+          },
+          "uncertainty_reasons": {
+            "minItems": 1,
+            "items": {
+              "enum": [
+                "missing_state",
+                "missing_event",
+                "unknown_precondition",
+                "ambiguous_intent",
+                "conflicting_evidence",
+                "out_of_scope_pattern"
+              ]
+            }
+          }
+        }
+      }
+    },
+    {
+      "if": {
+        "properties": {
+          "uncertainty_reasons": {
+            "contains": {
+              "const": "none"
+            }
+          }
+        },
+        "required": [
+          "uncertainty_reasons"
+        ]
+      },
+      "then": {
+        "properties": {
+          "uncertainty_reasons": {
+            "minItems": 1,
+            "maxItems": 1
+          }
+        }
+      }
+    }
+  ]
+}
