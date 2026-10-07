@@ -39,6 +39,15 @@ class OpenAICompatibleBackendTests(unittest.TestCase):
         body = json.loads(http_request.data.decode("utf-8"))
         self.assertEqual(body["max_completion_tokens"], 321)
         self.assertNotIn("max_tokens", body)
+        response_format = body["response_format"]
+        self.assertEqual(response_format["type"], "json_schema")
+        schema = response_format["json_schema"]["schema"]
+        uncertainty = schema["properties"]["uncertainty_reasons"]
+        self.assertEqual(uncertainty["type"], "array")
+        self.assertIn("none", uncertainty["items"]["enum"])
+        self.assertEqual(
+            schema["properties"]["episode_id"]["enum"], [request["episode_id"]]
+        )
 
 
 if __name__ == "__main__":

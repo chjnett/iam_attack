@@ -7,7 +7,7 @@
 
 ## 오늘 할 일
 
-1. 이 노트북에 이미 만들어진 `dist/flowgate-prompt-dev-gpu.tar.gz`만 RTX 3090 PC로 복사합니다.
+1. 이 노트북에 이미 만들어진 `dist/flowgate-prompt-dev-gpu-v2.tar.gz`만 RTX 3090 PC로 복사합니다. v2는 Qwen 출력 배열을 JSON Schema로 강제합니다.
 2. GPU PC에서 압축을 풀고 내부 `GPU_README.md`의 명령을 실행합니다.
 3. 다음 네 파일만 다시 이 노트북으로 가져옵니다.
    - `local_responses.jsonl`
@@ -19,14 +19,14 @@
 예시 전송 명령은 다음과 같습니다. 주소와 경로만 자신의 GPU PC에 맞게 바꾸면 됩니다.
 
 ```bash
-scp dist/flowgate-prompt-dev-gpu.tar.gz <GPU_USER>@<GPU_HOST>:~/
+scp dist/flowgate-prompt-dev-gpu-v2.tar.gz <GPU_USER>@<GPU_HOST>:~/
 ```
 
 GPU PC에서는:
 
 ```bash
 mkdir -p ~/flowgate-prompt-dev
-tar -xzf ~/flowgate-prompt-dev-gpu.tar.gz -C ~/flowgate-prompt-dev
+tar -xzf ~/flowgate-prompt-dev-gpu-v2.tar.gz -C ~/flowgate-prompt-dev
 cd ~/flowgate-prompt-dev
 less GPU_README.md
 ```

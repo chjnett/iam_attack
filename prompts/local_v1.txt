@@ -36,7 +36,13 @@ Return exactly one JSON object and no Markdown, prose, XML, or code fence. It mu
   "summary": "one concise evidence-based sentence; do not reveal hidden reasoning"
 }
 
-Use only the signal and uncertainty enum values allowed by the schema. For an attack verdict, cite at least one observed event and set candidate_path_assessment to supports_attack. For abstain, set candidate_path_assessment to insufficient and give at least one non-none uncertainty reason. Do not provide chain-of-thought.
+signals must be a JSON array containing only zero or more of these exact strings:
+["capability_gain", "sensitive_action_after_gain", "observed_role_assumption", "cross_service_chain", "temporal_proximity", "matched_administrative_pattern", "missing_precondition", "incomplete_observation", "conflicting_evidence", "no_attack_signal"]
+
+uncertainty_reasons must be a JSON array, never a sentence, object, null, or bare string. It may contain only these exact strings:
+["missing_state", "missing_event", "unknown_precondition", "ambiguous_intent", "conflicting_evidence", "out_of_scope_pattern", "none"]
+
+For attack or benign with no material uncertainty, output exactly ["none"]. Never combine "none" with another value. For abstain, set candidate_path_assessment to insufficient and output at least one reason other than "none". For attack, cite at least one observed event and set candidate_path_assessment to supports_attack. Do not provide chain-of-thought.
 
 SANITIZED WORKER INPUT
 {{WORKER_INPUT_JSON}}

@@ -118,7 +118,7 @@ flowgate-pilot bundle-gpu \
   --requests data/generated/gpu/requests.jsonl \
   --labels data/generated/private/prompt_dev_labels.jsonl \
   --split prompt_dev \
-  --out dist/flowgate-prompt-dev-gpu.tar.gz
+  --out dist/flowgate-prompt-dev-gpu-v2.tar.gz
 ```
 
 Copy only the archive to the RTX 3090 worker. The worker's `GPU_README.md`

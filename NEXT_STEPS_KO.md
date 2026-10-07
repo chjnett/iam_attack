@@ -58,17 +58,18 @@ GPU 전송 파일의 무결성도 확인한다.
 
 ```bash
 cd /Users/cheonhyeonjun/iam_attack/dist
-shasum -a 256 -c flowgate-prompt-dev-gpu.tar.gz.sha256
+shasum -a 256 -c flowgate-prompt-dev-gpu-v2.tar.gz.sha256
 ```
 
-성공 기준: `flowgate-prompt-dev-gpu.tar.gz: OK`.
+성공 기준: `flowgate-prompt-dev-gpu-v2.tar.gz: OK`. v2는 enum 배열을
+JSON Schema로 강제해 Qwen의 `uncertainty_reasons` 형식 오류를 막는다.
 
 ## 1. 개발용 6건을 GPU PC로 전송
 
 노트북에서 다음 명령을 실행한다. `<GPU_USER>`와 `<GPU_HOST>`만 바꾼다.
 
 ```bash
-scp /Users/cheonhyeonjun/iam_attack/dist/flowgate-prompt-dev-gpu.tar.gz \
+scp /Users/cheonhyeonjun/iam_attack/dist/flowgate-prompt-dev-gpu-v2.tar.gz \
   <GPU_USER>@<GPU_HOST>:~/
 ```
 
@@ -80,7 +81,7 @@ GPU PC에서:
 
 ```bash
 mkdir -p ~/flowgate-prompt-dev
-tar -xzf ~/flowgate-prompt-dev-gpu.tar.gz -C ~/flowgate-prompt-dev
+tar -xzf ~/flowgate-prompt-dev-gpu-v2.tar.gz -C ~/flowgate-prompt-dev
 cd ~/flowgate-prompt-dev
 
 uv venv --python 3.12 --seed .venv-vllm

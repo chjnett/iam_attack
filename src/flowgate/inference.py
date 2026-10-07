@@ -8,7 +8,77 @@ import urllib.request
 from dataclasses import dataclass, field
 from typing import Any, Protocol
 
-from .contracts import RESPONSE_SCHEMA_VERSION, validate_request
+from .contracts import (
+    ALLOWED_PATH_ASSESSMENTS,
+    ALLOWED_SIGNALS,
+    ALLOWED_UNCERTAINTY_REASONS,
+    ALLOWED_VERDICTS,
+    MODEL_OUTPUT_FIELDS,
+    RESPONSE_SCHEMA_VERSION,
+    validate_request,
+)
+
+
+def _structured_response_format(request: dict[str, Any]) -> dict[str, Any]:
+    """Build the constrained JSON shape shared by vLLM and OpenAI endpoints.
+
+    Cross-field semantics remain in ``validate_response``.  The generation
+    schema exists to prevent small models from replacing enum arrays with free
+    text or scalars before that semantic validation runs.
+    """
+
+    event_ids = [
+        str(event["event_id"])
+        for event in request.get("observed_events", [])
+        if isinstance(event, dict) and isinstance(event.get("event_id"), str)
+    ]
+    citation_items: dict[str, Any] = {"type": "string"}
+    if event_ids:
+        citation_items["enum"] = event_ids
+    properties: dict[str, Any] = {
+        "schema_version": {"type": "string", "enum": [RESPONSE_SCHEMA_VERSION]},
+        "episode_id": {"type": "string", "enum": [request["episode_id"]]},
+        "witness_digest": {"type": "string", "enum": [request["witness_digest"]]},
+        "family": {"type": "string", "enum": [request["family"]]},
+        "verdict": {"type": "string", "enum": sorted(ALLOWED_VERDICTS)},
+        "malicious_probability": {"type": "number", "minimum": 0, "maximum": 1},
+        "candidate_path_assessment": {
+            "type": "string",
+            "enum": sorted(ALLOWED_PATH_ASSESSMENTS),
+        },
+        "cited_event_ids": {
+            "type": "array",
+            "items": citation_items,
+            "maxItems": 32,
+        },
+        "signals": {
+            "type": "array",
+            "items": {"type": "string", "enum": sorted(ALLOWED_SIGNALS)},
+            "maxItems": 10,
+        },
+        "uncertainty_reasons": {
+            "type": "array",
+            "items": {
+                "type": "string",
+                "enum": sorted(ALLOWED_UNCERTAINTY_REASONS),
+            },
+            "maxItems": 8,
+        },
+        "summary": {"type": "string", "minLength": 1, "maxLength": 600},
+    }
+    return {
+        "type": "json_schema",
+        "json_schema": {
+            "name": "flowgate_model_output",
+            "strict": True,
+            "schema": {
+                "type": "object",
+                "properties": properties,
+                "required": sorted(MODEL_OUTPUT_FIELDS),
+                "additionalProperties": False,
+            },
+        },
+    }
 
 
 class Backend(Protocol):
@@ -105,7 +175,7 @@ class OpenAICompatibleBackend:
             "temperature": self.temperature,
             "top_p": self.top_p,
             "max_completion_tokens": self.max_output_tokens,
-            "response_format": {"type": "json_object"},
+            "response_format": _structured_response_format(request),
             "messages": [
                 {"role": "system", "content": system_prompt},
                 {
