@@ -102,10 +102,13 @@ def _worker_freeze(path: str | Path) -> dict[str, Any]:
         "max_output_tokens": 700,
     }:
         raise ValueError("unexpected blind decoding commitment")
-    from .freeze import VLLM_RUNTIME_VERSION
+    from .freeze import VLLM_RUNTIME_ENVIRONMENT, VLLM_RUNTIME_VERSION
 
     local_model = manifest.get("models", {}).get("local", {})
-    if local_model.get("runtime") != {"vllm": VLLM_RUNTIME_VERSION}:
+    if local_model.get("runtime") != {
+        "vllm": VLLM_RUNTIME_VERSION,
+        "environment": VLLM_RUNTIME_ENVIRONMENT,
+    }:
         raise ValueError("unexpected local vLLM runtime commitment")
     return manifest
 
@@ -353,6 +356,7 @@ def cmd_run_batch(args: argparse.Namespace) -> int:
             runtime_metadata = validate_local_runtime_metadata(
                 runtime_metadata,
                 expected_vllm_version=model_commitment["runtime"]["vllm"],
+                expected_environment=model_commitment["runtime"]["environment"],
             )
         expected_prompt_file_hash = freeze["file_sha256"][
             f"prompts/{prompt_version}.txt"

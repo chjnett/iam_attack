@@ -6,6 +6,7 @@ import unittest
 
 from flowgate.freeze import (
     VLLM_RUNTIME_VERSION,
+    VLLM_RUNTIME_ENVIRONMENT,
     create_freeze_manifest,
     validate_local_runtime_metadata,
     verify_freeze_manifest,
@@ -81,11 +82,20 @@ class FreezeTests(unittest.TestCase):
     def test_local_runtime_metadata_must_match_vllm_commitment(self) -> None:
         metadata = {
             "packages": {"vllm": VLLM_RUNTIME_VERSION},
+            "environment": dict(VLLM_RUNTIME_ENVIRONMENT),
             "gpus": [{"name": "NVIDIA GeForce RTX 3090"}],
         }
         self.assertIs(validate_local_runtime_metadata(metadata), metadata)
         with self.assertRaisesRegex(ValueError, "vLLM runtime differs"):
-            validate_local_runtime_metadata({"packages": {"vllm": "0.30.0"}})
+            validate_local_runtime_metadata({
+                "packages": {"vllm": "0.30.0"},
+                "environment": dict(VLLM_RUNTIME_ENVIRONMENT),
+            })
+        with self.assertRaisesRegex(ValueError, "runtime environment differs"):
+            validate_local_runtime_metadata({
+                "packages": {"vllm": VLLM_RUNTIME_VERSION},
+                "environment": {"VLLM_USE_FLASHINFER_SAMPLER": "1"},
+            })
 
 
 if __name__ == "__main__":

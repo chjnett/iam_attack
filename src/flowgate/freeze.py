@@ -12,6 +12,7 @@ from .io import file_sha256, read_json, read_jsonl, write_json
 FREEZE_SCHEMA_VERSION = "flowgate-protocol-freeze/1.0"
 PROTOCOL_ID = "flowgate-pilot-24-v1"
 VLLM_RUNTIME_VERSION = "0.31.0"
+VLLM_RUNTIME_ENVIRONMENT = {"VLLM_USE_FLASHINFER_SAMPLER": "0"}
 FROZEN_EXPLICIT_FILES = (
     "configs/pilot.json",
     "scripts/capture_runtime.py",
@@ -49,6 +50,7 @@ def validate_local_runtime_metadata(
     metadata: Any,
     *,
     expected_vllm_version: str = VLLM_RUNTIME_VERSION,
+    expected_environment: dict[str, str] | None = None,
 ) -> dict[str, Any]:
     if not isinstance(metadata, dict):
         raise ValueError("local blind run is missing runtime metadata")
@@ -59,6 +61,20 @@ def validate_local_runtime_metadata(
         raise ValueError(
             "local vLLM runtime differs from protocol freeze: "
             f"expected {expected_vllm_version}, got {packages.get('vllm')!r}"
+        )
+    required_environment = (
+        VLLM_RUNTIME_ENVIRONMENT
+        if expected_environment is None
+        else expected_environment
+    )
+    environment = metadata.get("environment")
+    if not isinstance(environment, dict) or any(
+        environment.get(name) != value
+        for name, value in required_environment.items()
+    ):
+        raise ValueError(
+            "local runtime environment differs from protocol freeze: "
+            f"expected {required_environment}, got {environment!r}"
         )
     return metadata
 
@@ -147,7 +163,10 @@ def create_freeze_manifest(
                 "model_revision": _required_text(local_model_revision, "local model revision"),
                 "role": "local",
                 "quantization": "awq",
-                "runtime": {"vllm": VLLM_RUNTIME_VERSION},
+                "runtime": {
+                    "vllm": VLLM_RUNTIME_VERSION,
+                    "environment": VLLM_RUNTIME_ENVIRONMENT,
+                },
                 "serving": {
                     "max_model_len": 8192,
                     "gpu_memory_utilization": 0.85,
@@ -242,7 +261,10 @@ def verify_freeze_manifest(
         "serving"
     ) != {"max_model_len": 8192, "gpu_memory_utilization": 0.85}:
         raise ValueError("local quantization/serving commitment differs from protocol")
-    if models["local"].get("runtime") != {"vllm": VLLM_RUNTIME_VERSION}:
+    if models["local"].get("runtime") != {
+        "vllm": VLLM_RUNTIME_VERSION,
+        "environment": VLLM_RUNTIME_ENVIRONMENT,
+    }:
         raise ValueError("local vLLM runtime commitment differs from protocol")
     remote = models["remote"]
     _required_text(remote.get("provider"), "remote provider")

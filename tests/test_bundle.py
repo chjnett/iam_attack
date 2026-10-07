@@ -11,7 +11,11 @@ from pathlib import Path
 
 from flowgate.bundle import create_gpu_bundle
 from flowgate.cli import generate_corpus
-from flowgate.freeze import VLLM_RUNTIME_VERSION, create_freeze_manifest
+from flowgate.freeze import (
+    VLLM_RUNTIME_ENVIRONMENT,
+    VLLM_RUNTIME_VERSION,
+    create_freeze_manifest,
+)
 from flowgate.io import write_json
 
 
@@ -81,7 +85,10 @@ class BundleTests(unittest.TestCase):
             with tarfile.open(archive_path, "r:gz") as archive:
                 archive.extractall(extracted, filter="data")
             runtime_path = extracted / "runtime.json"
-            write_json(runtime_path, {"packages": {"vllm": VLLM_RUNTIME_VERSION}})
+            write_json(runtime_path, {
+                "packages": {"vllm": VLLM_RUNTIME_VERSION},
+                "environment": dict(VLLM_RUNTIME_ENVIRONMENT),
+            })
 
             result = subprocess.run(
                 [

@@ -5,6 +5,7 @@ from __future__ import annotations
 
 import importlib.metadata
 import json
+import os
 import platform
 import subprocess
 import sys
@@ -58,6 +59,11 @@ def main() -> int:
             "vllm": _version("vllm"),
             "torch": _version("torch"),
             "transformers": _version("transformers"),
+        },
+        "environment": {
+            "VLLM_USE_FLASHINFER_SAMPLER": os.environ.get(
+                "VLLM_USE_FLASHINFER_SAMPLER"
+            ),
         },
         "gpus": _nvidia(),
     }

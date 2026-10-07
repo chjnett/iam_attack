@@ -7,7 +7,11 @@ import unittest
 from flowgate.batch import merge_predictions, read_prompt, run_backend
 from flowgate.cli import _code_fingerprint
 from flowgate.contracts import make_run_manifest
-from flowgate.freeze import VLLM_RUNTIME_VERSION, create_freeze_manifest
+from flowgate.freeze import (
+    VLLM_RUNTIME_ENVIRONMENT,
+    VLLM_RUNTIME_VERSION,
+    create_freeze_manifest,
+)
 from flowgate.inference import MockBackend
 from flowgate.io import file_sha256, read_json, read_jsonl, write_json, write_jsonl
 from flowgate.routing import select_remote_calls
@@ -67,6 +71,7 @@ class OutputSealEndToEndTests(unittest.TestCase):
                     {
                         "capture": "unit-test",
                         "packages": {"vllm": VLLM_RUNTIME_VERSION},
+                        "environment": dict(VLLM_RUNTIME_ENVIRONMENT),
                         "gpu": {"name": "NVIDIA GeForce RTX 3090"},
                     }
                     if role == "local"

@@ -65,6 +65,7 @@ uv pip install 'vllm==0.31.0' --torch-backend=auto
 export FLOWGATE_LOCAL_MODEL=Qwen/Qwen2.5-7B-Instruct-AWQ
 export FLOWGATE_LOCAL_REVISION=b25037543e9394b818fdfca67ab2a00ecc7dd641
 export FLOWGATE_LOCAL_KEY=local-dev-key
+export VLLM_USE_FLASHINFER_SAMPLER=0
 
 vllm serve "$FLOWGATE_LOCAL_MODEL" \\
   --revision "$FLOWGATE_LOCAL_REVISION" \\
@@ -87,6 +88,7 @@ source .venv-vllm/bin/activate
 export FLOWGATE_LOCAL_MODEL=Qwen/Qwen2.5-7B-Instruct-AWQ
 export FLOWGATE_LOCAL_REVISION=b25037543e9394b818fdfca67ab2a00ecc7dd641
 export FLOWGATE_LOCAL_KEY=local-dev-key
+export VLLM_USE_FLASHINFER_SAMPLER=0
 if test -f protocol-freeze.json; then
   export FLOWGATE_RUN_ID=blind-local-v1
   python3 scripts/capture_runtime.py > runtime.json
