@@ -1,0 +1,264 @@
+{
+  "schema_version": "1.0",
+  "protocol_id": "flowgate-pilot-24-v1",
+  "status": "protocol_only_no_results",
+  "research_task": "risk_constrained_deferment_for_aws_iam_episode_triage",
+  "case_design": {
+    "total_cases": 24,
+    "intent_balance": {
+      "attack": 12,
+      "benign": 12
+    },
+    "families": [
+      {
+        "id": "policy_attachment_abuse",
+        "total": 8,
+        "prompt_dev": {
+          "total": 2,
+          "attack": 1,
+          "benign": 1
+        },
+        "blind": {
+          "total": 6,
+          "attack": 3,
+          "benign": 3
+        }
+      },
+      {
+        "id": "role_trust_abuse",
+        "total": 8,
+        "prompt_dev": {
+          "total": 2,
+          "attack": 1,
+          "benign": 1
+        },
+        "blind": {
+          "total": 6,
+          "attack": 3,
+          "benign": 3
+        }
+      },
+      {
+        "id": "passrole_compute_abuse",
+        "total": 8,
+        "prompt_dev": {
+          "total": 2,
+          "attack": 1,
+          "benign": 1
+        },
+        "blind": {
+          "total": 6,
+          "attack": 3,
+          "benign": 3
+        }
+      }
+    ],
+    "splits": {
+      "prompt_dev": {
+        "count": 6,
+        "purpose": "prompt_and_contract_debugging_only",
+        "included_in_blind_metrics": false
+      },
+      "blind": {
+        "count": 18,
+        "purpose": "single_frozen_dry_run",
+        "included_in_blind_metrics": true
+      }
+    }
+  },
+  "trust_boundary": {
+    "trusted_plane": {
+      "location": "researcher_laptop",
+      "may_store": [
+        "raw_cloudtrail",
+        "raw_iam_state",
+        "pseudonym_map",
+        "intent_labels",
+        "expected_paths",
+        "api_credentials",
+        "blind_unseal_material"
+      ],
+      "responsibilities": [
+        "episode_construction",
+        "witness_construction",
+        "sanitization",
+        "schema_validation",
+        "digest_verification",
+        "blind_evaluation"
+      ]
+    },
+    "gpu_worker": {
+      "location": "sanitized_gpu_worker",
+      "allowed_input_schema": "schemas/worker-input.schema.json",
+      "forbidden_data": [
+        "intent_label",
+        "malicious",
+        "label",
+        "ground_truth",
+        "expected_verdict",
+        "expected_evidence",
+        "split",
+        "split_name",
+        "raw_account_id",
+        "raw_arn",
+        "raw_principal_name",
+        "raw_resource_name",
+        "raw_policy_document",
+        "credential",
+        "secret_value"
+      ]
+    },
+    "remote_model": {
+      "location": "external_api",
+      "allowed_input_schema": "schemas/worker-input.schema.json",
+      "receives_local_output": false,
+      "retention_expectation": "provider_controls_must_be_recorded_before_run"
+    }
+  },
+  "contracts": {
+    "canonical_witness": "schemas/witness.schema.json",
+    "worker_input": "schemas/worker-input.schema.json",
+    "model_output": "schemas/model-output.schema.json",
+    "run_record": "schemas/run-record.schema.json",
+    "trusted_labels": "schemas/trusted-labels.schema.json",
+    "digest": {
+      "algorithm": "sha256",
+      "encoding": "lowercase_hex",
+      "canonicalization": "sorted_keys_compact_json",
+      "scope": "worker_input_after_trusted_only_fields_are_removed",
+      "excluded_fields": [
+        "witness_digest"
+      ]
+    }
+  },
+  "models": {
+    "local": {
+      "role": "local",
+      "runtime": "gpu_worker",
+      "model_id_source": "FLOWGATE_LOCAL_MODEL",
+      "prompt": "prompts/local_v1.txt",
+      "temperature": 0,
+      "top_p": 1,
+      "max_output_tokens": 700
+    },
+    "remote": {
+      "role": "remote",
+      "runtime": "external_api",
+      "model_id_source": "FLOWGATE_REMOTE_MODEL",
+      "prompt": "prompts/remote_v1.txt",
+      "temperature": 0,
+      "top_p": 1,
+      "max_output_tokens": 700,
+      "independent_of_local_output": true
+    }
+  },
+  "leakage_controls": {
+    "prompt_editing_split": "prompt_dev",
+    "blind_split": "blind",
+    "blind_labels_leave_trusted_plane": false,
+    "future_events_allowed": false,
+    "same_worker_input_for_local_and_remote": true,
+    "freeze_before_blind_unseal": [
+      "local_prompt_sha256",
+      "remote_prompt_sha256",
+      "local_model_id",
+      "remote_model_id",
+      "decoding_parameters",
+      "sanitizer_version",
+      "routing_rule_version",
+      "episode_manifest_sha256"
+    ],
+    "post_unseal_changes_require_new_protocol": true,
+    "retain_all_failures": true
+  },
+  "dry_run_analysis": {
+    "counterfactual_collection": {
+      "remote_all_blind_cases": 18,
+      "calls_per_case": 1,
+      "independent_of_local_output": true,
+      "purpose": "fixed counterfactual replay across routing policies and exact budgets",
+      "actual_collection_cost_reported_separately": true
+    },
+    "routing_comparison": {
+      "policies": [
+        "never_remote",
+        "random",
+        "uncertainty",
+        "flowgate-v0",
+        "always_remote"
+      ],
+      "exact_call_budgets": "0_through_18",
+      "frontier_axes": [
+        "mcc",
+        "false_negative_rate",
+        "api_cost",
+        "decision_coverage",
+        "missed_rescue_risk"
+      ],
+      "latency_reporting": "reported_separately_but_not_used_for_frontier_dominance",
+      "labels_used_only_after_output_seal": true
+    },
+    "non_llm_baseline": {
+      "id": "static_witness_only",
+      "rule": "attack_iff_verified_capability_gain_and_sensitive_action; abstain_if_capability_unknown; otherwise_benign",
+      "reporting": "descriptive_metrics_and_coverage_only",
+      "included_in_cost_mcc_frontier": false,
+      "commercial_opaque_tools": "out_of_scope_due_to_nonreproducible_rules_versions_and_replay_interfaces"
+    },
+    "primary_counts": [
+      "local_correct_remote_correct",
+      "local_wrong_remote_correct_rescue",
+      "local_correct_remote_wrong_harm",
+      "local_wrong_remote_wrong",
+      "local_abstain",
+      "remote_abstain"
+    ],
+    "descriptive_metrics": [
+      "mcc",
+      "auprc",
+      "valid_output_rate",
+      "serialized_size_ratio",
+      "token_ratio_when_tokenizer_is_fixed"
+    ],
+    "oracle": {
+      "blind_remote_call_budget_cases": 4,
+      "uses_labels_offline_only": true,
+      "deployable": false
+    },
+    "publication_claim_allowed": false
+  },
+  "engineering_gates": {
+    "contracts_and_privacy": {
+      "hard_stop": true,
+      "required_unique_episodes": 24,
+      "required_prompt_dev_cases": 6,
+      "required_blind_cases": 18,
+      "require_all_schema_valid": true,
+      "minimum_model_output_parse_rate": 0.95,
+      "require_zero_forbidden_fields": true,
+      "maximum_invalid_path_false_passes": 0,
+      "require_episode_and_digest_binding": true
+    },
+    "evidence_reconstruction": {
+      "minimum_witness_success_count": 20,
+      "total_cases": 24,
+      "maximum_median_worker_input_tokens": 700,
+      "unknown_must_remain_unknown": true
+    },
+    "model_complementarity": {
+      "blind_min_nonabstaining_local_errors_for_decision": 4,
+      "blind_min_rescues": 2,
+      "require_rescues_gt_harms": true,
+      "oracle_remote_call_budget_cases": 4,
+      "oracle_maximum_call_rate": 0.25,
+      "oracle_minimum_mcc_gain_over_local": 0.05
+    },
+    "decision": {
+      "continue": "all_prior_gates_pass",
+      "pivot": "evidence_gate_passes_but_complementarity_gate_fails",
+      "kill": "privacy_or_contract_gate_fails_or_oracle_has_no_useful_headroom",
+      "inconclusive": "fewer_than_four_nonabstaining_local_errors_or_insufficient_valid_blind_outputs"
+    },
+    "interpretation": "engineering_stop_rules_not_statistical_evidence"
+  }
+}

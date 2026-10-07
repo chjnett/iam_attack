@@ -1,0 +1,41 @@
+.DS_Store
+Thumbs.db
+
+# Secrets and local configuration
+.env
+.env.*
+*.pem
+*.key
+secrets/
+
+# Trusted and potentially identifying data
+data/raw/
+data/trusted/
+data/blind_labels/
+data/pseudonym_maps/
+*blind-labels.json
+*trusted-labels.json
+
+# Generated outputs and provider responses
+runs/
+artifacts/
+cache/
+logs/
+*.jsonl
+*.sqlite
+*.db
+
+# Python and tooling caches
+__pycache__/
+*.py[cod]
+.pytest_cache/
+.mypy_cache/
+.ruff_cache/
+.venv/
+venv/
+
+# Editor files
+.idea/
+.vscode/
+*.swp
+*~

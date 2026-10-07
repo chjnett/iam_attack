@@ -1,0 +1,39 @@
+{
+  "blind_cases": 18,
+  "corpus": {
+    "attacks": 12,
+    "benign": 12,
+    "episodes": 24,
+    "families": {
+      "passrole_compute_abuse": 8,
+      "policy_attachment_abuse": 8,
+      "role_trust_abuse": 8
+    },
+    "gpu_export_is_label_blind": true,
+    "input_contract_valid_count": 24,
+    "invalid_false_pass_count": 0,
+    "median_witness_tokens": 365.0,
+    "paths": {
+      "blind_labels": "private/blind_labels.jsonl",
+      "gpu_requests": "gpu/requests.jsonl",
+      "private_episodes": "private/episodes.jsonl",
+      "private_witnesses": "private/witnesses.jsonl",
+      "prompt_dev_labels": "private/prompt_dev_labels.jsonl"
+    },
+    "purpose": "synthetic feasibility pilot; not a benchmark claim",
+    "schema_version": "flowgate-corpus-manifest/1.0",
+    "splits": {
+      "blind": 18,
+      "prompt_dev": 6
+    },
+    "token_count_method": "ceil(UTF-8 canonical JSON bytes / 4)",
+    "witness_success_count": 24
+  },
+  "errors": 0,
+  "local_responses": 24,
+  "merged_predictions": 24,
+  "remote_calls": 4,
+  "smoke_only": true,
+  "status": "PASS",
+  "warning": "Mock outputs validate plumbing only and must not be reported as research results."
+}

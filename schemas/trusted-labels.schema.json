@@ -1,0 +1,36 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "urn:flowgate:schema:trusted-label-row:v1",
+  "title": "FlowGate Trusted Label JSONL Row",
+  "description": "One laptop-only ground-truth row. It must never be sent to a GPU worker or remote API.",
+  "type": "object",
+  "additionalProperties": false,
+  "required": [
+    "episode_id",
+    "malicious",
+    "family",
+    "split"
+  ],
+  "properties": {
+    "episode_id": {
+      "type": "string",
+      "pattern": "^[A-Za-z0-9._-]{1,96}$"
+    },
+    "malicious": {
+      "type": "boolean"
+    },
+    "family": {
+      "enum": [
+        "policy_attachment_abuse",
+        "role_trust_abuse",
+        "passrole_compute_abuse"
+      ]
+    },
+    "split": {
+      "enum": [
+        "prompt_dev",
+        "blind"
+      ]
+    }
+  }
+}

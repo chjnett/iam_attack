@@ -1,0 +1,253 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "urn:flowgate:schema:witness:v1",
+  "title": "FlowGate Canonical Temporal Permission Witness",
+  "description": "Label-blind witness retained on the trusted plane. The split field must be removed before model inference.",
+  "type": "object",
+  "additionalProperties": false,
+  "required": [
+    "schema_version",
+    "episode_id",
+    "family",
+    "split",
+    "prefix_len",
+    "cutoff",
+    "capability_state",
+    "capability_gain",
+    "provenance",
+    "observed_events",
+    "candidate_path",
+    "unknown_preconditions",
+    "feature_summary",
+    "witness_digest"
+  ],
+  "properties": {
+    "schema_version": {
+      "const": "1.0"
+    },
+    "episode_id": {
+      "type": "string",
+      "pattern": "^[A-Za-z0-9._-]{1,96}$"
+    },
+    "family": {
+      "$ref": "#/$defs/family"
+    },
+    "split": {
+      "enum": [
+        "prompt_dev",
+        "blind"
+      ]
+    },
+    "prefix_len": {
+      "type": "integer",
+      "minimum": 1
+    },
+    "cutoff": {
+      "type": "string",
+      "format": "date-time"
+    },
+    "capability_state": {
+      "enum": [
+        "verified",
+        "possible",
+        "unknown"
+      ]
+    },
+    "capability_gain": {
+      "type": [
+        "boolean",
+        "null"
+      ]
+    },
+    "provenance": {
+      "type": "array",
+      "maxItems": 128,
+      "uniqueItems": true,
+      "items": {
+        "type": "string",
+        "pattern": "^(?:snapshot|event|state|observed|capability_state|baseline_capability):[A-Za-z0-9._:-]+$"
+      }
+    },
+    "observed_events": {
+      "type": "array",
+      "minItems": 1,
+      "maxItems": 128,
+      "items": {
+        "$ref": "#/$defs/event"
+      }
+    },
+    "candidate_path": {
+      "type": "array",
+      "maxItems": 128,
+      "items": {
+        "type": "string",
+        "anyOf": [
+          {"pattern": "^(?:[PRXYC][A-Z0-9]{3,}|(?:role|service)-session:R[A-Z0-9]{3,}|)$"},
+          {"pattern": "^[a-z0-9-]{1,64}:[A-Za-z0-9*]+$"}
+        ]
+      }
+    },
+    "unknown_preconditions": {
+      "type": "array",
+      "maxItems": 64,
+      "uniqueItems": true,
+      "items": {
+        "type": "string",
+        "pattern": "^[A-Za-z0-9._:-]{1,256}$"
+      }
+    },
+    "feature_summary": {
+      "$ref": "#/$defs/featureSummary"
+    },
+    "witness_digest": {
+      "type": "string",
+      "pattern": "^[a-f0-9]{64}$"
+    }
+  },
+  "$defs": {
+    "family": {
+      "enum": [
+        "policy_attachment_abuse",
+        "role_trust_abuse",
+        "passrole_compute_abuse"
+      ]
+    },
+    "safeValue": {
+      "oneOf": [
+        {
+          "type": [
+            "string",
+            "number",
+            "integer",
+            "boolean",
+            "null"
+          ]
+        },
+        {
+          "type": "array",
+          "maxItems": 32,
+          "items": {
+            "type": [
+              "string",
+              "number",
+              "integer",
+              "boolean",
+              "null"
+            ]
+          }
+        }
+      ]
+    },
+    "event": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "event_id",
+        "timestamp",
+        "action",
+        "actor",
+        "target",
+        "resource",
+        "outcome",
+        "details"
+      ],
+      "properties": {
+        "event_id": {
+          "type": "string",
+          "pattern": "^[A-Za-z0-9._-]{1,128}$"
+        },
+        "timestamp": {
+          "type": "string",
+          "format": "date-time"
+        },
+        "action": {
+          "type": "string",
+          "pattern": "^[a-z0-9-]{1,64}:[A-Za-z0-9*]+$"
+        },
+        "actor": {
+          "type": "string",
+          "pattern": "^(?:[PRXYC][A-Z0-9]{3,}|(?:role|service)-session:R[A-Z0-9]{3,}|)$"
+        },
+        "target": {
+          "type": "string",
+          "pattern": "^(?:[PRXYC][A-Z0-9]{3,}|(?:role|service)-session:R[A-Z0-9]{3,}|)$"
+        },
+        "resource": {
+          "type": "string",
+          "pattern": "^(?:[PRXYC][A-Z0-9]{3,}|(?:role|service)-session:R[A-Z0-9]{3,}|)$"
+        },
+        "outcome": {
+          "enum": ["success", "failure", "unknown"]
+        },
+        "details": {
+          "type": "object",
+          "maxProperties": 10,
+          "additionalProperties": false,
+          "properties": {
+            "change_ticket_present": {"type": "boolean"},
+            "approved_actor_match": {"type": "boolean"},
+            "maintenance_window_match": {"type": "boolean"},
+            "rollback_observed": {"type": "boolean"},
+            "break_glass": {"type": "boolean"},
+            "policy_id": {"type": "string", "pattern": "^Y[A-Z0-9]{3,}$"},
+            "added_principal": {"type": "string", "pattern": "^P[A-Z0-9]{3,}$"},
+            "execution_role": {"type": "string", "pattern": "^R[A-Z0-9]{3,}$"},
+            "trust_condition": {"enum": ["true", "false", "unknown"]},
+            "code_controlled": {"type": ["boolean", "null"]}
+          },
+          "description": "Closed pilot allowlist; no free-form text is permitted."
+        }
+      }
+    },
+    "featureSummary": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "path_length",
+        "cross_service_count",
+        "observed_event_count",
+        "prefix_fraction",
+        "observed_edge_ratio",
+        "witness_completeness",
+        "unknown_precondition_count",
+        "sensitive_action_observed"
+      ],
+      "properties": {
+        "path_length": {
+          "type": "integer",
+          "minimum": 0
+        },
+        "cross_service_count": {
+          "type": "integer",
+          "minimum": 0
+        },
+        "observed_event_count": {
+          "type": "integer",
+          "minimum": 1
+        },
+        "prefix_fraction": {
+          "type": "number",
+          "minimum": 0,
+          "maximum": 1
+        },
+        "observed_edge_ratio": {
+          "type": "number",
+          "minimum": 0,
+          "maximum": 1
+        },
+        "witness_completeness": {
+          "type": "number",
+          "minimum": 0,
+          "maximum": 1
+        },
+        "unknown_precondition_count": {
+          "type": "integer",
+          "minimum": 0
+        },
+        "sensitive_action_observed": {
+          "type": "boolean"
+        }
+      }
+    }
+  }
+}
