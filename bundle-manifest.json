@@ -1,5 +1,5 @@
 {
-  "created_at": "2026-10-07T05:55:54.869606+00:00",
+  "created_at": "2026-10-07T06:56:02.207342+00:00",
   "explicitly_omitted": [
     "data/generated/private",
     "fixtures.py",
@@ -9,7 +9,7 @@
     "remote prompt and API credentials"
   ],
   "file_sha256": {
-    "prompts/local_v1.txt": "sha256:5df2f6705e44eebc09ba7067a0326a5d6ae860070bc6bd171155f2d640c11584",
+    "prompts/local_v1.txt": "sha256:245c5f8e76ee99f2590512f722bb7623beeb7ae0b7bbe2042311c92b3f9e292e",
     "pyproject.toml": "sha256:42cd4fb99fc4a32a2c06c2ceb10bf611b37af7fae0c1e2671ed690a68e32b323",
     "schemas/model-output.schema.json": "sha256:e6b311e9babca1ab204db63c8c29a85dfebd3ddc6928aa3eadc8cc5f7320664a",
     "schemas/run-record.schema.json": "sha256:18ebbf63bc728cd8361f6f2530c083e62b058ee85fa75b740cfb52c5b3cf4ba4",
@@ -24,7 +24,7 @@
     "src/flowgate/engineering.py": "sha256:643652195caf7fc1f9616048b8ea27e5ba75781fe9bde9337508b244330cb579",
     "src/flowgate/evaluate.py": "sha256:61828a36b34002baf699e3c763962781cf43b6c7290815aef5951bf6c6a7e29d",
     "src/flowgate/freeze.py": "sha256:aa9f774e36cda567e9c5990d694f8f4e2991ee575e4ccf9a998b9f2f801f79a1",
-    "src/flowgate/inference.py": "sha256:a6f3ac81f5bca112041bb041d9fa000f31a93129799551318af8d97ab164d97d",
+    "src/flowgate/inference.py": "sha256:7d257817870576ad7e7bcf1a4ae4c9d6ee015e24faeb77034e3b368c227d7917",
     "src/flowgate/io.py": "sha256:92e9caa636a7d590fbd322f35bee61332a4505d60d832e03a8b2e6bd557aaef9",
     "src/flowgate/metrics.py": "sha256:8a6fb34c1b8a7244bdf3d0231407fc22d3b4f4b8fad83f31adfac89431d3618f",
     "src/flowgate/privacy.py": "sha256:115ed0cab73f79d7200e869b0f5b5801fab88d512fa3ccd9d769d552f7cb09ae",
