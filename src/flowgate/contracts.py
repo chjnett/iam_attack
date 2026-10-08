@@ -474,7 +474,7 @@ def validate_run_record(record: dict[str, Any], request: dict[str, Any]) -> None
         raise ValueError("run-record witness binding mismatch")
     if record["model_role"] not in {"local", "remote"}:
         raise ValueError("invalid run-record model role")
-    if record["prompt_version"] not in {"local_v1", "remote_v1"}:
+    if record["prompt_version"] not in {"local_v1", "remote_v1", "remote_v2"}:
         raise ValueError("invalid run-record prompt version")
     if not isinstance(record["prompt_sha256"], str) or not re.fullmatch(
         r"[a-f0-9]{64}", record["prompt_sha256"]

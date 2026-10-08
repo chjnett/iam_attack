@@ -48,7 +48,8 @@
     "prompt_version": {
       "enum": [
         "local_v1",
-        "remote_v1"
+        "remote_v1",
+        "remote_v2"
       ]
     },
     "prompt_sha256": {

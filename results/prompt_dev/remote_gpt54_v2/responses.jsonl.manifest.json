@@ -1,0 +1,33 @@
+{
+  "backend": "openai",
+  "code_version": "sha256:2f08109a3c4eaf3a39ae848ff3e48a7964c0bdd0726438bdb57d64099f07c691",
+  "created_at": "2026-10-08T05:41:07.214478+00:00",
+  "decoding": {
+    "max_output_tokens": 700,
+    "temperature": 0,
+    "top_p": 1
+  },
+  "endpoint_origin": "https://api.openai.com",
+  "error_count": 0,
+  "input_sha256": "sha256:548b7d6551769aa9815c292f7aa51a7adc0aa2b271c1509e38faea72822413be",
+  "model_id": "gpt-5.4-2026-03-05",
+  "model_revision": "gpt-5.4-2026-03-05",
+  "phase": "prompt_dev",
+  "pricing": {
+    "currency": "USD",
+    "input_per_million_tokens": 2.5,
+    "output_per_million_tokens": 15.0,
+    "pricing_snapshot": "https://developers.openai.com/api/docs/models/gpt-5.4 accessed 2026-10-08"
+  },
+  "prompt_sha256": "4f1d763b11e74cf3ea2d465ee7c0e1e1e86d01e2130d92f65021ca90d8cbaa8b",
+  "protocol_freeze_sha256": null,
+  "quantization": null,
+  "request_count": 6,
+  "run_id": "prompt-dev-remote-gpt54-v2",
+  "run_record_count": 6,
+  "runtime_metadata": null,
+  "schema_version": "flowgate-run-manifest/1.0",
+  "serving_config": null,
+  "smoke_only": false,
+  "valid_response_count": 6
+}

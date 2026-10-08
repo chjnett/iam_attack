@@ -5,11 +5,12 @@
 - Origin Skill: academic-research-suite / experiment-agent
 - Origin Mode: plan
 - Origin Date: 2026-10-07
-- Verification Status: UNVERIFIED ON REAL GPU
+- Verification Status: PROMPT DEVELOPMENT VERIFIED; BLIND RUN NOT STARTED
 - Version Label: flowgate_pilot_execution_v1
 
-이 문서는 `/Users/cheonhyeonjun/iam_attack`을 기준으로 한다. 현재 완료된 것은
-코드·계약·Mock 검증이다. 실제 RTX 3090 추론과 유료 API 호출은 아직 하지 않았다.
+이 문서는 `/Users/cheonhyeonjun/iam_attack`을 기준으로 한다. RTX 3090의 로컬
+개발용 6건과 GPT-5.4의 원격 개발용 6건은 완료되었다. 최종 원격 프롬프트는
+`prompts/remote_v2.txt`이며, 블라인드 18건과 프로토콜 동결은 아직 수행하지 않았다.
 
 ## 이번 주 목표
 

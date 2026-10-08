@@ -145,7 +145,7 @@
       "role": "remote",
       "runtime": "external_api",
       "model_id_source": "FLOWGATE_REMOTE_MODEL",
-      "prompt": "prompts/remote_v1.txt",
+      "prompt": "prompts/remote_v2.txt",
       "temperature": 0,
       "top_p": 1,
       "max_output_tokens": 700,

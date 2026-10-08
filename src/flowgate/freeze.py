@@ -18,6 +18,7 @@ FROZEN_EXPLICIT_FILES = (
     "scripts/capture_runtime.py",
     "prompts/local_v1.txt",
     "prompts/remote_v1.txt",
+    "prompts/remote_v2.txt",
     "schemas/witness.schema.json",
     "schemas/worker-input.schema.json",
     "schemas/model-output.schema.json",

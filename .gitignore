@@ -24,6 +24,10 @@ logs/
 *.jsonl
 *.sqlite
 *.db
+work/
+
+# Setup/authentication failures are not research model outputs.
+results/prompt_dev/remote_gpt54_v1/
 
 # Python and tooling caches
 __pycache__/

@@ -81,7 +81,7 @@ FlowGate는 문제를 두 단계로 분리합니다.
 | 프롬프트 개발 | 6건, 블라인드 성능 계산에서 제외 |
 | 블라인드 평가 | 18건, 프로토콜 동결 후 한 번만 실행 |
 | 로컬 모델 | RTX 3090의 `Qwen/Qwen2.5-7B-Instruct-AWQ` |
-| 원격 모델 | `gpt-5.4-mini-2026-03-17` |
+| 원격 모델 | `gpt-5.4-2026-03-05` |
 | 라우팅 베이스라인 | 로컬 전용, 무작위, 불확실성, FlowGate, 원격 전용 |
 | 핵심 비교 지표 | MCC, FNR, API 비용, 판단 커버리지, 놓친 rescue 위험 |
 | 배포 가정 호출 예산 | 블라인드 18건 중 원격 호출 4건 |
@@ -230,7 +230,7 @@ FlowGate는 한 번 봉인한 로컬·원격 출력에 다섯 가지 라우팅 �
 ```bash
 read -s FLOWGATE_REMOTE_KEY
 export FLOWGATE_REMOTE_KEY
-export FLOWGATE_REMOTE_MODEL='gpt-5.4-mini-2026-03-17'
+export FLOWGATE_REMOTE_MODEL='gpt-5.4-2026-03-05'
 ```
 
 API 키를 Git에 커밋하거나 GPU 번들에 포함하거나 GPU PC로 복사하지 마십시오.

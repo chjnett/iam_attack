@@ -315,7 +315,14 @@ def cmd_run_batch(args: argparse.Namespace) -> int:
     _ensure_new(output_paths, force=args.force)
     project_root = Path(__file__).resolve().parents[2]
     model_role = "remote" if args.remote else "local"
-    prompt_version = "remote_v1" if args.remote else "local_v1"
+    prompt_version = Path(args.prompt).stem
+    allowed_prompt_versions = (
+        {"remote_v1", "remote_v2"} if args.remote else {"local_v1"}
+    )
+    if prompt_version not in allowed_prompt_versions:
+        raise ValueError(
+            f"unsupported {model_role} prompt version: {prompt_version}"
+        )
     canonical_prompt = project_root / "prompts" / f"{prompt_version}.txt"
     if not canonical_prompt.is_file() or prompt_hash(prompt) != prompt_hash(
         read_prompt(canonical_prompt)
