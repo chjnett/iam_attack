@@ -1,518 +1,266 @@
-# FlowGate 24-case dry run
+# FlowGate
 
-Korean first-run checklist: [`START_HERE_KO.md`](START_HERE_KO.md)
+**AWS IAM 보안 분석을 위한 권한 근거 기반 선택적 LLM 라우팅 시스템**
 
-Step-by-step Korean execution guide: [`NEXT_STEPS_KO.md`](NEXT_STEPS_KO.md)
+FlowGate는 AWS IAM 권한 변경 에피소드를 작고 검증 가능한 **권한 증거(Permission Witness)**로 변환합니다. 일반적인 사례는 RTX 3090에서 실행하는 로컬 모델이 처리하고, 원격 대형 모델이 실제로 로컬 모델의 오류를 교정할 가능성이 높은 사례만 비용 인지 라우터가 선별해 전달합니다.
 
-FlowGate is a proposed, verifier-grounded deferment system for AWS IAM privilege-change episode triage. It converts an episode into a compact temporal permission witness and asks whether a remote LLM is likely to correct a local model's error rather than merely reconsider an uncertain answer.
+> **현재 상태 — 타당성 검증 파일럿**
+> 구현과 개발용 6건 실험은 완료되었습니다. 동결된 블라인드 18건 평가는 아직 수행하지 않았습니다. 따라서 현재 단계에서는 운영 환경 적용 가능성, 통계적 위험 보장, SOTA 성능을 주장하지 않습니다.
 
-This directory is a **research protocol scaffold, not a results package**. No accuracy, cost saving, risk guarantee, or SOTA claim has been established. With only 24 cases, the dry run can validate contracts, privacy boundaries, evidence reconstruction, and local/remote complementarity; it cannot establish publication-grade performance.
+[빠른 시작](START_HERE_KO.md) · [단계별 실험 가이드](NEXT_STEPS_KO.md) · [위협 모델](docs/threat-model.md) · [개발용 실험 결과](results/prompt_dev/v2/ANALYSIS.md)
 
-## Frozen dry-run scope
+---
 
-| Item | Protocol |
-|---|---|
-| Cases | 24 executable or deterministic fixture episodes |
-| Families | `policy_attachment_abuse`, `role_trust_abuse`, `passrole_compute_abuse` |
-| Intent labels | 12 `malicious: true` (attack), 12 `malicious: false` (matched benign) |
-| Prompt-development split | 6 cases: 2 per family, one attack and one benign |
-| Blind split | 18 cases: 6 per family, three attack and three benign |
-| Local inference | One fixed 7–8B-class model on the sanitized GPU worker |
-| Remote inference | One fixed remote model, independently given the same sanitized worker input |
-| Primary purpose | Decide whether a larger, preregistered pilot is justified |
+## 왜 FlowGate인가?
 
-The matched benign cases intentionally use the same family and similar API sequence as their attack counterpart. A family name is therefore **not** an intent label.
+CloudTrail 로그와 IAM 상태는 규모가 크고 서로 복잡하게 연결되어 있어 사람이 이벤트를 하나씩 검토하기 어렵습니다. 모든 사례를 대형 LLM API로 보내면 분석은 쉬워지지만 비용, 지연 시간, 데이터 노출이 증가합니다.
 
-## One-sentence research claim to test
+단순히 로컬 모델의 확신도가 낮은 사례를 모두 원격 모델로 보내는 방법도 충분하지 않습니다. 입력 증거 자체가 불완전한 사례는 더 큰 모델에 전달해도 정답을 복구할 수 없기 때문입니다.
 
-> FlowGate converts AWS privilege-change episodes into verifiable temporal permission witnesses and uses them to defer only cases in which a remote LLM is expected to rescue the local model, minimizing API use subject to a local-accept miss-risk target.
+FlowGate는 문제를 두 단계로 분리합니다.
 
-The 24-case dry run tests whether this claim is plausible enough to warrant a larger study. It does not test the miss-risk bound itself.
+1. **증거로 어떤 권한 변화를 확인할 수 있는가?**
+   결정론적 분석 계층이 시간 순서가 보존된 권한 증거를 구성합니다.
+2. **원격 모델이 로컬 모델의 판단을 교정할 가능성이 있는가?**
+   라우터는 단순히 불확실한 사례가 아니라, 추가 추론으로 복구 가능한 사례를 우선합니다.
 
-## Trust boundary
+연구 목표는 원격 API 호출을 줄이면서 탐지 품질을 높이고, 동시에 로컬 처리 사례의 미탐 위험을 제한하는 **비용–성능 파레토 개선**입니다.
+
+## 핵심 아이디어
 
 ```text
-TRUSTED LAPTOP
-raw CloudTrail / IAM state / pseudonym map / labels / API credentials
-        |
-        | deterministic witness construction + allowlist sanitization
-        v
-SANITIZED WORKER INPUT
-no label, no split, no raw account ID, ARN, secret, policy document, or credential
-        |                              |
-        v                              v
-GPU LOCAL MODEL                 REMOTE MODEL API
-        |                              |
-        +---------- JSON only --------+
-                       |
-                       v
-TRUSTED LAPTOP EVALUATOR
-schema validation, digest binding, blind-label unsealing, rescue/harm analysis
+원본 CloudTrail 로그 + IAM 상태
+                 │
+                 ▼
+┌────────────────────────────────┐
+│ 결정론적 증거 분석 계층       │
+│ Temporal Permission Witness    │
+└────────────────┬───────────────┘
+                 │ 비식별·정제된 정답 비공개 증거
+                 ▼
+┌────────────────────────────────┐
+│ RTX 3090 로컬 모델             │
+│ 판단 + 증거 + 불확실성 신호    │
+└────────────────┬───────────────┘
+                 │
+                 ▼
+┌────────────────────────────────┐       아니요
+│ Marginal-Rescue 라우터         ├──────────────► 로컬 결과 채택
+│ “원격 모델이 이 사례를 구할까?”│
+└────────────────┬───────────────┘
+                 │ 예, 호출 예산 이내
+                 ▼
+┌────────────────────────────────┐
+│ 원격 LLM                       │
+│ 독립적인 두 번째 판단          │
+└────────────────┬───────────────┘
+                 ▼
+          검증된 최종 판단
 ```
 
-The remote model must not see the local answer. Independent judgments are required to measure rescue and harm without anchoring.
+원격 모델은 로컬 모델과 동일한 정제 증거를 독립적으로 받으며, 로컬 모델의 답변은 보지 못합니다. 이 구조는 원격 모델이 로컬 판단에 끌리는 앵커링을 방지하고, 실제 오류 교정(rescue)과 정답 훼손(harm)을 측정할 수 있게 합니다.
 
-## Quick Start
+## 구현된 기능
 
-This is a two-stage protocol, not a single 24-case run: develop only on six
-`prompt_dev` cases, freeze the complete protocol, and then run the 18 blind cases
-once. Keep the physical boundary explicit:
+- 공격 12건과 대응 정상 사례 12건으로 구성된 AWS IAM 유사 에피소드 생성
+- 정책 연결 악용, 역할 신뢰 정책 악용, `iam:PassRole`과 컴퓨트 실행의 세 가지 권한 변경 유형
+- 알 수 없는 상태를 명시적으로 보존하는 시간 기반 권한 증거 구성
+- 허용 목록 기반 정제, 가명화, 금지 필드 검사, SHA-256 증거 바인딩
+- 작업자 입력, 모델 출력, 실행 기록, 신뢰 구역 정답을 위한 엄격한 JSON 계약
+- 로컬 및 OpenAI 호환 원격 추론 백엔드
+- API 호출 예산 기반 라우팅과 결정론적 로컬·원격 결과 병합
+- 블라인드 정답 공개 전 출력 봉인
+- MCC, FNR, AUPRC, 커버리지, rescue/harm, 비용 및 파레토 비교
+- 원본 데이터와 정답을 포함하지 않는 GPU 실행 번들
 
-- The **trusted laptop** alone holds `data/generated/private/`, all labels, raw episodes, the pseudonym map, `prompts/remote_v1.txt`, remote provider settings and credentials, remote outputs, seals, and evaluation results.
-- The **GPU worker** receives only a sanitized `bundle-gpu` archive. It runs the local model and never receives a label, remote prompt, remote credential, or remote output.
-- Return exactly four GPU artifacts: `local_responses.jsonl`, `local_run_records.jsonl`, `local_errors.jsonl`, and the automatically created `local_responses.jsonl.manifest.json`.
+## 현재 파일럿 구성
 
-Run setup from this project directory on the trusted laptop:
+| 항목 | 동결 대상 설계 |
+|---|---|
+| 전체 에피소드 | 24건: 공격 12건, 대응 정상 12건 |
+| 프롬프트 개발 | 6건, 블라인드 성능 계산에서 제외 |
+| 블라인드 평가 | 18건, 프로토콜 동결 후 한 번만 실행 |
+| 로컬 모델 | RTX 3090의 `Qwen/Qwen2.5-7B-Instruct-AWQ` |
+| 원격 모델 | `gpt-5.4-mini-2026-03-17` |
+| 라우팅 베이스라인 | 로컬 전용, 무작위, 불확실성, FlowGate, 원격 전용 |
+| 핵심 비교 지표 | MCC, FNR, API 비용, 판단 커버리지, 놓친 rescue 위험 |
+| 배포 가정 호출 예산 | 블라인드 18건 중 원격 호출 4건 |
+
+### 개발용 6건 점검 결과
+
+고정된 로컬 실행 환경에서 개발용 사례 6건을 성공적으로 처리했습니다.
+
+- 구조화 출력 6/6건 유효, 실행 오류 0건
+- 유효하지 않은 권한 경로를 통과시킨 사례 0건
+- 확정 판단 2건 모두 정답, 보류(`abstain`) 4건
+- 라우터는 증거가 충분한 역할 신뢰 사례 2건을 선택하고, 초기 상태를 알 수 없어 복구 불가능한 PassRole 사례 2건은 제외
+
+이는 엔지니어링 동작 점검 결과이며 블라인드 정확도가 아닙니다. 자세한 내용은 [개발용 실험 분석](results/prompt_dev/v2/ANALYSIS.md)을 참고하십시오.
+
+## 신뢰 경계
+
+```text
+신뢰된 노트북
+원본 로그 · IAM 상태 · 정답 · 가명 매핑 · API 인증 정보
+        │
+        │ 권한 증거 구성 + 허용 목록 기반 정제
+        ▼
+정제된 작업자 입력
+정답 없음 · 원본 ARN/계정 ID 없음 · 정책 문서 없음 · 인증 정보 없음
+        │                                      │
+        ▼                                      ▼
+GPU 로컬 모델                           원격 모델 API
+        │                                      │
+        └────────── 엄격한 JSON 출력 ──────────┘
+                           │
+                           ▼
+신뢰된 평가기
+스키마 검사 · 다이제스트 결합 · 출력 봉인 · 블라인드 평가
+```
+
+원본 데이터, 정답, API 인증 정보는 신뢰된 노트북에만 보관합니다. GPU 작업자는 스키마 검증을 통과한 정제 번들만 받고, 원격 모델은 로컬 모델의 답변 없이 동일한 정제 입력만 받습니다. 전체 가정과 잔여 위험은 [`docs/threat-model.md`](docs/threat-model.md)에 정리되어 있습니다.
+
+## 빠른 시작
+
+### 요구 환경
+
+- 신뢰된 노트북: Python 3.11 이상
+- 로컬 추론 PC: Linux 또는 WSL2, NVIDIA RTX 3090, 호환 CUDA 드라이버
+- GPU 작업자: `uv`, vLLM 0.31.0
+- 원격 모델 평가 시에만 OpenAI API 키 필요
+
+### 설치 및 검증
 
 ```bash
+git clone https://github.com/chjnett/iam_attack.git
+cd iam_attack
+
 python3 -m venv .venv
 source .venv/bin/activate
 python -m pip install -e .
-mkdir -p work/prompt_dev results/prompt_dev results/blind dist
+
+PYTHONDONTWRITEBYTECODE=1 python -m unittest discover -s tests
+flowgate-pilot smoke --out-dir results/smoke-run
+```
+
+`smoke` 명령은 결정론적 Mock 모델로 전체 파이프라인 연결을 확인합니다. GPU 모델을 실행하거나 유료 API를 호출하지 않습니다.
+
+### 고정 데이터셋 생성
+
+```bash
 flowgate-pilot generate --out-dir data/generated
 ```
 
-Define remote metadata only on the trusted laptop. The recommended reproducible
-default below is the immutable GPT-5.4 Mini snapshot. Its official model page
-lists Chat Completions and structured-output support, with standard text-token
-prices of USD 0.75/M input and USD 4.50/M output as checked on 2026-10-07. The
-retention value is deliberately left blank because it must describe the controls
-actually enabled for your API organization/project, not a generic provider
-promise. Recheck the linked official page immediately before freezing and never
-copy these variables to the GPU worker:
+### 실제 파일럿 실행
 
-```bash
-export FLOWGATE_REMOTE_BASE_URL='https://api.openai.com/v1'
-export FLOWGATE_REMOTE_MODEL='gpt-5.4-mini-2026-03-17'
-export FLOWGATE_REMOTE_REVISION='gpt-5.4-mini-2026-03-17'
-export FLOWGATE_REMOTE_PROVIDER='OpenAI'
-export FLOWGATE_PROVIDER_RETENTION='<record-the-actual-project-retention-control>'
-export FLOWGATE_PRICING_SNAPSHOT='https://developers.openai.com/api/docs/models/gpt-5.4-mini accessed 2026-10-07'
-export FLOWGATE_INPUT_PRICE_PER_MILLION='0.75'
-export FLOWGATE_OUTPUT_PRICE_PER_MILLION='4.50'
-export FLOWGATE_CURRENCY='USD'
-export FLOWGATE_REMOTE_KEY='<secret-kept-only-on-this-laptop>'
-```
+실제 실험은 의도적으로 두 대의 컴퓨터와 두 단계로 분리되어 있습니다.
 
-Official source: [GPT-5.4 Mini model and pricing](https://developers.openai.com/api/docs/models/gpt-5.4-mini).
-At the frozen 700-token output cap, 18 uncached calls can consume at most USD
-0.0567 in output tokens; input and any regional-processing uplift are additional.
-This is a planning bound, not a bill prediction—the run records use provider
-usage and the Pareto report separates the one-time remote-all measurement cost
-from simulated deployment cost at each routing budget.
+1. 신뢰된 노트북에서 개발용 `prompt_dev` 6건을 내보냅니다.
+2. GPU PC에서 로컬 모델을 실행하고 네 개의 결과 파일만 반환합니다.
+3. 개발 사례를 검토한 후 프롬프트, 코드, 모델, 라우팅 규칙, 가격 정보를 동결합니다.
+4. 블라인드 18건을 로컬 모델과 원격 모델로 각각 정확히 한 번 실행합니다.
+5. 블라인드 정답을 열기 전에 모든 출력을 봉인합니다.
+6. 저장된 결과로 라우팅 정책을 오프라인 재생하고 비용–성능 파레토 경계를 계산합니다.
 
-### Stage 1 — six `prompt_dev` cases
+정확한 명령어는 [`NEXT_STEPS_KO.md`](NEXT_STEPS_KO.md)를 따르십시오. 프로토콜 동결과 출력 봉인은 연구의 재현성을 위한 필수 절차입니다.
 
-Export the six sanitized development requests and build their GPU archive on the
-trusted laptop:
-
-```bash
-flowgate-pilot export-split \
-  --requests data/generated/gpu/requests.jsonl \
-  --labels data/generated/private/prompt_dev_labels.jsonl \
-  --split prompt_dev \
-  --out work/prompt_dev/requests.jsonl \
-  --manifest-out work/prompt_dev/requests.manifest.json
-
-flowgate-pilot bundle-gpu \
-  --requests data/generated/gpu/requests.jsonl \
-  --labels data/generated/private/prompt_dev_labels.jsonl \
-  --split prompt_dev \
-  --out dist/flowgate-prompt-dev-gpu-v2.tar.gz
-```
-
-Copy only the archive to the RTX 3090 worker. The worker's `GPU_README.md`
-contains the same commands; the local server is the official
-[Qwen/Qwen2.5-7B-Instruct-AWQ](https://huggingface.co/Qwen/Qwen2.5-7B-Instruct-AWQ)
-checkpoint through the current [vLLM OpenAI-compatible server](https://docs.vllm.ai/en/latest/serving/online_serving/openai_compatible_server/):
-
-```bash
-uv venv --python 3.12 --seed .venv-vllm
-source .venv-vllm/bin/activate
-uv pip install 'vllm==0.31.0' --torch-backend=auto
-
-export FLOWGATE_LOCAL_MODEL=Qwen/Qwen2.5-7B-Instruct-AWQ
-export FLOWGATE_LOCAL_REVISION=b25037543e9394b818fdfca67ab2a00ecc7dd641
-export FLOWGATE_LOCAL_KEY=local-dev-key
-export VLLM_USE_FLASHINFER_SAMPLER=0
-
-vllm serve "$FLOWGATE_LOCAL_MODEL" \
-  --revision "$FLOWGATE_LOCAL_REVISION" \
-  --host 127.0.0.1 \
-  --port 8000 \
-  --dtype auto \
-  --max-model-len 8192 \
-  --gpu-memory-utilization 0.85 \
-  --generation-config vllm \
-  --api-key "$FLOWGATE_LOCAL_KEY"
-```
-
-In a second GPU shell, run the development batch with its required phase:
-
-```bash
-source .venv-vllm/bin/activate
-export FLOWGATE_LOCAL_MODEL=Qwen/Qwen2.5-7B-Instruct-AWQ
-export FLOWGATE_LOCAL_REVISION=b25037543e9394b818fdfca67ab2a00ecc7dd641
-export FLOWGATE_LOCAL_KEY=local-dev-key
-export VLLM_USE_FLASHINFER_SAMPLER=0
-mkdir -p results
-
-PYTHONPATH=src python3 -m flowgate.cli run-batch \
-  --requests data/requests.jsonl \
-  --prompt prompts/local_v1.txt \
-  --out results/local_responses.jsonl \
-  --records results/local_run_records.jsonl \
-  --errors results/local_errors.jsonl \
-  --run-id prompt-dev-local-v1 \
-  --backend openai \
-  --base-url http://127.0.0.1:8000/v1 \
-  --model-id "$FLOWGATE_LOCAL_MODEL" \
-  --model-revision "$FLOWGATE_LOCAL_REVISION" \
-  --quantization awq \
-  --api-key-env FLOWGATE_LOCAL_KEY \
-  --phase prompt_dev
-```
-
-Return the four local artifacts to `results/prompt_dev/` on the trusted laptop.
-If the remote prompt also needs development, call it only from the trusted
-laptop on `work/prompt_dev/requests.jsonl`, with `--phase prompt_dev`. The six
-development labels may be opened there. Use new versioned paths for every prompt
-iteration; never overwrite a first-attempt artifact, and never include these six
-cases in blind metrics.
-
-### Freeze the protocol
-
-After Stage 1, stop editing prompts, schemas, code, model IDs/revisions, decoding,
-routing, retention, and pricing. Create the commitment on the trusted laptop:
-
-```bash
-export FLOWGATE_LOCAL_MODEL=Qwen/Qwen2.5-7B-Instruct-AWQ
-export FLOWGATE_LOCAL_REVISION=b25037543e9394b818fdfca67ab2a00ecc7dd641
-
-flowgate-pilot freeze \
-  --out results/protocol-freeze.json \
-  --local-model-id "$FLOWGATE_LOCAL_MODEL" \
-  --local-model-revision "$FLOWGATE_LOCAL_REVISION" \
-  --remote-model-id "$FLOWGATE_REMOTE_MODEL" \
-  --remote-model-revision "$FLOWGATE_REMOTE_REVISION" \
-  --remote-provider "$FLOWGATE_REMOTE_PROVIDER" \
-  --provider-retention "$FLOWGATE_PROVIDER_RETENTION" \
-  --pricing-snapshot "$FLOWGATE_PRICING_SNAPSHOT" \
-  --input-price-per-million "$FLOWGATE_INPUT_PRICE_PER_MILLION" \
-  --output-price-per-million "$FLOWGATE_OUTPUT_PRICE_PER_MILLION" \
-  --currency "$FLOWGATE_CURRENCY"
-```
-
-The freeze hashes the blind-label file but does not authorize opening it.
-
-### Stage 2 — export and run all 18 blind cases once
-
-Only after the freeze succeeds, export the committed blind requests and build the
-GPU bundle. The bundle automatically embeds `protocol-freeze.json`; no blind
-label file is used or copied in either command:
-
-```bash
-flowgate-pilot export-split \
-  --requests data/generated/gpu/requests.jsonl \
-  --split blind \
-  --freeze-manifest results/protocol-freeze.json \
-  --out results/blind/requests.jsonl \
-  --manifest-out results/blind/requests.manifest.json
-
-flowgate-pilot bundle-gpu \
-  --requests data/generated/gpu/requests.jsonl \
-  --split blind \
-  --freeze-manifest results/protocol-freeze.json \
-  --out dist/flowgate-blind-gpu.tar.gz
-```
-
-Copy only the blind archive to the GPU worker. Inside its extracted directory,
-capture the runtime and run all 18 local requests with the embedded freeze and
-the exact frozen server settings:
-
-```bash
-source .venv-vllm/bin/activate
-export FLOWGATE_LOCAL_MODEL=Qwen/Qwen2.5-7B-Instruct-AWQ
-export FLOWGATE_LOCAL_REVISION=b25037543e9394b818fdfca67ab2a00ecc7dd641
-export FLOWGATE_LOCAL_KEY=local-dev-key
-export VLLM_USE_FLASHINFER_SAMPLER=0
-mkdir -p results
-
-python3 scripts/capture_runtime.py > runtime.json
-
-PYTHONPATH=src python3 -m flowgate.cli run-batch \
-  --requests data/requests.jsonl \
-  --prompt prompts/local_v1.txt \
-  --out results/local_responses.jsonl \
-  --records results/local_run_records.jsonl \
-  --errors results/local_errors.jsonl \
-  --run-id blind-local-v1 \
-  --backend openai \
-  --base-url http://127.0.0.1:8000/v1 \
-  --model-id "$FLOWGATE_LOCAL_MODEL" \
-  --model-revision "$FLOWGATE_LOCAL_REVISION" \
-  --quantization awq \
-  --api-key-env FLOWGATE_LOCAL_KEY \
-  --phase blind \
-  --freeze-manifest protocol-freeze.json \
-  --runtime-metadata runtime.json \
-  --server-max-model-len 8192 \
-  --server-gpu-memory-utilization 0.85
-```
-
-The automatic local run manifest embeds `runtime.json`; do not treat the source
-snapshot as a fifth return artifact. Return the four local artifacts and place
-them under `results/blind/` without renaming their basenames.
-
-Next, still without opening blind labels, invoke the frozen remote model from the
-trusted laptop on the **same complete 18-request file**. This is one independent
-counterfactual call per case, exactly once; it is not a call on the later
-four-request selection and it receives no local answer:
-
-```bash
-flowgate-pilot run-batch \
-  --requests results/blind/requests.jsonl \
-  --prompt prompts/remote_v1.txt \
-  --out results/blind/remote_responses.jsonl \
-  --records results/blind/remote_run_records.jsonl \
-  --errors results/blind/remote_errors.jsonl \
-  --run-id blind-remote-all-v1 \
-  --backend openai \
-  --base-url "$FLOWGATE_REMOTE_BASE_URL" \
-  --model-id "$FLOWGATE_REMOTE_MODEL" \
-  --model-revision "$FLOWGATE_REMOTE_REVISION" \
-  --api-key-env FLOWGATE_REMOTE_KEY \
-  --remote \
-  --phase blind \
-  --freeze-manifest results/protocol-freeze.json \
-  --input-price-per-million "$FLOWGATE_INPUT_PRICE_PER_MILLION" \
-  --output-price-per-million "$FLOWGATE_OUTPUT_PRICE_PER_MILLION" \
-  --currency "$FLOWGATE_CURRENCY" \
-  --pricing-snapshot "$FLOWGATE_PRICING_SNAPSHOT"
-```
-
-Do not retry a failed blind case or use `--force`; retain the error and mark the
-run inconclusive. Build local and remote engineering statistics separately:
-
-```bash
-flowgate-pilot stats \
-  --requests results/blind/requests.jsonl \
-  --responses results/blind/local_responses.jsonl \
-  --errors results/blind/local_errors.jsonl \
-  --out results/blind/local_stats.json
-
-flowgate-pilot stats \
-  --requests results/blind/requests.jsonl \
-  --responses results/blind/remote_responses.jsonl \
-  --errors results/blind/remote_errors.jsonl \
-  --out results/blind/remote_stats.json
-```
-
-Derive the frozen `flowgate-v0` decision for exactly four cases from local output
-only. `selected_remote_requests.jsonl` is an audit artifact; do not use it to make
-another remote call. Merge those decisions with the already captured remote-all
-counterfactual:
-
-```bash
-flowgate-pilot select \
-  --requests results/blind/requests.jsonl \
-  --local-responses results/blind/local_responses.jsonl \
-  --decisions-out results/blind/routing_decisions.jsonl \
-  --selected-out results/blind/selected_remote_requests.jsonl \
-  --policy flowgate-v0 \
-  --budget-fraction 0.25 \
-  --call-budget 4 \
-  --seed 7
-
-flowgate-pilot merge \
-  --requests results/blind/requests.jsonl \
-  --local-responses results/blind/local_responses.jsonl \
-  --decisions results/blind/routing_decisions.jsonl \
-  --remote-responses results/blind/remote_responses.jsonl \
-  --out results/blind/predictions.jsonl
-```
-
-Seal every blind artifact before any blind label is opened:
-
-```bash
-flowgate-pilot seal-outputs \
-  --freeze-manifest results/protocol-freeze.json \
-  --requests results/blind/requests.jsonl \
-  --local-responses results/blind/local_responses.jsonl \
-  --local-errors results/blind/local_errors.jsonl \
-  --local-records results/blind/local_run_records.jsonl \
-  --local-manifest results/blind/local_responses.jsonl.manifest.json \
-  --decisions results/blind/routing_decisions.jsonl \
-  --remote-responses results/blind/remote_responses.jsonl \
-  --remote-errors results/blind/remote_errors.jsonl \
-  --remote-records results/blind/remote_run_records.jsonl \
-  --remote-manifest results/blind/remote_responses.jsonl.manifest.json \
-  --predictions results/blind/predictions.jsonl \
-  --out results/blind/output-seal.json
-```
-
-Only after `seal-outputs` succeeds may the trusted laptop open
-`data/generated/private/blind_labels.jsonl`. Evaluation consumes the separate
-local/remote stats, and comparison replays the sealed outputs across budgets:
-
-```bash
-flowgate-pilot evaluate \
-  --labels data/generated/private/blind_labels.jsonl \
-  --predictions results/blind/predictions.jsonl \
-  --corpus-manifest data/generated/manifest.json \
-  --local-stats results/blind/local_stats.json \
-  --remote-stats results/blind/remote_stats.json \
-  --freeze-manifest results/protocol-freeze.json \
-  --output-seal results/blind/output-seal.json \
-  --out results/blind/evaluation.json
-
-flowgate-pilot compare \
-  --freeze-manifest results/protocol-freeze.json \
-  --output-seal results/blind/output-seal.json \
-  --labels data/generated/private/blind_labels.jsonl \
-  --out-json results/blind/pareto.json \
-  --out-csv results/blind/pareto.csv
-```
-
-Any blind-label access before the seal, any retry, or any post-freeze change
-invalidates this blind run and requires a new protocol version and blind set.
-
-## Artifact layout
+## CLI 명령
 
 ```text
-configs/pilot.json                 frozen case allocation, controls, and engineering gates
-schemas/witness.schema.json        canonical label-blind witness retained on the laptop
-schemas/worker-input.schema.json   exact sanitized payload allowed off the laptop
-schemas/model-output.schema.json   exact JSON contract for both models
-schemas/run-record.schema.json     reproducibility record binding prompt, witness, and output
-schemas/trusted-labels.schema.json laptop-only minimal ground-truth contract
-prompts/local_v1.txt               frozen local-model prompt
-prompts/remote_v1.txt              frozen independent remote-model prompt
-docs/threat-model.md               assets, trust boundaries, threats, and residual risks
+generate       고정된 24건 데이터셋 생성
+export-split   정제된 개발 또는 동결된 블라인드 요청 내보내기
+bundle-gpu     정답이 없는 GPU 실행용 압축 파일 생성
+run-batch      OpenAI 호환 로컬·원격 추론 일괄 실행
+freeze         코드, 프롬프트, 모델, 라우팅, 정답, 가격 정보 동결
+select         정해진 원격 호출 예산 안에서 사례 선택
+merge          로컬 출력과 선택된 원격 판단 병합
+seal-outputs   정답 공개 전에 블라인드 결과를 해시로 봉인
+stats          계약 및 엔지니어링 통계 생성
+evaluate       성능 지표와 Continue/Pivot/Kill 판정 계산
+compare        라우팅 정책 재생 및 파레토 표 생성
+smoke          Mock 모델로 파이프라인 연결 검증
 ```
 
-## Canonical data flow
+각 명령의 옵션은 `flowgate-pilot <명령> --help`로 확인할 수 있습니다.
 
-1. The laptop creates 24 episodes and stores intent labels separately.
-2. `build_witness(...)` produces a label-blind evidence object with trusted bookkeeping. Its private digest covers that exact trusted object except `witness_digest`.
-3. The sanitizer removes `split`, rejects forbidden fields and raw identifiers, then computes a new lowercase SHA-256 over the exact worker input excluding `witness_digest`. Only this worker-bound digest leaves the laptop.
-4. The local and remote prompts receive the same worker input independently.
-5. Their responses must validate under `model-output.schema.json`. Markdown, prose outside the JSON object, invented event IDs, and digest mismatches are invalid outputs.
-6. A trusted run record binds the model ID, prompt hash, witness digest, token counts, cost metadata, and validated output.
-7. Blind labels are unsealed only after prompt files, routing rules, model IDs, and the run manifest have been frozen and hashed.
+## 저장소 구조
 
-## Exact model decision semantics
+```text
+iam_attack/
+├── configs/              파일럿 설계와 진행 판정 기준
+├── data/generated/       생성 데이터; 비공개 정답은 신뢰 구역에 유지
+├── docs/                 위협 모델과 연구 문서
+├── prompts/              버전이 관리되는 로컬·원격 프롬프트
+├── schemas/              신뢰 경계를 통과하는 모든 파일의 JSON 계약
+├── scripts/              실행 환경 기록 도구
+├── src/flowgate/         증거, 정제, 라우팅, 추론, 평가 구현
+├── tests/                계약 및 전체 파이프라인 단위 테스트
+├── results/              버전이 관리되는 개발·블라인드 결과
+├── START_HERE_KO.md      짧은 시작 안내
+└── NEXT_STEPS_KO.md      두 컴퓨터 실험의 정확한 실행 절차
+```
 
-- `attack`: the observed sequence and supplied candidate path support malicious privilege escalation or abuse.
-- `benign`: the same type of capability change is better explained by the matched administrative workflow.
-- `abstain`: the supplied evidence is insufficient or contradictory. Abstention is measured as uncovered analyst workload, not silently counted as correct.
-- `malicious_probability`: the model's estimate in `[0, 1]`; it is not treated as calibrated without a separate calibration study.
-- `candidate_path_assessment`: whether the supplied path supports attack, supports a benign explanation, or is insufficient.
-- `cited_event_ids`: only IDs present in `observed_events` are legal.
+## 평가 설계
 
-Models do not invent or recompute IAM reachability. The witness generator owns capability facts; the model judges operational context.
+FlowGate는 한 번 봉인한 로컬·원격 출력에 다섯 가지 라우팅 정책을 적용해 비교합니다.
 
-## Leakage controls
+| 정책 | 비교 목적 |
+|---|---|
+| 로컬 전용 (`never_remote`) | 최소 API 비용 기준점 |
+| 무작위 (`random`) | 동일 호출 예산의 무작위 선택 기준점 |
+| 불확실성 (`uncertainty`) | 일반적인 confidence 기반 deferment |
+| FlowGate (`flowgate-v0`) | 권한 증거와 복구 가능성을 반영한 라우팅 |
+| 원격 전용 (`always_remote`) | 원격 모델의 성능 및 비용 상한 |
 
-The following controls are mandatory:
+반사실 비교를 위해 블라인드 18건의 원격 출력을 한 번만 수집합니다. 이후 호출 예산 0~18의 결과는 저장된 출력으로 오프라인 재생하므로 API를 반복 호출하지 않습니다. LLM을 사용하지 않는 정적 권한 증거 규칙도 설명적 베이스라인으로 별도 보고합니다.
 
-1. Labels, expected verdicts, and expected evidence never appear in a witness, prompt, worker log, or remote request.
-2. The six `prompt_dev` cases are the only cases available for prompt editing. They are excluded from blind metrics.
-3. The 18 blind labels remain sealed on the laptop until prompts, model IDs, decoding parameters, routing rules, and manifest hashes are frozen.
-4. No blind result may trigger prompt, feature, threshold, family, or case edits. Any such edit creates a new protocol version and requires a new blind set.
-5. Both models receive the same prefix and cutoff. Future events are prohibited.
-6. Remote output is never exposed to the local model, and local output is never exposed to the remote model.
-7. The family allocation is balanced in both splits, but the `attack|benign` label is never transmitted.
-8. All outputs and failures are retained; malformed or timed-out outputs cannot be silently rerun with a changed prompt.
+주요 측정값은 다음과 같습니다.
 
-## Dry-run measurements
+- **탐지 품질:** MCC, 위음성률(FNR), AUPRC, 판단 커버리지
+- **라우팅 품질:** 로컬 오답 교정(rescue), 로컬 정답 훼손(harm), 놓친 rescue 위험
+- **효율성:** 실제 공급자 토큰 비용, 원격 호출 횟수
+- **무결성:** 스키마 유효 출력률, 인용 이벤트 유효성, 다이제스트 결합, 증거 재구성 성공률
 
-Report counts before aggregate scores:
+## API 비용과 키 관리
 
-- valid witnesses and schema-valid worker payloads;
-- local and remote valid-output rates;
-- local-correct/remote-correct contingency table;
-- `rescue = local wrong AND remote correct`;
-- `harm = local correct AND remote wrong`;
-- abstention count for each model;
-- local-only, remote-only, and Oracle-at-4-call correct counts on the 18 blind cases;
-- MCC and AUPRC with exact episode counts, marked descriptive;
-- raw-to-worker serialized size ratio and, when a tokenizer is fixed, token ratio;
-- witness/path disagreements found by the trusted verifier.
+개발 실험에서 측정한 입력·출력 길이를 기준으로 계획된 원격 호출 24건의 비용은 미화 1달러보다 훨씬 적을 것으로 예상됩니다. 다만 실제 비용은 공급자가 반환한 토큰 사용량으로 기록하고, 프로토콜 동결 직전에 가격과 데이터 보존 설정을 다시 확인해야 합니다.
 
-Also report a transparent, non-LLM **static/witness-only** baseline. It predicts
-`attack` only when the trusted witness simultaneously says
-`capability_state=verified`, `capability_gain=true`, and
-`sensitive_action_observed=true`; it abstains when capability state is unknown
-and otherwise predicts `benign`. Its coverage and covered-case classification
-metrics are descriptive and appear in `pareto.json` under
-`descriptive_baselines.static_witness_only`. It is not a router, has no LLM API
-cost or LLM latency, and is deliberately excluded from the cost–MCC frontier
-and `pareto.csv` router rows.
+프로젝트 전용 API 키는 신뢰된 노트북에만 두고 셸 기록에 남지 않도록 입력합니다.
 
-Router Pareto dominance jointly uses lower API cost, higher MCC, lower FNR,
-higher decision coverage, and lower missed-rescue risk. Thus a policy cannot
-look optimal merely by abstaining on hard cases and scoring only an easy subset.
-Latency is reported separately because the dry run does not measure a comparable
-end-to-end deployment latency for every replayed policy.
+```bash
+read -s FLOWGATE_REMOTE_KEY
+export FLOWGATE_REMOTE_KEY
+export FLOWGATE_REMOTE_MODEL='gpt-5.4-mini-2026-03-17'
+```
 
-Opaque commercial CSPM/CNAPP/ITDR products are contextual related work, not
-experimental baselines in this dry run: their exact rules, model versions, and
-replay interfaces are not reproducible here. Do not describe their exclusion as
-evidence that FlowGate outperforms commercial systems.
+API 키를 Git에 커밋하거나 GPU 번들에 포함하거나 GPU PC로 복사하지 마십시오.
 
-`Oracle@4` is the floor of the frozen 25% budget on 18 blind cases. It may use labels only during offline analysis and is an unattainable ceiling, never a deployable baseline.
+## 재현성 규칙
 
-## Go / No-Go engineering gates
+- 프롬프트는 지정된 개발용 6건에서만 수정합니다.
+- 개발용 사례는 블라인드 성능 계산에 포함하지 않습니다.
+- 블라인드 실행 전에 코드, 프롬프트, 모델 revision, 디코딩, 라우팅, 런타임, 보존 정책, 가격을 동결합니다.
+- 첫 번째 응답, 실패, 보류, 타임아웃을 모두 보존합니다.
+- 각 블라인드 사례에 대해 독립적인 로컬·원격 판단을 정확히 한 번씩 생성합니다.
+- 정답을 열기 전에 모든 출력을 봉인합니다.
+- 정답 공개 후 변경이 필요하면 새 프로토콜과 새 블라인드 세트를 사용합니다.
 
-These are **engineering stop rules**, not statistical significance thresholds or claimed results.
+이 규칙은 결과를 본 뒤 프롬프트를 조정하거나, 편리한 답이 나올 때까지 재시도하거나, 정답에 따라 API 호출 대상을 고르는 문제를 방지합니다.
 
-### Gate 1 — contracts and privacy (hard stop)
+## 연구 범위와 한계
 
-- exactly 24 unique episodes, three specified families, 6/18 split, and 12/12 intent balance;
-- every witness, worker input, model output, label file, and run record validates against its schema;
-- at least 95% of first-attempt model outputs parse and validate;
-- no forbidden key or raw identifier appears in a worker or remote payload;
-- all model outputs bind to the input `episode_id` and `witness_digest`.
-- deliberately invalid authorization paths produce zero false passes.
+이 저장소는 더 큰 연구를 시작하기 위한 타당성 검증 도구입니다. 24건의 dry run으로 계약, 개인정보 경계, 증거 재구성, 로컬·원격 모델의 상보성이 작동하는지는 확인할 수 있습니다. 그러나 실제 환경의 공격 빈도, 계정 간 일반화, 보정된 위험 보장, SOTA 성능을 증명할 수는 없습니다.
 
-Failure means fix the pipeline before interpreting any model result.
+파일럿이 진행 기준을 통과하면 다음 단계에서는 계정과 공격 유형을 분리한 대규모 train/calibration/test 데이터셋, 신뢰구간, 현업 베이스라인을 포함하는 정식 평가로 확장합니다.
 
-### Gate 2 — evidence reconstruction
+## 기여하기
 
-- at least 20 of 24 cases produce a valid, prefix-safe witness;
-- median worker input is at most 700 tokens (record the tokenizer, or clearly mark the byte-based estimate);
-- unknown or partial evidence is surfaced as such rather than coerced into a verified path.
+재현성 오류, 새로운 권한 흐름 사례, 개인정보 검사, 라우팅 베이스라인, 평가 도구에 대한 Issue와 Pull Request를 환영합니다. 동결된 실험에 영향을 주는 변경은 반드시 새 프로토콜 버전을 사용해야 하며 기존 결과 파일을 덮어쓰면 안 됩니다.
 
-Failure means narrow the supported templates or pivot to an evidence-reconstruction study. Do not proceed to a learned router.
+## 인용
 
-### Gate 3 — model complementarity
+FlowGate는 현재 진행 중인 연구 프로토타입으로 아직 정식 출판 논문이 없습니다. 이 저장소를 연구에 사용하는 경우 정확한 실험 계약을 식별할 수 있도록 저장소 커밋과 프로토콜 ID `flowgate-pilot-24-v1`을 함께 기록해 주십시오.
 
-On the 18 blind cases:
+## 라이선스
 
-- the local model must make at least four non-abstaining errors; otherwise routing headroom is inconclusive rather than proven absent;
-- there must be at least two rescue cases;
-- rescue count must exceed harm count;
-- an offline Oracle may use at most four remote calls (25% of 18, rounded down);
-- that Oracle must improve MCC over local-only by at least 0.05.
-
-If the local model makes fewer than four errors, do not weaken it artificially. Record the result as inconclusive and design a separately versioned hard-case extension. If the other conditions fail, kill the rescue-routing branch and consider a witness/verifier pivot.
-
-### Gate 4 — decision
-
-- **Continue to an expanded pilot:** Gates 1–3 pass without looking at blind labels during development.
-- **Pivot:** witness reconstruction passes but complementarity fails; study compact/verifiable context or symbolic verification instead.
-- **Kill:** contract/privacy cannot be enforced, or even Oracle routing lacks useful correction headroom.
-- **Inconclusive:** too few local errors or blind outputs to evaluate complementarity; do not claim success and do not begin full implementation.
-
-No risk-controlled or SOTA claim is allowed until a larger, separately split train/calibration/test corpus is evaluated under held-out families or accounts with uncertainty intervals.
-
-## Scope exclusions
-
-This dry run does not implement or claim:
-
-- production streaming, automatic blocking, or incident response;
-- complete AWS IAM coverage, cross-account reasoning, or multi-cloud support;
-- equivalence to GuardDuty, Wiz, Orca, or other opaque managed products;
-- a trained GNN router or formal distribution-shift guarantee;
-- real-world prevalence, analyst-time savings, or operational false-positive rates.
+현재 저장소에는 라이선스 파일이 없습니다. 라이선스가 추가되기 전까지 코드를 공개적으로 열람할 수는 있지만, 오픈소스 재사용 권한이 자동으로 부여되지는 않습니다.
