@@ -1,0 +1,236 @@
+{
+  "complementarity": {
+    "both_correct": 3,
+    "both_wrong": 0,
+    "harm": 0,
+    "local_errors": 1,
+    "n": 4,
+    "net_rescue": 1,
+    "neutral": 3,
+    "remote_errors": 0,
+    "rescue": 1,
+    "rescue_rate_of_local_errors": 1.0
+  },
+  "corpus_episode_count": 18,
+  "episode_count": 18,
+  "evaluation_split": "blind",
+  "final": {
+    "abstention_count": 10,
+    "accuracy": 0.875,
+    "average_precision": 0.7208333333333332,
+    "coverage": 0.4444444444444444,
+    "fn": 0,
+    "fnr": 0.0,
+    "fp": 1,
+    "fpr": 0.25,
+    "mcc": 0.7745966692414834,
+    "n": 8,
+    "negative_count": 4,
+    "positive_count": 4,
+    "precision": 0.8,
+    "recall": 1.0,
+    "tn": 3,
+    "tp": 4
+  },
+  "full_remote_coverage": true,
+  "go_no_go": {
+    "checks": {
+      "episode_count": {
+        "criterion": ">= 24",
+        "passed": true,
+        "value": 24
+      },
+      "input_contract_valid": {
+        "criterion": "== 24",
+        "passed": true,
+        "value": 24
+      },
+      "invalid_false_pass": {
+        "criterion": "<= 0",
+        "passed": true,
+        "value": 0
+      },
+      "local_errors": {
+        "criterion": ">= 4",
+        "passed": false,
+        "value": 1
+      },
+      "median_witness_tokens": {
+        "criterion": "<= 700",
+        "passed": true,
+        "value": 365.0
+      },
+      "net_rescue": {
+        "criterion": "> 0 (rescue > harm)",
+        "passed": true,
+        "value": 1
+      },
+      "oracle_call_rate": {
+        "criterion": "<= 0.25",
+        "passed": true,
+        "value": 0.05555555555555555
+      },
+      "oracle_mcc_gain": {
+        "criterion": ">= 0.05",
+        "passed": true,
+        "value": 0.42264973081037416
+      },
+      "parse_rate": {
+        "criterion": "both >= 0.95",
+        "passed": true,
+        "value": {
+          "local": 1.0,
+          "minimum": 1.0,
+          "remote": 1.0
+        }
+      },
+      "rescue_count": {
+        "criterion": ">= 2",
+        "passed": false,
+        "value": 1
+      },
+      "witness_success": {
+        "criterion": ">= 20 and >= 0.833333",
+        "passed": true,
+        "value": {
+          "count": 24,
+          "rate": 1.0
+        }
+      }
+    },
+    "decision": "INCONCLUSIVE",
+    "failed_checks": [
+      "local_errors",
+      "rescue_count"
+    ],
+    "passed": false,
+    "thresholds": {
+      "maximum_invalid_false_pass_count": 0,
+      "maximum_median_witness_tokens": 700,
+      "maximum_oracle_call_rate": 0.25,
+      "minimum_episode_count": 24,
+      "minimum_local_errors": 4,
+      "minimum_oracle_mcc_gain": 0.05,
+      "minimum_parse_rate": 0.95,
+      "minimum_rescue_count": 2,
+      "minimum_witness_success_count": 20,
+      "minimum_witness_success_rate": 0.8333333333333334
+    }
+  },
+  "local": {
+    "abstention_count": 14,
+    "accuracy": 0.75,
+    "average_precision": 0.6666666666666666,
+    "coverage": 0.2222222222222222,
+    "fn": 0,
+    "fnr": 0.0,
+    "fp": 1,
+    "fpr": 0.5,
+    "mcc": 0.5773502691896258,
+    "n": 4,
+    "negative_count": 2,
+    "positive_count": 2,
+    "precision": 0.6666666666666666,
+    "recall": 1.0,
+    "tn": 1,
+    "tp": 2
+  },
+  "local_abstention_count": 14,
+  "oracle_at_25_percent": {
+    "attack_rescue_count": 0,
+    "call_budget": 4,
+    "captured_rescue_count": 1,
+    "classification": {
+      "accuracy": 1.0,
+      "average_precision": null,
+      "fn": 0,
+      "fnr": 0.0,
+      "fp": 0,
+      "fpr": 0.0,
+      "mcc": 1.0,
+      "n": 4,
+      "negative_count": 2,
+      "positive_count": 2,
+      "precision": 1.0,
+      "recall": 1.0,
+      "tn": 2,
+      "tp": 2
+    },
+    "final_predictions": [
+      0,
+      1,
+      1,
+      0
+    ],
+    "local_accept_rate": 0.75,
+    "maximum_call_rate": 0.25,
+    "mcc_gain_over_local": 0.42264973081037416,
+    "missed_attack_rescue_count": 0,
+    "missed_rescue_count": 0,
+    "missed_rescue_risk": 0.0,
+    "remote_call_count": 1,
+    "remote_call_rate": 0.05555555555555555,
+    "rescue_capture": 1.0,
+    "rescue_count": 1,
+    "routed_harm_count": 0
+  },
+  "oracle_local_decision_count": 4,
+  "paired_local_remote_count": 4,
+  "remote": {
+    "abstention_count": 3,
+    "accuracy": 0.8666666666666667,
+    "average_precision": 0.8666666666666666,
+    "coverage": 0.8333333333333334,
+    "fn": 2,
+    "fnr": 0.3333333333333333,
+    "fp": 0,
+    "fpr": 0.0,
+    "mcc": 0.7385489458759964,
+    "n": 15,
+    "negative_count": 9,
+    "positive_count": 6,
+    "precision": 1.0,
+    "recall": 0.6666666666666666,
+    "tn": 9,
+    "tp": 4
+  },
+  "remote_abstention_count": 3,
+  "remote_output_count": 18,
+  "routing": {
+    "attack_rescue_count": 0,
+    "captured_rescue_count": 0,
+    "classification": {
+      "accuracy": 0.75,
+      "average_precision": null,
+      "fn": 0,
+      "fnr": 0.0,
+      "fp": 1,
+      "fpr": 0.5,
+      "mcc": 0.5773502691896258,
+      "n": 4,
+      "negative_count": 2,
+      "positive_count": 2,
+      "precision": 0.6666666666666666,
+      "recall": 1.0,
+      "tn": 1,
+      "tp": 2
+    },
+    "final_predictions": [
+      1,
+      1,
+      1,
+      0
+    ],
+    "local_accept_rate": 0.7777777777777778,
+    "missed_attack_rescue_count": 0,
+    "missed_rescue_count": 1,
+    "missed_rescue_risk": 0.0,
+    "paid_remote_abstention_count": 0,
+    "paired_remote_call_count": 0,
+    "remote_call_count": 4,
+    "remote_call_rate": 0.2222222222222222,
+    "rescue_capture": 0.0,
+    "rescue_count": 1,
+    "routed_harm_count": 0
+  }
+}

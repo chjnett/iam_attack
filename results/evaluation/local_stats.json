@@ -1,0 +1,12 @@
+{
+  "input_contract_valid_count": 18,
+  "invalid_false_pass_count": 0,
+  "median_witness_tokens": 362.0,
+  "parse_success_count": 18,
+  "parse_total_count": 18,
+  "request_count": 18,
+  "schema_version": "flowgate-engineering-stats/1.0",
+  "token_count_method": "ceil(UTF-8 JSON bytes / 4); tokenizer-free estimate",
+  "unaccounted_output_count": 0,
+  "witness_success_count": 18
+}

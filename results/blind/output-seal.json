@@ -1,0 +1,102 @@
+{
+  "artifacts": {
+    "blind_requests": {
+      "path": "results/blind/requests.jsonl",
+      "sha256": "sha256:c9fdc9fec39130efe03c129c2e49d22cb2b34952eafade57c945656715e2e7cb",
+      "size_bytes": 27409
+    },
+    "local_errors": {
+      "path": "results/blind/local_v1/local_errors.jsonl",
+      "sha256": "sha256:e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "size_bytes": 0
+    },
+    "local_manifest": {
+      "path": "results/blind/local_v1/local_responses.jsonl.manifest.json",
+      "sha256": "sha256:817b5a604eb9652f0a2faf257facc235c1485619787a86aebd3a8216bd27f3bf",
+      "size_bytes": 1600
+    },
+    "local_records": {
+      "path": "results/blind/local_v1/local_run_records.jsonl",
+      "sha256": "sha256:a98fdce2cfcd99e0cd2e17112d77ea1bc237941119c7cea5ed1f17ba9419dac2",
+      "size_bytes": 22054
+    },
+    "local_responses": {
+      "path": "results/blind/local_v1/local_responses.jsonl",
+      "sha256": "sha256:eb8197ffec8d0b2064b17ef8d82bbdbc95a560a3d5c2f18514e0e197214c7fd8",
+      "size_bytes": 10264
+    },
+    "predictions": {
+      "path": "results/blind/flowgate_v0/predictions.jsonl",
+      "sha256": "sha256:218fff645cdd45451642351084eeaffa7195f1247876ee5374b06cd3ed1eb08c",
+      "size_bytes": 43503
+    },
+    "remote_errors": {
+      "path": "results/blind/remote_gpt54_v1/remote_errors.jsonl",
+      "sha256": "sha256:e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "size_bytes": 0
+    },
+    "remote_manifest": {
+      "path": "results/blind/remote_gpt54_v1/remote_responses.jsonl.manifest.json",
+      "sha256": "sha256:4320cf5aee8f6d81a9fb7bdb9735c729c6d35ea5d4c019485c70b0b7e5770e70",
+      "size_bytes": 1192
+    },
+    "remote_records": {
+      "path": "results/blind/remote_gpt54_v1/remote_run_records.jsonl",
+      "sha256": "sha256:f2e94ff5ee1596bbc480611472c26bd2a457aa8be94f9af22bdf5b944cdb0994",
+      "size_bytes": 26019
+    },
+    "remote_responses": {
+      "path": "results/blind/remote_gpt54_v1/remote_responses.jsonl",
+      "sha256": "sha256:f5b70284f08b3a705953741766a75e17f2ac7570f4af6eb7fbaf88681b768ee6",
+      "size_bytes": 12879
+    },
+    "routing_decisions": {
+      "path": "results/blind/flowgate_v0/routing_decisions.jsonl",
+      "sha256": "sha256:cb1050fcdd1f6a4ea3f111b8d371468823250b3e7aecd4942a2b6f812467998e",
+      "size_bytes": 5864
+    }
+  },
+  "blind_episode_count": 18,
+  "blind_episode_ids": [
+    "FG-010f73484b",
+    "FG-2041a40303",
+    "FG-3bd571fe51",
+    "FG-4467052279",
+    "FG-862d098d07",
+    "FG-8a12fc5359",
+    "FG-8beaf357ae",
+    "FG-98c0f1802c",
+    "FG-a76c1edb32",
+    "FG-a7d434ea5f",
+    "FG-c2a407e09c",
+    "FG-c507d82b70",
+    "FG-d3d840c5bd",
+    "FG-f4c2c11862",
+    "FG-facc6b7516",
+    "FG-fb064d4004",
+    "FG-fcd20679bb",
+    "FG-fe48e6e940"
+  ],
+  "created_at": "2026-10-08T08:09:10.967379+00:00",
+  "protocol_amendment": {
+    "amendment_id": "flowgate-pre-unseal-amendment-001",
+    "labels_opened_before_amendment": false,
+    "model_outputs_changed": false,
+    "original_freeze_sha256": "sha256:16d6eda9f1d5872c9bae5c4f7cb3c0f43762569b936af6c6a5fb9e3640bfe79e",
+    "reason": "frozen verifier hard-coded remote_v1 while the frozen run used remote_v2",
+    "remote_manifest_sha256": "sha256:4320cf5aee8f6d81a9fb7bdb9735c729c6d35ea5d4c019485c70b0b7e5770e70",
+    "remote_prompt_contract_sha256": "f4c9a026332ad8e1d5b70e08c1b62b39ce984f60c41dabbc34066b48b3c641cf",
+    "remote_prompt_file_sha256": "sha256:4b51a8ae5745060679e501827cde9b4ea68a2bf29b0f173cc146ca2ee32fa5c9",
+    "remote_prompt_path": "prompts/remote_v2.txt",
+    "remote_records_sha256": "sha256:f2e94ff5ee1596bbc480611472c26bd2a457aa8be94f9af22bdf5b944cdb0994",
+    "routing_changed": false,
+    "scope": "seal verifier prompt filename lookup only",
+    "timing": "after blind inference and routing, before label unseal"
+  },
+  "protocol_freeze_path": "results/protocol-freeze.json",
+  "protocol_freeze_sha256": "sha256:16d6eda9f1d5872c9bae5c4f7cb3c0f43762569b936af6c6a5fb9e3640bfe79e",
+  "protocol_id": "flowgate-pilot-24-v1",
+  "remote_all_counterfactual": true,
+  "schema_version": "flowgate-output-seal/1.0",
+  "status": "sealed_before_label_unseal"
+}

@@ -1,0 +1,3532 @@
+{
+  "currency": "USD",
+  "descriptive_baselines": {
+    "static_witness_only": {
+      "abstention_count": 4,
+      "baseline_id": "static_witness_only",
+      "baseline_type": "transparent_non_llm_rule",
+      "coverage": 0.7777777777777778,
+      "covered_metrics": {
+        "accuracy": 0.5,
+        "average_precision": 0.5,
+        "fn": 5,
+        "fnr": 0.7142857142857143,
+        "fp": 2,
+        "fpr": 0.2857142857142857,
+        "mcc": 0.0,
+        "n": 14,
+        "negative_count": 7,
+        "positive_count": 7,
+        "precision": 0.5,
+        "recall": 0.2857142857142857,
+        "tn": 5,
+        "tp": 2
+      },
+      "decision_counts": {
+        "abstain": 4,
+        "attack": 4,
+        "benign": 10
+      },
+      "decision_rule": "attack iff capability_state=verified AND capability_gain=true AND sensitive_action_observed=true; abstain iff capability_state=unknown; otherwise benign",
+      "display_name": "static/witness-only",
+      "included_in_cost_mcc_frontier": false,
+      "input_scope": "validated_trusted_request_facts_only",
+      "llm_api_use": "none",
+      "runtime_measurement": "not_collected"
+    }
+  },
+  "episode_count": 18,
+  "frontier": [
+    {
+      "abstention_count": 14,
+      "attack_rescue_opportunities": 0,
+      "average_precision": 0.6666666666666666,
+      "budget": 0,
+      "call_rate": 0.0,
+      "calls": 0,
+      "cost": 0.0,
+      "coverage": 0.2222222222222222,
+      "currency": "USD",
+      "fnr": 0.0,
+      "latency": {
+        "local_all": {
+          "count": 0,
+          "mean_ms": null,
+          "median_ms": null,
+          "p95_ms": null,
+          "total_ms": null
+        },
+        "remote_all_counterfactual": {
+          "count": 18,
+          "mean_ms": 3841.3888888888887,
+          "median_ms": 3517.0,
+          "p95_ms": 6913.0,
+          "total_ms": 69145.0
+        },
+        "remote_selected": {
+          "count": 0,
+          "mean_ms": null,
+          "median_ms": null,
+          "p95_ms": null,
+          "total_ms": 0
+        },
+        "sequential_total_mean_ms": null
+      },
+      "mcc": 0.5773502691896258,
+      "missed_attack_rescues": 0,
+      "missed_rescue_risk": 0.0,
+      "pareto_optimal": true,
+      "policy": "random",
+      "precision": 0.6666666666666666,
+      "recall": 1.0
+    },
+    {
+      "abstention_count": 14,
+      "attack_rescue_opportunities": 0,
+      "average_precision": 1.0,
+      "budget": 2,
+      "call_rate": 0.1111111111111111,
+      "calls": 2,
+      "cost": 0.0149075,
+      "coverage": 0.2222222222222222,
+      "currency": "USD",
+      "fnr": 0.0,
+      "latency": {
+        "local_all": {
+          "count": 0,
+          "mean_ms": null,
+          "median_ms": null,
+          "p95_ms": null,
+          "total_ms": null
+        },
+        "remote_all_counterfactual": {
+          "count": 18,
+          "mean_ms": 3841.3888888888887,
+          "median_ms": 3517.0,
+          "p95_ms": 6913.0,
+          "total_ms": 69145.0
+        },
+        "remote_selected": {
+          "count": 2,
+          "mean_ms": 3616.0,
+          "median_ms": 3616.0,
+          "p95_ms": 3707.0,
+          "total_ms": 7232.0
+        },
+        "sequential_total_mean_ms": null
+      },
+      "mcc": 1.0,
+      "missed_attack_rescues": 0,
+      "missed_rescue_risk": 0.0,
+      "pareto_optimal": true,
+      "policy": "random",
+      "precision": 1.0,
+      "recall": 1.0
+    },
+    {
+      "abstention_count": 14,
+      "attack_rescue_opportunities": 0,
+      "average_precision": 0.6666666666666666,
+      "budget": 0,
+      "call_rate": 0.0,
+      "calls": 0,
+      "cost": 0.0,
+      "coverage": 0.2222222222222222,
+      "currency": "USD",
+      "fnr": 0.0,
+      "latency": {
+        "local_all": {
+          "count": 0,
+          "mean_ms": null,
+          "median_ms": null,
+          "p95_ms": null,
+          "total_ms": null
+        },
+        "remote_all_counterfactual": {
+          "count": 18,
+          "mean_ms": 3841.3888888888887,
+          "median_ms": 3517.0,
+          "p95_ms": 6913.0,
+          "total_ms": 69145.0
+        },
+        "remote_selected": {
+          "count": 0,
+          "mean_ms": null,
+          "median_ms": null,
+          "p95_ms": null,
+          "total_ms": 0
+        },
+        "sequential_total_mean_ms": null
+      },
+      "mcc": 0.5773502691896258,
+      "missed_attack_rescues": 0,
+      "missed_rescue_risk": 0.0,
+      "pareto_optimal": true,
+      "policy": "uncertainty",
+      "precision": 0.6666666666666666,
+      "recall": 1.0
+    },
+    {
+      "abstention_count": 13,
+      "attack_rescue_opportunities": 0,
+      "average_precision": 0.6666666666666666,
+      "budget": 1,
+      "call_rate": 0.05555555555555555,
+      "calls": 1,
+      "cost": 0.0068725,
+      "coverage": 0.2777777777777778,
+      "currency": "USD",
+      "fnr": 0.0,
+      "latency": {
+        "local_all": {
+          "count": 0,
+          "mean_ms": null,
+          "median_ms": null,
+          "p95_ms": null,
+          "total_ms": null
+        },
+        "remote_all_counterfactual": {
+          "count": 18,
+          "mean_ms": 3841.3888888888887,
+          "median_ms": 3517.0,
+          "p95_ms": 6913.0,
+          "total_ms": 69145.0
+        },
+        "remote_selected": {
+          "count": 1,
+          "mean_ms": 3761.0,
+          "median_ms": 3761.0,
+          "p95_ms": 3761.0,
+          "total_ms": 3761.0
+        },
+        "sequential_total_mean_ms": null
+      },
+      "mcc": 0.6666666666666666,
+      "missed_attack_rescues": 0,
+      "missed_rescue_risk": 0.0,
+      "pareto_optimal": true,
+      "policy": "uncertainty",
+      "precision": 0.6666666666666666,
+      "recall": 1.0
+    },
+    {
+      "abstention_count": 8,
+      "attack_rescue_opportunities": 0,
+      "average_precision": 0.6944444444444444,
+      "budget": 9,
+      "call_rate": 0.5,
+      "calls": 9,
+      "cost": 0.0634225,
+      "coverage": 0.5555555555555556,
+      "currency": "USD",
+      "fnr": 0.0,
+      "latency": {
+        "local_all": {
+          "count": 0,
+          "mean_ms": null,
+          "median_ms": null,
+          "p95_ms": null,
+          "total_ms": null
+        },
+        "remote_all_counterfactual": {
+          "count": 18,
+          "mean_ms": 3841.3888888888887,
+          "median_ms": 3517.0,
+          "p95_ms": 6913.0,
+          "total_ms": 69145.0
+        },
+        "remote_selected": {
+          "count": 9,
+          "mean_ms": 4015.3333333333335,
+          "median_ms": 3509.0,
+          "p95_ms": 6913.0,
+          "total_ms": 36138.0
+        },
+        "sequential_total_mean_ms": null
+      },
+      "mcc": 0.8017837257372732,
+      "missed_attack_rescues": 0,
+      "missed_rescue_risk": 0.0,
+      "pareto_optimal": true,
+      "policy": "uncertainty",
+      "precision": 0.75,
+      "recall": 1.0
+    },
+    {
+      "abstention_count": 7,
+      "attack_rescue_opportunities": 0,
+      "average_precision": 0.6944444444444444,
+      "budget": 10,
+      "call_rate": 0.5555555555555556,
+      "calls": 10,
+      "cost": 0.0705625,
+      "coverage": 0.6111111111111112,
+      "currency": "USD",
+      "fnr": 0.0,
+      "latency": {
+        "local_all": {
+          "count": 0,
+          "mean_ms": null,
+          "median_ms": null,
+          "p95_ms": null,
+          "total_ms": null
+        },
+        "remote_all_counterfactual": {
+          "count": 18,
+          "mean_ms": 3841.3888888888887,
+          "median_ms": 3517.0,
+          "p95_ms": 6913.0,
+          "total_ms": 69145.0
+        },
+        "remote_selected": {
+          "count": 10,
+          "mean_ms": 4018.9,
+          "median_ms": 3635.0,
+          "p95_ms": 6913.0,
+          "total_ms": 40189.0
+        },
+        "sequential_total_mean_ms": null
+      },
+      "mcc": 0.8100925873009825,
+      "missed_attack_rescues": 0,
+      "missed_rescue_risk": 0.0,
+      "pareto_optimal": true,
+      "policy": "uncertainty",
+      "precision": 0.75,
+      "recall": 1.0
+    },
+    {
+      "abstention_count": 6,
+      "attack_rescue_opportunities": 0,
+      "average_precision": 0.7208333333333332,
+      "budget": 11,
+      "call_rate": 0.6111111111111112,
+      "calls": 11,
+      "cost": 0.0773575,
+      "coverage": 0.6666666666666666,
+      "currency": "USD",
+      "fnr": 0.0,
+      "latency": {
+        "local_all": {
+          "count": 0,
+          "mean_ms": null,
+          "median_ms": null,
+          "p95_ms": null,
+          "total_ms": null
+        },
+        "remote_all_counterfactual": {
+          "count": 18,
+          "mean_ms": 3841.3888888888887,
+          "median_ms": 3517.0,
+          "p95_ms": 6913.0,
+          "total_ms": 69145.0
+        },
+        "remote_selected": {
+          "count": 11,
+          "mean_ms": 3955.7272727272725,
+          "median_ms": 3509.0,
+          "p95_ms": 6913.0,
+          "total_ms": 43513.0
+        },
+        "sequential_total_mean_ms": null
+      },
+      "mcc": 0.8366600265340756,
+      "missed_attack_rescues": 0,
+      "missed_rescue_risk": 0.0,
+      "pareto_optimal": true,
+      "policy": "uncertainty",
+      "precision": 0.8,
+      "recall": 1.0
+    },
+    {
+      "abstention_count": 5,
+      "attack_rescue_opportunities": 0,
+      "average_precision": 0.7195238095238096,
+      "budget": 12,
+      "call_rate": 0.6666666666666666,
+      "calls": 12,
+      "cost": 0.0843375,
+      "coverage": 0.7222222222222222,
+      "currency": "USD",
+      "fnr": 0.2,
+      "latency": {
+        "local_all": {
+          "count": 0,
+          "mean_ms": null,
+          "median_ms": null,
+          "p95_ms": null,
+          "total_ms": null
+        },
+        "remote_all_counterfactual": {
+          "count": 18,
+          "mean_ms": 3841.3888888888887,
+          "median_ms": 3517.0,
+          "p95_ms": 6913.0,
+          "total_ms": 69145.0
+        },
+        "remote_selected": {
+          "count": 12,
+          "mean_ms": 3949.1666666666665,
+          "median_ms": 3635.0,
+          "p95_ms": 6913.0,
+          "total_ms": 47390.0
+        },
+        "sequential_total_mean_ms": null
+      },
+      "mcc": 0.675,
+      "missed_attack_rescues": 0,
+      "missed_rescue_risk": 0.0,
+      "pareto_optimal": true,
+      "policy": "uncertainty",
+      "precision": 0.8,
+      "recall": 0.8
+    },
+    {
+      "abstention_count": 4,
+      "attack_rescue_opportunities": 0,
+      "average_precision": 0.7305555555555555,
+      "budget": 13,
+      "call_rate": 0.7222222222222222,
+      "calls": 13,
+      "cost": 0.09132,
+      "coverage": 0.7777777777777778,
+      "currency": "USD",
+      "fnr": 0.3333333333333333,
+      "latency": {
+        "local_all": {
+          "count": 0,
+          "mean_ms": null,
+          "median_ms": null,
+          "p95_ms": null,
+          "total_ms": null
+        },
+        "remote_all_counterfactual": {
+          "count": 18,
+          "mean_ms": 3841.3888888888887,
+          "median_ms": 3517.0,
+          "p95_ms": 6913.0,
+          "total_ms": 69145.0
+        },
+        "remote_selected": {
+          "count": 13,
+          "mean_ms": 3983.076923076923,
+          "median_ms": 3761.0,
+          "p95_ms": 6913.0,
+          "total_ms": 51780.0
+        },
+        "sequential_total_mean_ms": null
+      },
+      "mcc": 0.5594309277855158,
+      "missed_attack_rescues": 0,
+      "missed_rescue_risk": 0.0,
+      "pareto_optimal": true,
+      "policy": "uncertainty",
+      "precision": 0.8,
+      "recall": 0.6666666666666666
+    },
+    {
+      "abstention_count": 3,
+      "attack_rescue_opportunities": 0,
+      "average_precision": 0.7027777777777777,
+      "budget": 14,
+      "call_rate": 0.7777777777777778,
+      "calls": 14,
+      "cost": 0.09838,
+      "coverage": 0.8333333333333334,
+      "currency": "USD",
+      "fnr": 0.3333333333333333,
+      "latency": {
+        "local_all": {
+          "count": 0,
+          "mean_ms": null,
+          "median_ms": null,
+          "p95_ms": null,
+          "total_ms": null
+        },
+        "remote_all_counterfactual": {
+          "count": 18,
+          "mean_ms": 3841.3888888888887,
+          "median_ms": 3517.0,
+          "p95_ms": 6913.0,
+          "total_ms": 69145.0
+        },
+        "remote_selected": {
+          "count": 14,
+          "mean_ms": 3936.3571428571427,
+          "median_ms": 3635.0,
+          "p95_ms": 6913.0,
+          "total_ms": 55109.0
+        },
+        "sequential_total_mean_ms": null
+      },
+      "mcc": 0.5773502691896257,
+      "missed_attack_rescues": 0,
+      "missed_rescue_risk": 0.0,
+      "pareto_optimal": true,
+      "policy": "uncertainty",
+      "precision": 0.8,
+      "recall": 0.6666666666666666
+    },
+    {
+      "abstention_count": 3,
+      "attack_rescue_opportunities": 0,
+      "average_precision": 0.8888888888888888,
+      "budget": 15,
+      "call_rate": 0.8333333333333334,
+      "calls": 15,
+      "cost": 0.10586,
+      "coverage": 0.8333333333333334,
+      "currency": "USD",
+      "fnr": 0.3333333333333333,
+      "latency": {
+        "local_all": {
+          "count": 0,
+          "mean_ms": null,
+          "median_ms": null,
+          "p95_ms": null,
+          "total_ms": null
+        },
+        "remote_all_counterfactual": {
+          "count": 18,
+          "mean_ms": 3841.3888888888887,
+          "median_ms": 3517.0,
+          "p95_ms": 6913.0,
+          "total_ms": 69145.0
+        },
+        "remote_selected": {
+          "count": 15,
+          "mean_ms": 3908.9333333333334,
+          "median_ms": 3525.0,
+          "p95_ms": 6913.0,
+          "total_ms": 58634.0
+        },
+        "sequential_total_mean_ms": null
+      },
+      "mcc": 0.7385489458759964,
+      "missed_attack_rescues": 0,
+      "missed_rescue_risk": 0.0,
+      "pareto_optimal": true,
+      "policy": "uncertainty",
+      "precision": 1.0,
+      "recall": 0.6666666666666666
+    },
+    {
+      "abstention_count": 14,
+      "attack_rescue_opportunities": 0,
+      "average_precision": 0.6666666666666666,
+      "budget": 0,
+      "call_rate": 0.0,
+      "calls": 0,
+      "cost": 0.0,
+      "coverage": 0.2222222222222222,
+      "currency": "USD",
+      "fnr": 0.0,
+      "latency": {
+        "local_all": {
+          "count": 0,
+          "mean_ms": null,
+          "median_ms": null,
+          "p95_ms": null,
+          "total_ms": null
+        },
+        "remote_all_counterfactual": {
+          "count": 18,
+          "mean_ms": 3841.3888888888887,
+          "median_ms": 3517.0,
+          "p95_ms": 6913.0,
+          "total_ms": 69145.0
+        },
+        "remote_selected": {
+          "count": 0,
+          "mean_ms": null,
+          "median_ms": null,
+          "p95_ms": null,
+          "total_ms": 0
+        },
+        "sequential_total_mean_ms": null
+      },
+      "mcc": 0.5773502691896258,
+      "missed_attack_rescues": 0,
+      "missed_rescue_risk": 0.0,
+      "pareto_optimal": true,
+      "policy": "flowgate-v0",
+      "precision": 0.6666666666666666,
+      "recall": 1.0
+    },
+    {
+      "abstention_count": 12,
+      "attack_rescue_opportunities": 0,
+      "average_precision": 0.6944444444444444,
+      "budget": 2,
+      "call_rate": 0.1111111111111111,
+      "calls": 2,
+      "cost": 0.014759999999999999,
+      "coverage": 0.3333333333333333,
+      "currency": "USD",
+      "fnr": 0.0,
+      "latency": {
+        "local_all": {
+          "count": 0,
+          "mean_ms": null,
+          "median_ms": null,
+          "p95_ms": null,
+          "total_ms": null
+        },
+        "remote_all_counterfactual": {
+          "count": 18,
+          "mean_ms": 3841.3888888888887,
+          "median_ms": 3517.0,
+          "p95_ms": 6913.0,
+          "total_ms": 69145.0
+        },
+        "remote_selected": {
+          "count": 2,
+          "mean_ms": 5877.0,
+          "median_ms": 5877.0,
+          "p95_ms": 6913.0,
+          "total_ms": 11754.0
+        },
+        "sequential_total_mean_ms": null
+      },
+      "mcc": 0.7071067811865476,
+      "missed_attack_rescues": 0,
+      "missed_rescue_risk": 0.0,
+      "pareto_optimal": true,
+      "policy": "flowgate-v0",
+      "precision": 0.75,
+      "recall": 1.0
+    },
+    {
+      "abstention_count": 11,
+      "attack_rescue_opportunities": 0,
+      "average_precision": 0.6944444444444444,
+      "budget": 3,
+      "call_rate": 0.16666666666666666,
+      "calls": 3,
+      "cost": 0.0219,
+      "coverage": 0.3888888888888889,
+      "currency": "USD",
+      "fnr": 0.0,
+      "latency": {
+        "local_all": {
+          "count": 0,
+          "mean_ms": null,
+          "median_ms": null,
+          "p95_ms": null,
+          "total_ms": null
+        },
+        "remote_all_counterfactual": {
+          "count": 18,
+          "mean_ms": 3841.3888888888887,
+          "median_ms": 3517.0,
+          "p95_ms": 6913.0,
+          "total_ms": 69145.0
+        },
+        "remote_selected": {
+          "count": 3,
+          "mean_ms": 5268.333333333333,
+          "median_ms": 4841.0,
+          "p95_ms": 6913.0,
+          "total_ms": 15805.0
+        },
+        "sequential_total_mean_ms": null
+      },
+      "mcc": 0.75,
+      "missed_attack_rescues": 0,
+      "missed_rescue_risk": 0.0,
+      "pareto_optimal": true,
+      "policy": "flowgate-v0",
+      "precision": 0.75,
+      "recall": 1.0
+    },
+    {
+      "abstention_count": 10,
+      "attack_rescue_opportunities": 0,
+      "average_precision": 0.7208333333333332,
+      "budget": 4,
+      "call_rate": 0.2222222222222222,
+      "calls": 4,
+      "cost": 0.028695,
+      "coverage": 0.4444444444444444,
+      "currency": "USD",
+      "fnr": 0.0,
+      "latency": {
+        "local_all": {
+          "count": 0,
+          "mean_ms": null,
+          "median_ms": null,
+          "p95_ms": null,
+          "total_ms": null
+        },
+        "remote_all_counterfactual": {
+          "count": 18,
+          "mean_ms": 3841.3888888888887,
+          "median_ms": 3517.0,
+          "p95_ms": 6913.0,
+          "total_ms": 69145.0
+        },
+        "remote_selected": {
+          "count": 4,
+          "mean_ms": 4782.25,
+          "median_ms": 4446.0,
+          "p95_ms": 6913.0,
+          "total_ms": 19129.0
+        },
+        "sequential_total_mean_ms": null
+      },
+      "mcc": 0.7745966692414834,
+      "missed_attack_rescues": 0,
+      "missed_rescue_risk": 0.0,
+      "pareto_optimal": true,
+      "policy": "flowgate-v0",
+      "precision": 0.8,
+      "recall": 1.0
+    },
+    {
+      "abstention_count": 9,
+      "attack_rescue_opportunities": 0,
+      "average_precision": 0.7208333333333332,
+      "budget": 5,
+      "call_rate": 0.2777777777777778,
+      "calls": 5,
+      "cost": 0.0355675,
+      "coverage": 0.5,
+      "currency": "USD",
+      "fnr": 0.0,
+      "latency": {
+        "local_all": {
+          "count": 0,
+          "mean_ms": null,
+          "median_ms": null,
+          "p95_ms": null,
+          "total_ms": null
+        },
+        "remote_all_counterfactual": {
+          "count": 18,
+          "mean_ms": 3841.3888888888887,
+          "median_ms": 3517.0,
+          "p95_ms": 6913.0,
+          "total_ms": 69145.0
+        },
+        "remote_selected": {
+          "count": 5,
+          "mean_ms": 4578.0,
+          "median_ms": 4051.0,
+          "p95_ms": 6913.0,
+          "total_ms": 22890.0
+        },
+        "sequential_total_mean_ms": null
+      },
+      "mcc": 0.8,
+      "missed_attack_rescues": 0,
+      "missed_rescue_risk": 0.0,
+      "pareto_optimal": true,
+      "policy": "flowgate-v0",
+      "precision": 0.8,
+      "recall": 1.0
+    },
+    {
+      "abstention_count": 8,
+      "attack_rescue_opportunities": 0,
+      "average_precision": 0.7195238095238096,
+      "budget": 7,
+      "call_rate": 0.3888888888888889,
+      "calls": 7,
+      "cost": 0.049295000000000005,
+      "coverage": 0.5555555555555556,
+      "currency": "USD",
+      "fnr": 0.2,
+      "latency": {
+        "local_all": {
+          "count": 0,
+          "mean_ms": null,
+          "median_ms": null,
+          "p95_ms": null,
+          "total_ms": null
+        },
+        "remote_all_counterfactual": {
+          "count": 18,
+          "mean_ms": 3841.3888888888887,
+          "median_ms": 3517.0,
+          "p95_ms": 6913.0,
+          "total_ms": 69145.0
+        },
+        "remote_selected": {
+          "count": 7,
+          "mean_ms": 4392.0,
+          "median_ms": 4051.0,
+          "p95_ms": 6913.0,
+          "total_ms": 30744.0
+        },
+        "sequential_total_mean_ms": null
+      },
+      "mcc": 0.6,
+      "missed_attack_rescues": 0,
+      "missed_rescue_risk": 0.0,
+      "pareto_optimal": true,
+      "policy": "flowgate-v0",
+      "precision": 0.8,
+      "recall": 0.8
+    },
+    {
+      "abstention_count": 7,
+      "attack_rescue_opportunities": 0,
+      "average_precision": 0.7016666666666667,
+      "budget": 8,
+      "call_rate": 0.4444444444444444,
+      "calls": 8,
+      "cost": 0.056355,
+      "coverage": 0.6111111111111112,
+      "currency": "USD",
+      "fnr": 0.2,
+      "latency": {
+        "local_all": {
+          "count": 0,
+          "mean_ms": null,
+          "median_ms": null,
+          "p95_ms": null,
+          "total_ms": null
+        },
+        "remote_all_counterfactual": {
+          "count": 18,
+          "mean_ms": 3841.3888888888887,
+          "median_ms": 3517.0,
+          "p95_ms": 6913.0,
+          "total_ms": 69145.0
+        },
+        "remote_selected": {
+          "count": 8,
+          "mean_ms": 4259.125,
+          "median_ms": 3906.0,
+          "p95_ms": 6913.0,
+          "total_ms": 34073.0
+        },
+        "sequential_total_mean_ms": null
+      },
+      "mcc": 0.6333333333333333,
+      "missed_attack_rescues": 0,
+      "missed_rescue_risk": 0.0,
+      "pareto_optimal": true,
+      "policy": "flowgate-v0",
+      "precision": 0.8,
+      "recall": 0.8
+    },
+    {
+      "abstention_count": 6,
+      "attack_rescue_opportunities": 0,
+      "average_precision": 0.7016666666666667,
+      "budget": 9,
+      "call_rate": 0.5,
+      "calls": 9,
+      "cost": 0.06337500000000001,
+      "coverage": 0.6666666666666666,
+      "currency": "USD",
+      "fnr": 0.2,
+      "latency": {
+        "local_all": {
+          "count": 0,
+          "mean_ms": null,
+          "median_ms": null,
+          "p95_ms": null,
+          "total_ms": null
+        },
+        "remote_all_counterfactual": {
+          "count": 18,
+          "mean_ms": 3841.3888888888887,
+          "median_ms": 3517.0,
+          "p95_ms": 6913.0,
+          "total_ms": 69145.0
+        },
+        "remote_selected": {
+          "count": 9,
+          "mean_ms": 4136.0,
+          "median_ms": 3761.0,
+          "p95_ms": 6913.0,
+          "total_ms": 37224.0
+        },
+        "sequential_total_mean_ms": null
+      },
+      "mcc": 0.6571428571428571,
+      "missed_attack_rescues": 0,
+      "missed_rescue_risk": 0.0,
+      "pareto_optimal": true,
+      "policy": "flowgate-v0",
+      "precision": 0.8,
+      "recall": 0.8
+    },
+    {
+      "abstention_count": 5,
+      "attack_rescue_opportunities": 0,
+      "average_precision": 0.7027777777777777,
+      "budget": 10,
+      "call_rate": 0.5555555555555556,
+      "calls": 10,
+      "cost": 0.070355,
+      "coverage": 0.7222222222222222,
+      "currency": "USD",
+      "fnr": 0.3333333333333333,
+      "latency": {
+        "local_all": {
+          "count": 0,
+          "mean_ms": null,
+          "median_ms": null,
+          "p95_ms": null,
+          "total_ms": null
+        },
+        "remote_all_counterfactual": {
+          "count": 18,
+          "mean_ms": 3841.3888888888887,
+          "median_ms": 3517.0,
+          "p95_ms": 6913.0,
+          "total_ms": 69145.0
+        },
+        "remote_selected": {
+          "count": 10,
+          "mean_ms": 4110.1,
+          "median_ms": 3819.0,
+          "p95_ms": 6913.0,
+          "total_ms": 41101.0
+        },
+        "sequential_total_mean_ms": null
+      },
+      "mcc": 0.5367450401216932,
+      "missed_attack_rescues": 0,
+      "missed_rescue_risk": 0.0,
+      "pareto_optimal": true,
+      "policy": "flowgate-v0",
+      "precision": 0.8,
+      "recall": 0.6666666666666666
+    },
+    {
+      "abstention_count": 5,
+      "attack_rescue_opportunities": 0,
+      "average_precision": 0.8888888888888888,
+      "budget": 11,
+      "call_rate": 0.6111111111111112,
+      "calls": 11,
+      "cost": 0.077835,
+      "coverage": 0.7222222222222222,
+      "currency": "USD",
+      "fnr": 0.3333333333333333,
+      "latency": {
+        "local_all": {
+          "count": 0,
+          "mean_ms": null,
+          "median_ms": null,
+          "p95_ms": null,
+          "total_ms": null
+        },
+        "remote_all_counterfactual": {
+          "count": 18,
+          "mean_ms": 3841.3888888888887,
+          "median_ms": 3517.0,
+          "p95_ms": 6913.0,
+          "total_ms": 69145.0
+        },
+        "remote_selected": {
+          "count": 11,
+          "mean_ms": 4056.909090909091,
+          "median_ms": 3761.0,
+          "p95_ms": 6913.0,
+          "total_ms": 44626.0
+        },
+        "sequential_total_mean_ms": null
+      },
+      "mcc": 0.7200822998230956,
+      "missed_attack_rescues": 0,
+      "missed_rescue_risk": 0.0,
+      "pareto_optimal": true,
+      "policy": "flowgate-v0",
+      "precision": 1.0,
+      "recall": 0.6666666666666666
+    },
+    {
+      "abstention_count": 14,
+      "attack_rescue_opportunities": 0,
+      "average_precision": 0.6666666666666666,
+      "budget": 0,
+      "call_rate": 0.0,
+      "calls": 0,
+      "cost": 0.0,
+      "coverage": 0.2222222222222222,
+      "currency": "USD",
+      "fnr": 0.0,
+      "latency": {
+        "local_all": {
+          "count": 0,
+          "mean_ms": null,
+          "median_ms": null,
+          "p95_ms": null,
+          "total_ms": null
+        },
+        "remote_all_counterfactual": {
+          "count": 18,
+          "mean_ms": 3841.3888888888887,
+          "median_ms": 3517.0,
+          "p95_ms": 6913.0,
+          "total_ms": 69145.0
+        },
+        "remote_selected": {
+          "count": 0,
+          "mean_ms": null,
+          "median_ms": null,
+          "p95_ms": null,
+          "total_ms": 0
+        },
+        "sequential_total_mean_ms": null
+      },
+      "mcc": 0.5773502691896258,
+      "missed_attack_rescues": 0,
+      "missed_rescue_risk": 0.0,
+      "pareto_optimal": true,
+      "policy": "never",
+      "precision": 0.6666666666666666,
+      "recall": 1.0
+    }
+  ],
+  "output_seal_sha256": "sha256:8ab3c4948682f5a302ffc9b3a61cd940ac0fb9b889de53baabb01bc34d6fe440",
+  "protocol_freeze_sha256": "sha256:16d6eda9f1d5872c9bae5c4f7cb3c0f43762569b936af6c6a5fb9e3640bfe79e",
+  "remote_all_actual_cost": 0.128245,
+  "remote_counterfactual": "complete remote-all run; cost below is simulated selected-call cost",
+  "rows": [
+    {
+      "abstention_count": 14,
+      "attack_rescue_opportunities": 0,
+      "average_precision": 0.6666666666666666,
+      "budget": 0,
+      "call_rate": 0.0,
+      "calls": 0,
+      "cost": 0.0,
+      "coverage": 0.2222222222222222,
+      "currency": "USD",
+      "fnr": 0.0,
+      "latency": {
+        "local_all": {
+          "count": 0,
+          "mean_ms": null,
+          "median_ms": null,
+          "p95_ms": null,
+          "total_ms": null
+        },
+        "remote_all_counterfactual": {
+          "count": 18,
+          "mean_ms": 3841.3888888888887,
+          "median_ms": 3517.0,
+          "p95_ms": 6913.0,
+          "total_ms": 69145.0
+        },
+        "remote_selected": {
+          "count": 0,
+          "mean_ms": null,
+          "median_ms": null,
+          "p95_ms": null,
+          "total_ms": 0
+        },
+        "sequential_total_mean_ms": null
+      },
+      "mcc": 0.5773502691896258,
+      "missed_attack_rescues": 0,
+      "missed_rescue_risk": 0.0,
+      "pareto_optimal": true,
+      "policy": "random",
+      "precision": 0.6666666666666666,
+      "recall": 1.0
+    },
+    {
+      "abstention_count": 14,
+      "attack_rescue_opportunities": 0,
+      "average_precision": 0.8333333333333333,
+      "budget": 1,
+      "call_rate": 0.05555555555555555,
+      "calls": 1,
+      "cost": 0.0074275,
+      "coverage": 0.2222222222222222,
+      "currency": "USD",
+      "fnr": 0.0,
+      "latency": {
+        "local_all": {
+          "count": 0,
+          "mean_ms": null,
+          "median_ms": null,
+          "p95_ms": null,
+          "total_ms": null
+        },
+        "remote_all_counterfactual": {
+          "count": 18,
+          "mean_ms": 3841.3888888888887,
+          "median_ms": 3517.0,
+          "p95_ms": 6913.0,
+          "total_ms": 69145.0
+        },
+        "remote_selected": {
+          "count": 1,
+          "mean_ms": 3707.0,
+          "median_ms": 3707.0,
+          "p95_ms": 3707.0,
+          "total_ms": 3707.0
+        },
+        "sequential_total_mean_ms": null
+      },
+      "mcc": 0.5773502691896258,
+      "missed_attack_rescues": 0,
+      "missed_rescue_risk": 0.0,
+      "pareto_optimal": false,
+      "policy": "random",
+      "precision": 0.6666666666666666,
+      "recall": 1.0
+    },
+    {
+      "abstention_count": 14,
+      "attack_rescue_opportunities": 0,
+      "average_precision": 1.0,
+      "budget": 2,
+      "call_rate": 0.1111111111111111,
+      "calls": 2,
+      "cost": 0.0149075,
+      "coverage": 0.2222222222222222,
+      "currency": "USD",
+      "fnr": 0.0,
+      "latency": {
+        "local_all": {
+          "count": 0,
+          "mean_ms": null,
+          "median_ms": null,
+          "p95_ms": null,
+          "total_ms": null
+        },
+        "remote_all_counterfactual": {
+          "count": 18,
+          "mean_ms": 3841.3888888888887,
+          "median_ms": 3517.0,
+          "p95_ms": 6913.0,
+          "total_ms": 69145.0
+        },
+        "remote_selected": {
+          "count": 2,
+          "mean_ms": 3616.0,
+          "median_ms": 3616.0,
+          "p95_ms": 3707.0,
+          "total_ms": 7232.0
+        },
+        "sequential_total_mean_ms": null
+      },
+      "mcc": 1.0,
+      "missed_attack_rescues": 0,
+      "missed_rescue_risk": 0.0,
+      "pareto_optimal": true,
+      "policy": "random",
+      "precision": 1.0,
+      "recall": 1.0
+    },
+    {
+      "abstention_count": 13,
+      "attack_rescue_opportunities": 0,
+      "average_precision": 0.9166666666666666,
+      "budget": 3,
+      "call_rate": 0.16666666666666666,
+      "calls": 3,
+      "cost": 0.0218875,
+      "coverage": 0.2777777777777778,
+      "currency": "USD",
+      "fnr": 0.3333333333333333,
+      "latency": {
+        "local_all": {
+          "count": 0,
+          "mean_ms": null,
+          "median_ms": null,
+          "p95_ms": null,
+          "total_ms": null
+        },
+        "remote_all_counterfactual": {
+          "count": 18,
+          "mean_ms": 3841.3888888888887,
+          "median_ms": 3517.0,
+          "p95_ms": 6913.0,
+          "total_ms": 69145.0
+        },
+        "remote_selected": {
+          "count": 3,
+          "mean_ms": 3703.0,
+          "median_ms": 3707.0,
+          "p95_ms": 3877.0,
+          "total_ms": 11109.0
+        },
+        "sequential_total_mean_ms": null
+      },
+      "mcc": 0.6666666666666666,
+      "missed_attack_rescues": 0,
+      "missed_rescue_risk": 0.0,
+      "pareto_optimal": false,
+      "policy": "random",
+      "precision": 1.0,
+      "recall": 0.6666666666666666
+    },
+    {
+      "abstention_count": 12,
+      "attack_rescue_opportunities": 0,
+      "average_precision": 0.9166666666666666,
+      "budget": 4,
+      "call_rate": 0.2222222222222222,
+      "calls": 4,
+      "cost": 0.0290275,
+      "coverage": 0.3333333333333333,
+      "currency": "USD",
+      "fnr": 0.3333333333333333,
+      "latency": {
+        "local_all": {
+          "count": 0,
+          "mean_ms": null,
+          "median_ms": null,
+          "p95_ms": null,
+          "total_ms": null
+        },
+        "remote_all_counterfactual": {
+          "count": 18,
+          "mean_ms": 3841.3888888888887,
+          "median_ms": 3517.0,
+          "p95_ms": 6913.0,
+          "total_ms": 69145.0
+        },
+        "remote_selected": {
+          "count": 4,
+          "mean_ms": 3790.0,
+          "median_ms": 3792.0,
+          "p95_ms": 4051.0,
+          "total_ms": 15160.0
+        },
+        "sequential_total_mean_ms": null
+      },
+      "mcc": 0.7071067811865476,
+      "missed_attack_rescues": 0,
+      "missed_rescue_risk": 0.0,
+      "pareto_optimal": false,
+      "policy": "random",
+      "precision": 1.0,
+      "recall": 0.6666666666666666
+    },
+    {
+      "abstention_count": 12,
+      "attack_rescue_opportunities": 0,
+      "average_precision": 0.9166666666666666,
+      "budget": 5,
+      "call_rate": 0.2777777777777778,
+      "calls": 5,
+      "cost": 0.036352499999999996,
+      "coverage": 0.3333333333333333,
+      "currency": "USD",
+      "fnr": 0.3333333333333333,
+      "latency": {
+        "local_all": {
+          "count": 0,
+          "mean_ms": null,
+          "median_ms": null,
+          "p95_ms": null,
+          "total_ms": null
+        },
+        "remote_all_counterfactual": {
+          "count": 18,
+          "mean_ms": 3841.3888888888887,
+          "median_ms": 3517.0,
+          "p95_ms": 6913.0,
+          "total_ms": 69145.0
+        },
+        "remote_selected": {
+          "count": 5,
+          "mean_ms": 3705.4,
+          "median_ms": 3707.0,
+          "p95_ms": 4051.0,
+          "total_ms": 18527.0
+        },
+        "sequential_total_mean_ms": null
+      },
+      "mcc": 0.7071067811865476,
+      "missed_attack_rescues": 0,
+      "missed_rescue_risk": 0.0,
+      "pareto_optimal": false,
+      "policy": "random",
+      "precision": 1.0,
+      "recall": 0.6666666666666666
+    },
+    {
+      "abstention_count": 11,
+      "attack_rescue_opportunities": 0,
+      "average_precision": 0.8666666666666666,
+      "budget": 6,
+      "call_rate": 0.3333333333333333,
+      "calls": 6,
+      "cost": 0.043225,
+      "coverage": 0.3888888888888889,
+      "currency": "USD",
+      "fnr": 0.3333333333333333,
+      "latency": {
+        "local_all": {
+          "count": 0,
+          "mean_ms": null,
+          "median_ms": null,
+          "p95_ms": null,
+          "total_ms": null
+        },
+        "remote_all_counterfactual": {
+          "count": 18,
+          "mean_ms": 3841.3888888888887,
+          "median_ms": 3517.0,
+          "p95_ms": 6913.0,
+          "total_ms": 69145.0
+        },
+        "remote_selected": {
+          "count": 6,
+          "mean_ms": 3714.6666666666665,
+          "median_ms": 3734.0,
+          "p95_ms": 4051.0,
+          "total_ms": 22288.0
+        },
+        "sequential_total_mean_ms": null
+      },
+      "mcc": 0.7302967433402214,
+      "missed_attack_rescues": 0,
+      "missed_rescue_risk": 0.0,
+      "pareto_optimal": false,
+      "policy": "random",
+      "precision": 1.0,
+      "recall": 0.6666666666666666
+    },
+    {
+      "abstention_count": 10,
+      "attack_rescue_opportunities": 0,
+      "average_precision": 0.8333333333333333,
+      "budget": 7,
+      "call_rate": 0.3888888888888889,
+      "calls": 7,
+      "cost": 0.050284999999999996,
+      "coverage": 0.4444444444444444,
+      "currency": "USD",
+      "fnr": 0.3333333333333333,
+      "latency": {
+        "local_all": {
+          "count": 0,
+          "mean_ms": null,
+          "median_ms": null,
+          "p95_ms": null,
+          "total_ms": null
+        },
+        "remote_all_counterfactual": {
+          "count": 18,
+          "mean_ms": 3841.3888888888887,
+          "median_ms": 3517.0,
+          "p95_ms": 6913.0,
+          "total_ms": 69145.0
+        },
+        "remote_selected": {
+          "count": 7,
+          "mean_ms": 3659.5714285714284,
+          "median_ms": 3707.0,
+          "p95_ms": 4051.0,
+          "total_ms": 25617.0
+        },
+        "sequential_total_mean_ms": null
+      },
+      "mcc": 0.7453559924999299,
+      "missed_attack_rescues": 0,
+      "missed_rescue_risk": 0.0,
+      "pareto_optimal": false,
+      "policy": "random",
+      "precision": 1.0,
+      "recall": 0.6666666666666666
+    },
+    {
+      "abstention_count": 10,
+      "attack_rescue_opportunities": 0,
+      "average_precision": 0.8333333333333333,
+      "budget": 8,
+      "call_rate": 0.4444444444444444,
+      "calls": 8,
+      "cost": 0.05703000000000001,
+      "coverage": 0.4444444444444444,
+      "currency": "USD",
+      "fnr": 0.3333333333333333,
+      "latency": {
+        "local_all": {
+          "count": 0,
+          "mean_ms": null,
+          "median_ms": null,
+          "p95_ms": null,
+          "total_ms": null
+        },
+        "remote_all_counterfactual": {
+          "count": 18,
+          "mean_ms": 3841.3888888888887,
+          "median_ms": 3517.0,
+          "p95_ms": 6913.0,
+          "total_ms": 69145.0
+        },
+        "remote_selected": {
+          "count": 8,
+          "mean_ms": 3635.125,
+          "median_ms": 3616.0,
+          "p95_ms": 4051.0,
+          "total_ms": 29081.0
+        },
+        "sequential_total_mean_ms": null
+      },
+      "mcc": 0.7453559924999299,
+      "missed_attack_rescues": 0,
+      "missed_rescue_risk": 0.0,
+      "pareto_optimal": false,
+      "policy": "random",
+      "precision": 1.0,
+      "recall": 0.6666666666666666
+    },
+    {
+      "abstention_count": 9,
+      "attack_rescue_opportunities": 0,
+      "average_precision": 0.8928571428571428,
+      "budget": 9,
+      "call_rate": 0.5,
+      "calls": 9,
+      "cost": 0.063825,
+      "coverage": 0.5,
+      "currency": "USD",
+      "fnr": 0.25,
+      "latency": {
+        "local_all": {
+          "count": 0,
+          "mean_ms": null,
+          "median_ms": null,
+          "p95_ms": null,
+          "total_ms": null
+        },
+        "remote_all_counterfactual": {
+          "count": 18,
+          "mean_ms": 3841.3888888888887,
+          "median_ms": 3517.0,
+          "p95_ms": 6913.0,
+          "total_ms": 69145.0
+        },
+        "remote_selected": {
+          "count": 9,
+          "mean_ms": 3600.5555555555557,
+          "median_ms": 3525.0,
+          "p95_ms": 4051.0,
+          "total_ms": 32405.0
+        },
+        "sequential_total_mean_ms": null
+      },
+      "mcc": 0.7905694150420948,
+      "missed_attack_rescues": 0,
+      "missed_rescue_risk": 0.0,
+      "pareto_optimal": false,
+      "policy": "random",
+      "precision": 1.0,
+      "recall": 0.75
+    },
+    {
+      "abstention_count": 8,
+      "attack_rescue_opportunities": 0,
+      "average_precision": 0.8500000000000001,
+      "budget": 10,
+      "call_rate": 0.5555555555555556,
+      "calls": 10,
+      "cost": 0.07080750000000001,
+      "coverage": 0.5555555555555556,
+      "currency": "USD",
+      "fnr": 0.4,
+      "latency": {
+        "local_all": {
+          "count": 0,
+          "mean_ms": null,
+          "median_ms": null,
+          "p95_ms": null,
+          "total_ms": null
+        },
+        "remote_all_counterfactual": {
+          "count": 18,
+          "mean_ms": 3841.3888888888887,
+          "median_ms": 3517.0,
+          "p95_ms": 6913.0,
+          "total_ms": 69145.0
+        },
+        "remote_selected": {
+          "count": 10,
+          "mean_ms": 3679.5,
+          "median_ms": 3616.0,
+          "p95_ms": 4390.0,
+          "total_ms": 36795.0
+        },
+        "sequential_total_mean_ms": null
+      },
+      "mcc": 0.6546536707079772,
+      "missed_attack_rescues": 0,
+      "missed_rescue_risk": 0.0,
+      "pareto_optimal": false,
+      "policy": "random",
+      "precision": 1.0,
+      "recall": 0.6
+    },
+    {
+      "abstention_count": 8,
+      "attack_rescue_opportunities": 0,
+      "average_precision": 0.8222222222222223,
+      "budget": 11,
+      "call_rate": 0.6111111111111112,
+      "calls": 11,
+      "cost": 0.07844000000000001,
+      "coverage": 0.5555555555555556,
+      "currency": "USD",
+      "fnr": 0.4,
+      "latency": {
+        "local_all": {
+          "count": 0,
+          "mean_ms": null,
+          "median_ms": null,
+          "p95_ms": null,
+          "total_ms": null
+        },
+        "remote_all_counterfactual": {
+          "count": 18,
+          "mean_ms": 3841.3888888888887,
+          "median_ms": 3517.0,
+          "p95_ms": 6913.0,
+          "total_ms": 69145.0
+        },
+        "remote_selected": {
+          "count": 11,
+          "mean_ms": 3657.4545454545455,
+          "median_ms": 3525.0,
+          "p95_ms": 4390.0,
+          "total_ms": 40232.0
+        },
+        "sequential_total_mean_ms": null
+      },
+      "mcc": 0.6546536707079772,
+      "missed_attack_rescues": 0,
+      "missed_rescue_risk": 0.0,
+      "pareto_optimal": false,
+      "policy": "random",
+      "precision": 1.0,
+      "recall": 0.6
+    },
+    {
+      "abstention_count": 8,
+      "attack_rescue_opportunities": 0,
+      "average_precision": 0.8222222222222223,
+      "budget": 12,
+      "call_rate": 0.6666666666666666,
+      "calls": 12,
+      "cost": 0.08551,
+      "coverage": 0.5555555555555556,
+      "currency": "USD",
+      "fnr": 0.4,
+      "latency": {
+        "local_all": {
+          "count": 0,
+          "mean_ms": null,
+          "median_ms": null,
+          "p95_ms": null,
+          "total_ms": null
+        },
+        "remote_all_counterfactual": {
+          "count": 18,
+          "mean_ms": 3841.3888888888887,
+          "median_ms": 3517.0,
+          "p95_ms": 6913.0,
+          "total_ms": 69145.0
+        },
+        "remote_selected": {
+          "count": 12,
+          "mean_ms": 3619.0,
+          "median_ms": 3494.5,
+          "p95_ms": 4390.0,
+          "total_ms": 43428.0
+        },
+        "sequential_total_mean_ms": null
+      },
+      "mcc": 0.6546536707079772,
+      "missed_attack_rescues": 0,
+      "missed_rescue_risk": 0.0,
+      "pareto_optimal": false,
+      "policy": "random",
+      "precision": 1.0,
+      "recall": 0.6
+    },
+    {
+      "abstention_count": 7,
+      "attack_rescue_opportunities": 0,
+      "average_precision": 0.8222222222222223,
+      "budget": 13,
+      "call_rate": 0.7222222222222222,
+      "calls": 13,
+      "cost": 0.09296499999999999,
+      "coverage": 0.6111111111111112,
+      "currency": "USD",
+      "fnr": 0.4,
+      "latency": {
+        "local_all": {
+          "count": 0,
+          "mean_ms": null,
+          "median_ms": null,
+          "p95_ms": null,
+          "total_ms": null
+        },
+        "remote_all_counterfactual": {
+          "count": 18,
+          "mean_ms": 3841.3888888888887,
+          "median_ms": 3517.0,
+          "p95_ms": 6913.0,
+          "total_ms": 69145.0
+        },
+        "remote_selected": {
+          "count": 13,
+          "mean_ms": 3872.3846153846152,
+          "median_ms": 3525.0,
+          "p95_ms": 6913.0,
+          "total_ms": 50341.0
+        },
+        "sequential_total_mean_ms": null
+      },
+      "mcc": 0.6708203932499369,
+      "missed_attack_rescues": 0,
+      "missed_rescue_risk": 0.0,
+      "pareto_optimal": false,
+      "policy": "random",
+      "precision": 1.0,
+      "recall": 0.6
+    },
+    {
+      "abstention_count": 6,
+      "attack_rescue_opportunities": 0,
+      "average_precision": 0.8222222222222223,
+      "budget": 14,
+      "call_rate": 0.7777777777777778,
+      "calls": 14,
+      "cost": 0.09982249999999998,
+      "coverage": 0.6666666666666666,
+      "currency": "USD",
+      "fnr": 0.4,
+      "latency": {
+        "local_all": {
+          "count": 0,
+          "mean_ms": null,
+          "median_ms": null,
+          "p95_ms": null,
+          "total_ms": null
+        },
+        "remote_all_counterfactual": {
+          "count": 18,
+          "mean_ms": 3841.3888888888887,
+          "median_ms": 3517.0,
+          "p95_ms": 6913.0,
+          "total_ms": 69145.0
+        },
+        "remote_selected": {
+          "count": 14,
+          "mean_ms": 3846.4285714285716,
+          "median_ms": 3517.0,
+          "p95_ms": 6913.0,
+          "total_ms": 53850.0
+        },
+        "sequential_total_mean_ms": null
+      },
+      "mcc": 0.6831300510639732,
+      "missed_attack_rescues": 0,
+      "missed_rescue_risk": 0.0,
+      "pareto_optimal": false,
+      "policy": "random",
+      "precision": 1.0,
+      "recall": 0.6
+    },
+    {
+      "abstention_count": 5,
+      "attack_rescue_opportunities": 0,
+      "average_precision": 0.8666666666666666,
+      "budget": 15,
+      "call_rate": 0.8333333333333334,
+      "calls": 15,
+      "cost": 0.10712749999999999,
+      "coverage": 0.7222222222222222,
+      "currency": "USD",
+      "fnr": 0.3333333333333333,
+      "latency": {
+        "local_all": {
+          "count": 0,
+          "mean_ms": null,
+          "median_ms": null,
+          "p95_ms": null,
+          "total_ms": null
+        },
+        "remote_all_counterfactual": {
+          "count": 18,
+          "mean_ms": 3841.3888888888887,
+          "median_ms": 3517.0,
+          "p95_ms": 6913.0,
+          "total_ms": 69145.0
+        },
+        "remote_selected": {
+          "count": 15,
+          "mean_ms": 3912.733333333333,
+          "median_ms": 3525.0,
+          "p95_ms": 6913.0,
+          "total_ms": 58691.0
+        },
+        "sequential_total_mean_ms": null
+      },
+      "mcc": 0.7200822998230956,
+      "missed_attack_rescues": 0,
+      "missed_rescue_risk": 0.0,
+      "pareto_optimal": false,
+      "policy": "random",
+      "precision": 1.0,
+      "recall": 0.6666666666666666
+    },
+    {
+      "abstention_count": 5,
+      "attack_rescue_opportunities": 0,
+      "average_precision": 0.8666666666666666,
+      "budget": 16,
+      "call_rate": 0.8888888888888888,
+      "calls": 16,
+      "cost": 0.11413999999999999,
+      "coverage": 0.7222222222222222,
+      "currency": "USD",
+      "fnr": 0.3333333333333333,
+      "latency": {
+        "local_all": {
+          "count": 0,
+          "mean_ms": null,
+          "median_ms": null,
+          "p95_ms": null,
+          "total_ms": null
+        },
+        "remote_all_counterfactual": {
+          "count": 18,
+          "mean_ms": 3841.3888888888887,
+          "median_ms": 3517.0,
+          "p95_ms": 6913.0,
+          "total_ms": 69145.0
+        },
+        "remote_selected": {
+          "count": 16,
+          "mean_ms": 3908.5625,
+          "median_ms": 3616.0,
+          "p95_ms": 6913.0,
+          "total_ms": 62537.0
+        },
+        "sequential_total_mean_ms": null
+      },
+      "mcc": 0.7200822998230956,
+      "missed_attack_rescues": 0,
+      "missed_rescue_risk": 0.0,
+      "pareto_optimal": false,
+      "policy": "random",
+      "precision": 1.0,
+      "recall": 0.6666666666666666
+    },
+    {
+      "abstention_count": 4,
+      "attack_rescue_opportunities": 0,
+      "average_precision": 0.8666666666666666,
+      "budget": 17,
+      "call_rate": 0.9444444444444444,
+      "calls": 17,
+      "cost": 0.121225,
+      "coverage": 0.7777777777777778,
+      "currency": "USD",
+      "fnr": 0.3333333333333333,
+      "latency": {
+        "local_all": {
+          "count": 0,
+          "mean_ms": null,
+          "median_ms": null,
+          "p95_ms": null,
+          "total_ms": null
+        },
+        "remote_all_counterfactual": {
+          "count": 18,
+          "mean_ms": 3841.3888888888887,
+          "median_ms": 3517.0,
+          "p95_ms": 6913.0,
+          "total_ms": 69145.0
+        },
+        "remote_selected": {
+          "count": 17,
+          "mean_ms": 3882.0,
+          "median_ms": 3525.0,
+          "p95_ms": 6913.0,
+          "total_ms": 65994.0
+        },
+        "sequential_total_mean_ms": null
+      },
+      "mcc": 0.7302967433402214,
+      "missed_attack_rescues": 0,
+      "missed_rescue_risk": 0.0,
+      "pareto_optimal": false,
+      "policy": "random",
+      "precision": 1.0,
+      "recall": 0.6666666666666666
+    },
+    {
+      "abstention_count": 3,
+      "attack_rescue_opportunities": 0,
+      "average_precision": 0.8666666666666666,
+      "budget": 18,
+      "call_rate": 1.0,
+      "calls": 18,
+      "cost": 0.128245,
+      "coverage": 0.8333333333333334,
+      "currency": "USD",
+      "fnr": 0.3333333333333333,
+      "latency": {
+        "local_all": {
+          "count": 0,
+          "mean_ms": null,
+          "median_ms": null,
+          "p95_ms": null,
+          "total_ms": null
+        },
+        "remote_all_counterfactual": {
+          "count": 18,
+          "mean_ms": 3841.3888888888887,
+          "median_ms": 3517.0,
+          "p95_ms": 6913.0,
+          "total_ms": 69145.0
+        },
+        "remote_selected": {
+          "count": 18,
+          "mean_ms": 3841.3888888888887,
+          "median_ms": 3517.0,
+          "p95_ms": 6913.0,
+          "total_ms": 69145.0
+        },
+        "sequential_total_mean_ms": null
+      },
+      "mcc": 0.7385489458759964,
+      "missed_attack_rescues": 0,
+      "missed_rescue_risk": 0.0,
+      "pareto_optimal": false,
+      "policy": "random",
+      "precision": 1.0,
+      "recall": 0.6666666666666666
+    },
+    {
+      "abstention_count": 14,
+      "attack_rescue_opportunities": 0,
+      "average_precision": 0.6666666666666666,
+      "budget": 0,
+      "call_rate": 0.0,
+      "calls": 0,
+      "cost": 0.0,
+      "coverage": 0.2222222222222222,
+      "currency": "USD",
+      "fnr": 0.0,
+      "latency": {
+        "local_all": {
+          "count": 0,
+          "mean_ms": null,
+          "median_ms": null,
+          "p95_ms": null,
+          "total_ms": null
+        },
+        "remote_all_counterfactual": {
+          "count": 18,
+          "mean_ms": 3841.3888888888887,
+          "median_ms": 3517.0,
+          "p95_ms": 6913.0,
+          "total_ms": 69145.0
+        },
+        "remote_selected": {
+          "count": 0,
+          "mean_ms": null,
+          "median_ms": null,
+          "p95_ms": null,
+          "total_ms": 0
+        },
+        "sequential_total_mean_ms": null
+      },
+      "mcc": 0.5773502691896258,
+      "missed_attack_rescues": 0,
+      "missed_rescue_risk": 0.0,
+      "pareto_optimal": true,
+      "policy": "uncertainty",
+      "precision": 0.6666666666666666,
+      "recall": 1.0
+    },
+    {
+      "abstention_count": 13,
+      "attack_rescue_opportunities": 0,
+      "average_precision": 0.6666666666666666,
+      "budget": 1,
+      "call_rate": 0.05555555555555555,
+      "calls": 1,
+      "cost": 0.0068725,
+      "coverage": 0.2777777777777778,
+      "currency": "USD",
+      "fnr": 0.0,
+      "latency": {
+        "local_all": {
+          "count": 0,
+          "mean_ms": null,
+          "median_ms": null,
+          "p95_ms": null,
+          "total_ms": null
+        },
+        "remote_all_counterfactual": {
+          "count": 18,
+          "mean_ms": 3841.3888888888887,
+          "median_ms": 3517.0,
+          "p95_ms": 6913.0,
+          "total_ms": 69145.0
+        },
+        "remote_selected": {
+          "count": 1,
+          "mean_ms": 3761.0,
+          "median_ms": 3761.0,
+          "p95_ms": 3761.0,
+          "total_ms": 3761.0
+        },
+        "sequential_total_mean_ms": null
+      },
+      "mcc": 0.6666666666666666,
+      "missed_attack_rescues": 0,
+      "missed_rescue_risk": 0.0,
+      "pareto_optimal": true,
+      "policy": "uncertainty",
+      "precision": 0.6666666666666666,
+      "recall": 1.0
+    },
+    {
+      "abstention_count": 13,
+      "attack_rescue_opportunities": 0,
+      "average_precision": 0.6666666666666666,
+      "budget": 2,
+      "call_rate": 0.1111111111111111,
+      "calls": 2,
+      "cost": 0.013617500000000001,
+      "coverage": 0.2777777777777778,
+      "currency": "USD",
+      "fnr": 0.0,
+      "latency": {
+        "local_all": {
+          "count": 0,
+          "mean_ms": null,
+          "median_ms": null,
+          "p95_ms": null,
+          "total_ms": null
+        },
+        "remote_all_counterfactual": {
+          "count": 18,
+          "mean_ms": 3841.3888888888887,
+          "median_ms": 3517.0,
+          "p95_ms": 6913.0,
+          "total_ms": 69145.0
+        },
+        "remote_selected": {
+          "count": 2,
+          "mean_ms": 3612.5,
+          "median_ms": 3612.5,
+          "p95_ms": 3761.0,
+          "total_ms": 7225.0
+        },
+        "sequential_total_mean_ms": null
+      },
+      "mcc": 0.6666666666666666,
+      "missed_attack_rescues": 0,
+      "missed_rescue_risk": 0.0,
+      "pareto_optimal": false,
+      "policy": "uncertainty",
+      "precision": 0.6666666666666666,
+      "recall": 1.0
+    },
+    {
+      "abstention_count": 12,
+      "attack_rescue_opportunities": 0,
+      "average_precision": 0.6666666666666666,
+      "budget": 3,
+      "call_rate": 0.16666666666666666,
+      "calls": 3,
+      "cost": 0.020475,
+      "coverage": 0.3333333333333333,
+      "currency": "USD",
+      "fnr": 0.0,
+      "latency": {
+        "local_all": {
+          "count": 0,
+          "mean_ms": null,
+          "median_ms": null,
+          "p95_ms": null,
+          "total_ms": null
+        },
+        "remote_all_counterfactual": {
+          "count": 18,
+          "mean_ms": 3841.3888888888887,
+          "median_ms": 3517.0,
+          "p95_ms": 6913.0,
+          "total_ms": 69145.0
+        },
+        "remote_selected": {
+          "count": 3,
+          "mean_ms": 3578.0,
+          "median_ms": 3509.0,
+          "p95_ms": 3761.0,
+          "total_ms": 10734.0
+        },
+        "sequential_total_mean_ms": null
+      },
+      "mcc": 0.7071067811865476,
+      "missed_attack_rescues": 0,
+      "missed_rescue_risk": 0.0,
+      "pareto_optimal": false,
+      "policy": "uncertainty",
+      "precision": 0.6666666666666666,
+      "recall": 1.0
+    },
+    {
+      "abstention_count": 12,
+      "attack_rescue_opportunities": 0,
+      "average_precision": 0.6666666666666666,
+      "budget": 4,
+      "call_rate": 0.2222222222222222,
+      "calls": 4,
+      "cost": 0.027487499999999998,
+      "coverage": 0.3333333333333333,
+      "currency": "USD",
+      "fnr": 0.0,
+      "latency": {
+        "local_all": {
+          "count": 0,
+          "mean_ms": null,
+          "median_ms": null,
+          "p95_ms": null,
+          "total_ms": null
+        },
+        "remote_all_counterfactual": {
+          "count": 18,
+          "mean_ms": 3841.3888888888887,
+          "median_ms": 3517.0,
+          "p95_ms": 6913.0,
+          "total_ms": 69145.0
+        },
+        "remote_selected": {
+          "count": 4,
+          "mean_ms": 3645.0,
+          "median_ms": 3635.0,
+          "p95_ms": 3846.0,
+          "total_ms": 14580.0
+        },
+        "sequential_total_mean_ms": null
+      },
+      "mcc": 0.7071067811865476,
+      "missed_attack_rescues": 0,
+      "missed_rescue_risk": 0.0,
+      "pareto_optimal": false,
+      "policy": "uncertainty",
+      "precision": 0.6666666666666666,
+      "recall": 1.0
+    },
+    {
+      "abstention_count": 11,
+      "attack_rescue_opportunities": 0,
+      "average_precision": 0.6666666666666666,
+      "budget": 5,
+      "call_rate": 0.2777777777777778,
+      "calls": 5,
+      "cost": 0.034507499999999997,
+      "coverage": 0.3888888888888889,
+      "currency": "USD",
+      "fnr": 0.0,
+      "latency": {
+        "local_all": {
+          "count": 0,
+          "mean_ms": null,
+          "median_ms": null,
+          "p95_ms": null,
+          "total_ms": null
+        },
+        "remote_all_counterfactual": {
+          "count": 18,
+          "mean_ms": 3841.3888888888887,
+          "median_ms": 3517.0,
+          "p95_ms": 6913.0,
+          "total_ms": 69145.0
+        },
+        "remote_selected": {
+          "count": 5,
+          "mean_ms": 3546.2,
+          "median_ms": 3509.0,
+          "p95_ms": 3846.0,
+          "total_ms": 17731.0
+        },
+        "sequential_total_mean_ms": null
+      },
+      "mcc": 0.7302967433402214,
+      "missed_attack_rescues": 0,
+      "missed_rescue_risk": 0.0,
+      "pareto_optimal": false,
+      "policy": "uncertainty",
+      "precision": 0.6666666666666666,
+      "recall": 1.0
+    },
+    {
+      "abstention_count": 10,
+      "attack_rescue_opportunities": 0,
+      "average_precision": 0.6666666666666666,
+      "budget": 6,
+      "call_rate": 0.3333333333333333,
+      "calls": 6,
+      "cost": 0.0419625,
+      "coverage": 0.4444444444444444,
+      "currency": "USD",
+      "fnr": 0.0,
+      "latency": {
+        "local_all": {
+          "count": 0,
+          "mean_ms": null,
+          "median_ms": null,
+          "p95_ms": null,
+          "total_ms": null
+        },
+        "remote_all_counterfactual": {
+          "count": 18,
+          "mean_ms": 3841.3888888888887,
+          "median_ms": 3517.0,
+          "p95_ms": 6913.0,
+          "total_ms": 69145.0
+        },
+        "remote_selected": {
+          "count": 6,
+          "mean_ms": 4107.333333333333,
+          "median_ms": 3635.0,
+          "p95_ms": 6913.0,
+          "total_ms": 24644.0
+        },
+        "sequential_total_mean_ms": null
+      },
+      "mcc": 0.7453559924999299,
+      "missed_attack_rescues": 0,
+      "missed_rescue_risk": 0.0,
+      "pareto_optimal": false,
+      "policy": "uncertainty",
+      "precision": 0.6666666666666666,
+      "recall": 1.0
+    },
+    {
+      "abstention_count": 9,
+      "attack_rescue_opportunities": 0,
+      "average_precision": 0.6666666666666666,
+      "budget": 7,
+      "call_rate": 0.3888888888888889,
+      "calls": 7,
+      "cost": 0.0490475,
+      "coverage": 0.5,
+      "currency": "USD",
+      "fnr": 0.0,
+      "latency": {
+        "local_all": {
+          "count": 0,
+          "mean_ms": null,
+          "median_ms": null,
+          "p95_ms": null,
+          "total_ms": null
+        },
+        "remote_all_counterfactual": {
+          "count": 18,
+          "mean_ms": 3841.3888888888887,
+          "median_ms": 3517.0,
+          "p95_ms": 6913.0,
+          "total_ms": 69145.0
+        },
+        "remote_selected": {
+          "count": 7,
+          "mean_ms": 4014.4285714285716,
+          "median_ms": 3509.0,
+          "p95_ms": 6913.0,
+          "total_ms": 28101.0
+        },
+        "sequential_total_mean_ms": null
+      },
+      "mcc": 0.7559289460184544,
+      "missed_attack_rescues": 0,
+      "missed_rescue_risk": 0.0,
+      "pareto_optimal": false,
+      "policy": "uncertainty",
+      "precision": 0.6666666666666666,
+      "recall": 1.0
+    },
+    {
+      "abstention_count": 9,
+      "attack_rescue_opportunities": 0,
+      "average_precision": 0.6666666666666666,
+      "budget": 8,
+      "call_rate": 0.4444444444444444,
+      "calls": 8,
+      "cost": 0.0561175,
+      "coverage": 0.5,
+      "currency": "USD",
+      "fnr": 0.0,
+      "latency": {
+        "local_all": {
+          "count": 0,
+          "mean_ms": null,
+          "median_ms": null,
+          "p95_ms": null,
+          "total_ms": null
+        },
+        "remote_all_counterfactual": {
+          "count": 18,
+          "mean_ms": 3841.3888888888887,
+          "median_ms": 3517.0,
+          "p95_ms": 6913.0,
+          "total_ms": 69145.0
+        },
+        "remote_selected": {
+          "count": 8,
+          "mean_ms": 3912.125,
+          "median_ms": 3486.5,
+          "p95_ms": 6913.0,
+          "total_ms": 31297.0
+        },
+        "sequential_total_mean_ms": null
+      },
+      "mcc": 0.7559289460184544,
+      "missed_attack_rescues": 0,
+      "missed_rescue_risk": 0.0,
+      "pareto_optimal": false,
+      "policy": "uncertainty",
+      "precision": 0.6666666666666666,
+      "recall": 1.0
+    },
+    {
+      "abstention_count": 8,
+      "attack_rescue_opportunities": 0,
+      "average_precision": 0.6944444444444444,
+      "budget": 9,
+      "call_rate": 0.5,
+      "calls": 9,
+      "cost": 0.0634225,
+      "coverage": 0.5555555555555556,
+      "currency": "USD",
+      "fnr": 0.0,
+      "latency": {
+        "local_all": {
+          "count": 0,
+          "mean_ms": null,
+          "median_ms": null,
+          "p95_ms": null,
+          "total_ms": null
+        },
+        "remote_all_counterfactual": {
+          "count": 18,
+          "mean_ms": 3841.3888888888887,
+          "median_ms": 3517.0,
+          "p95_ms": 6913.0,
+          "total_ms": 69145.0
+        },
+        "remote_selected": {
+          "count": 9,
+          "mean_ms": 4015.3333333333335,
+          "median_ms": 3509.0,
+          "p95_ms": 6913.0,
+          "total_ms": 36138.0
+        },
+        "sequential_total_mean_ms": null
+      },
+      "mcc": 0.8017837257372732,
+      "missed_attack_rescues": 0,
+      "missed_rescue_risk": 0.0,
+      "pareto_optimal": true,
+      "policy": "uncertainty",
+      "precision": 0.75,
+      "recall": 1.0
+    },
+    {
+      "abstention_count": 7,
+      "attack_rescue_opportunities": 0,
+      "average_precision": 0.6944444444444444,
+      "budget": 10,
+      "call_rate": 0.5555555555555556,
+      "calls": 10,
+      "cost": 0.0705625,
+      "coverage": 0.6111111111111112,
+      "currency": "USD",
+      "fnr": 0.0,
+      "latency": {
+        "local_all": {
+          "count": 0,
+          "mean_ms": null,
+          "median_ms": null,
+          "p95_ms": null,
+          "total_ms": null
+        },
+        "remote_all_counterfactual": {
+          "count": 18,
+          "mean_ms": 3841.3888888888887,
+          "median_ms": 3517.0,
+          "p95_ms": 6913.0,
+          "total_ms": 69145.0
+        },
+        "remote_selected": {
+          "count": 10,
+          "mean_ms": 4018.9,
+          "median_ms": 3635.0,
+          "p95_ms": 6913.0,
+          "total_ms": 40189.0
+        },
+        "sequential_total_mean_ms": null
+      },
+      "mcc": 0.8100925873009825,
+      "missed_attack_rescues": 0,
+      "missed_rescue_risk": 0.0,
+      "pareto_optimal": true,
+      "policy": "uncertainty",
+      "precision": 0.75,
+      "recall": 1.0
+    },
+    {
+      "abstention_count": 6,
+      "attack_rescue_opportunities": 0,
+      "average_precision": 0.7208333333333332,
+      "budget": 11,
+      "call_rate": 0.6111111111111112,
+      "calls": 11,
+      "cost": 0.0773575,
+      "coverage": 0.6666666666666666,
+      "currency": "USD",
+      "fnr": 0.0,
+      "latency": {
+        "local_all": {
+          "count": 0,
+          "mean_ms": null,
+          "median_ms": null,
+          "p95_ms": null,
+          "total_ms": null
+        },
+        "remote_all_counterfactual": {
+          "count": 18,
+          "mean_ms": 3841.3888888888887,
+          "median_ms": 3517.0,
+          "p95_ms": 6913.0,
+          "total_ms": 69145.0
+        },
+        "remote_selected": {
+          "count": 11,
+          "mean_ms": 3955.7272727272725,
+          "median_ms": 3509.0,
+          "p95_ms": 6913.0,
+          "total_ms": 43513.0
+        },
+        "sequential_total_mean_ms": null
+      },
+      "mcc": 0.8366600265340756,
+      "missed_attack_rescues": 0,
+      "missed_rescue_risk": 0.0,
+      "pareto_optimal": true,
+      "policy": "uncertainty",
+      "precision": 0.8,
+      "recall": 1.0
+    },
+    {
+      "abstention_count": 5,
+      "attack_rescue_opportunities": 0,
+      "average_precision": 0.7195238095238096,
+      "budget": 12,
+      "call_rate": 0.6666666666666666,
+      "calls": 12,
+      "cost": 0.0843375,
+      "coverage": 0.7222222222222222,
+      "currency": "USD",
+      "fnr": 0.2,
+      "latency": {
+        "local_all": {
+          "count": 0,
+          "mean_ms": null,
+          "median_ms": null,
+          "p95_ms": null,
+          "total_ms": null
+        },
+        "remote_all_counterfactual": {
+          "count": 18,
+          "mean_ms": 3841.3888888888887,
+          "median_ms": 3517.0,
+          "p95_ms": 6913.0,
+          "total_ms": 69145.0
+        },
+        "remote_selected": {
+          "count": 12,
+          "mean_ms": 3949.1666666666665,
+          "median_ms": 3635.0,
+          "p95_ms": 6913.0,
+          "total_ms": 47390.0
+        },
+        "sequential_total_mean_ms": null
+      },
+      "mcc": 0.675,
+      "missed_attack_rescues": 0,
+      "missed_rescue_risk": 0.0,
+      "pareto_optimal": true,
+      "policy": "uncertainty",
+      "precision": 0.8,
+      "recall": 0.8
+    },
+    {
+      "abstention_count": 4,
+      "attack_rescue_opportunities": 0,
+      "average_precision": 0.7305555555555555,
+      "budget": 13,
+      "call_rate": 0.7222222222222222,
+      "calls": 13,
+      "cost": 0.09132,
+      "coverage": 0.7777777777777778,
+      "currency": "USD",
+      "fnr": 0.3333333333333333,
+      "latency": {
+        "local_all": {
+          "count": 0,
+          "mean_ms": null,
+          "median_ms": null,
+          "p95_ms": null,
+          "total_ms": null
+        },
+        "remote_all_counterfactual": {
+          "count": 18,
+          "mean_ms": 3841.3888888888887,
+          "median_ms": 3517.0,
+          "p95_ms": 6913.0,
+          "total_ms": 69145.0
+        },
+        "remote_selected": {
+          "count": 13,
+          "mean_ms": 3983.076923076923,
+          "median_ms": 3761.0,
+          "p95_ms": 6913.0,
+          "total_ms": 51780.0
+        },
+        "sequential_total_mean_ms": null
+      },
+      "mcc": 0.5594309277855158,
+      "missed_attack_rescues": 0,
+      "missed_rescue_risk": 0.0,
+      "pareto_optimal": true,
+      "policy": "uncertainty",
+      "precision": 0.8,
+      "recall": 0.6666666666666666
+    },
+    {
+      "abstention_count": 3,
+      "attack_rescue_opportunities": 0,
+      "average_precision": 0.7027777777777777,
+      "budget": 14,
+      "call_rate": 0.7777777777777778,
+      "calls": 14,
+      "cost": 0.09838,
+      "coverage": 0.8333333333333334,
+      "currency": "USD",
+      "fnr": 0.3333333333333333,
+      "latency": {
+        "local_all": {
+          "count": 0,
+          "mean_ms": null,
+          "median_ms": null,
+          "p95_ms": null,
+          "total_ms": null
+        },
+        "remote_all_counterfactual": {
+          "count": 18,
+          "mean_ms": 3841.3888888888887,
+          "median_ms": 3517.0,
+          "p95_ms": 6913.0,
+          "total_ms": 69145.0
+        },
+        "remote_selected": {
+          "count": 14,
+          "mean_ms": 3936.3571428571427,
+          "median_ms": 3635.0,
+          "p95_ms": 6913.0,
+          "total_ms": 55109.0
+        },
+        "sequential_total_mean_ms": null
+      },
+      "mcc": 0.5773502691896257,
+      "missed_attack_rescues": 0,
+      "missed_rescue_risk": 0.0,
+      "pareto_optimal": true,
+      "policy": "uncertainty",
+      "precision": 0.8,
+      "recall": 0.6666666666666666
+    },
+    {
+      "abstention_count": 3,
+      "attack_rescue_opportunities": 0,
+      "average_precision": 0.8888888888888888,
+      "budget": 15,
+      "call_rate": 0.8333333333333334,
+      "calls": 15,
+      "cost": 0.10586,
+      "coverage": 0.8333333333333334,
+      "currency": "USD",
+      "fnr": 0.3333333333333333,
+      "latency": {
+        "local_all": {
+          "count": 0,
+          "mean_ms": null,
+          "median_ms": null,
+          "p95_ms": null,
+          "total_ms": null
+        },
+        "remote_all_counterfactual": {
+          "count": 18,
+          "mean_ms": 3841.3888888888887,
+          "median_ms": 3517.0,
+          "p95_ms": 6913.0,
+          "total_ms": 69145.0
+        },
+        "remote_selected": {
+          "count": 15,
+          "mean_ms": 3908.9333333333334,
+          "median_ms": 3525.0,
+          "p95_ms": 6913.0,
+          "total_ms": 58634.0
+        },
+        "sequential_total_mean_ms": null
+      },
+      "mcc": 0.7385489458759964,
+      "missed_attack_rescues": 0,
+      "missed_rescue_risk": 0.0,
+      "pareto_optimal": true,
+      "policy": "uncertainty",
+      "precision": 1.0,
+      "recall": 0.6666666666666666
+    },
+    {
+      "abstention_count": 3,
+      "attack_rescue_opportunities": 0,
+      "average_precision": 0.8888888888888888,
+      "budget": 16,
+      "call_rate": 0.8888888888888888,
+      "calls": 16,
+      "cost": 0.113185,
+      "coverage": 0.8333333333333334,
+      "currency": "USD",
+      "fnr": 0.3333333333333333,
+      "latency": {
+        "local_all": {
+          "count": 0,
+          "mean_ms": null,
+          "median_ms": null,
+          "p95_ms": null,
+          "total_ms": null
+        },
+        "remote_all_counterfactual": {
+          "count": 18,
+          "mean_ms": 3841.3888888888887,
+          "median_ms": 3517.0,
+          "p95_ms": 6913.0,
+          "total_ms": 69145.0
+        },
+        "remote_selected": {
+          "count": 16,
+          "mean_ms": 3875.0625,
+          "median_ms": 3517.0,
+          "p95_ms": 6913.0,
+          "total_ms": 62001.0
+        },
+        "sequential_total_mean_ms": null
+      },
+      "mcc": 0.7385489458759964,
+      "missed_attack_rescues": 0,
+      "missed_rescue_risk": 0.0,
+      "pareto_optimal": false,
+      "policy": "uncertainty",
+      "precision": 1.0,
+      "recall": 0.6666666666666666
+    },
+    {
+      "abstention_count": 3,
+      "attack_rescue_opportunities": 0,
+      "average_precision": 0.8888888888888888,
+      "budget": 17,
+      "call_rate": 0.9444444444444444,
+      "calls": 17,
+      "cost": 0.1206125,
+      "coverage": 0.8333333333333334,
+      "currency": "USD",
+      "fnr": 0.3333333333333333,
+      "latency": {
+        "local_all": {
+          "count": 0,
+          "mean_ms": null,
+          "median_ms": null,
+          "p95_ms": null,
+          "total_ms": null
+        },
+        "remote_all_counterfactual": {
+          "count": 18,
+          "mean_ms": 3841.3888888888887,
+          "median_ms": 3517.0,
+          "p95_ms": 6913.0,
+          "total_ms": 69145.0
+        },
+        "remote_selected": {
+          "count": 17,
+          "mean_ms": 3865.176470588235,
+          "median_ms": 3525.0,
+          "p95_ms": 6913.0,
+          "total_ms": 65708.0
+        },
+        "sequential_total_mean_ms": null
+      },
+      "mcc": 0.7385489458759964,
+      "missed_attack_rescues": 0,
+      "missed_rescue_risk": 0.0,
+      "pareto_optimal": false,
+      "policy": "uncertainty",
+      "precision": 1.0,
+      "recall": 0.6666666666666666
+    },
+    {
+      "abstention_count": 3,
+      "attack_rescue_opportunities": 0,
+      "average_precision": 0.8666666666666666,
+      "budget": 18,
+      "call_rate": 1.0,
+      "calls": 18,
+      "cost": 0.128245,
+      "coverage": 0.8333333333333334,
+      "currency": "USD",
+      "fnr": 0.3333333333333333,
+      "latency": {
+        "local_all": {
+          "count": 0,
+          "mean_ms": null,
+          "median_ms": null,
+          "p95_ms": null,
+          "total_ms": null
+        },
+        "remote_all_counterfactual": {
+          "count": 18,
+          "mean_ms": 3841.3888888888887,
+          "median_ms": 3517.0,
+          "p95_ms": 6913.0,
+          "total_ms": 69145.0
+        },
+        "remote_selected": {
+          "count": 18,
+          "mean_ms": 3841.3888888888887,
+          "median_ms": 3517.0,
+          "p95_ms": 6913.0,
+          "total_ms": 69145.0
+        },
+        "sequential_total_mean_ms": null
+      },
+      "mcc": 0.7385489458759964,
+      "missed_attack_rescues": 0,
+      "missed_rescue_risk": 0.0,
+      "pareto_optimal": false,
+      "policy": "uncertainty",
+      "precision": 1.0,
+      "recall": 0.6666666666666666
+    },
+    {
+      "abstention_count": 14,
+      "attack_rescue_opportunities": 0,
+      "average_precision": 0.6666666666666666,
+      "budget": 0,
+      "call_rate": 0.0,
+      "calls": 0,
+      "cost": 0.0,
+      "coverage": 0.2222222222222222,
+      "currency": "USD",
+      "fnr": 0.0,
+      "latency": {
+        "local_all": {
+          "count": 0,
+          "mean_ms": null,
+          "median_ms": null,
+          "p95_ms": null,
+          "total_ms": null
+        },
+        "remote_all_counterfactual": {
+          "count": 18,
+          "mean_ms": 3841.3888888888887,
+          "median_ms": 3517.0,
+          "p95_ms": 6913.0,
+          "total_ms": 69145.0
+        },
+        "remote_selected": {
+          "count": 0,
+          "mean_ms": null,
+          "median_ms": null,
+          "p95_ms": null,
+          "total_ms": 0
+        },
+        "sequential_total_mean_ms": null
+      },
+      "mcc": 0.5773502691896258,
+      "missed_attack_rescues": 0,
+      "missed_rescue_risk": 0.0,
+      "pareto_optimal": true,
+      "policy": "flowgate-v0",
+      "precision": 0.6666666666666666,
+      "recall": 1.0
+    },
+    {
+      "abstention_count": 13,
+      "attack_rescue_opportunities": 0,
+      "average_precision": 0.6666666666666666,
+      "budget": 1,
+      "call_rate": 0.05555555555555555,
+      "calls": 1,
+      "cost": 0.007455,
+      "coverage": 0.2777777777777778,
+      "currency": "USD",
+      "fnr": 0.0,
+      "latency": {
+        "local_all": {
+          "count": 0,
+          "mean_ms": null,
+          "median_ms": null,
+          "p95_ms": null,
+          "total_ms": null
+        },
+        "remote_all_counterfactual": {
+          "count": 18,
+          "mean_ms": 3841.3888888888887,
+          "median_ms": 3517.0,
+          "p95_ms": 6913.0,
+          "total_ms": 69145.0
+        },
+        "remote_selected": {
+          "count": 1,
+          "mean_ms": 6913.0,
+          "median_ms": 6913.0,
+          "p95_ms": 6913.0,
+          "total_ms": 6913.0
+        },
+        "sequential_total_mean_ms": null
+      },
+      "mcc": 0.6666666666666666,
+      "missed_attack_rescues": 0,
+      "missed_rescue_risk": 0.0,
+      "pareto_optimal": false,
+      "policy": "flowgate-v0",
+      "precision": 0.6666666666666666,
+      "recall": 1.0
+    },
+    {
+      "abstention_count": 12,
+      "attack_rescue_opportunities": 0,
+      "average_precision": 0.6944444444444444,
+      "budget": 2,
+      "call_rate": 0.1111111111111111,
+      "calls": 2,
+      "cost": 0.014759999999999999,
+      "coverage": 0.3333333333333333,
+      "currency": "USD",
+      "fnr": 0.0,
+      "latency": {
+        "local_all": {
+          "count": 0,
+          "mean_ms": null,
+          "median_ms": null,
+          "p95_ms": null,
+          "total_ms": null
+        },
+        "remote_all_counterfactual": {
+          "count": 18,
+          "mean_ms": 3841.3888888888887,
+          "median_ms": 3517.0,
+          "p95_ms": 6913.0,
+          "total_ms": 69145.0
+        },
+        "remote_selected": {
+          "count": 2,
+          "mean_ms": 5877.0,
+          "median_ms": 5877.0,
+          "p95_ms": 6913.0,
+          "total_ms": 11754.0
+        },
+        "sequential_total_mean_ms": null
+      },
+      "mcc": 0.7071067811865476,
+      "missed_attack_rescues": 0,
+      "missed_rescue_risk": 0.0,
+      "pareto_optimal": true,
+      "policy": "flowgate-v0",
+      "precision": 0.75,
+      "recall": 1.0
+    },
+    {
+      "abstention_count": 11,
+      "attack_rescue_opportunities": 0,
+      "average_precision": 0.6944444444444444,
+      "budget": 3,
+      "call_rate": 0.16666666666666666,
+      "calls": 3,
+      "cost": 0.0219,
+      "coverage": 0.3888888888888889,
+      "currency": "USD",
+      "fnr": 0.0,
+      "latency": {
+        "local_all": {
+          "count": 0,
+          "mean_ms": null,
+          "median_ms": null,
+          "p95_ms": null,
+          "total_ms": null
+        },
+        "remote_all_counterfactual": {
+          "count": 18,
+          "mean_ms": 3841.3888888888887,
+          "median_ms": 3517.0,
+          "p95_ms": 6913.0,
+          "total_ms": 69145.0
+        },
+        "remote_selected": {
+          "count": 3,
+          "mean_ms": 5268.333333333333,
+          "median_ms": 4841.0,
+          "p95_ms": 6913.0,
+          "total_ms": 15805.0
+        },
+        "sequential_total_mean_ms": null
+      },
+      "mcc": 0.75,
+      "missed_attack_rescues": 0,
+      "missed_rescue_risk": 0.0,
+      "pareto_optimal": true,
+      "policy": "flowgate-v0",
+      "precision": 0.75,
+      "recall": 1.0
+    },
+    {
+      "abstention_count": 10,
+      "attack_rescue_opportunities": 0,
+      "average_precision": 0.7208333333333332,
+      "budget": 4,
+      "call_rate": 0.2222222222222222,
+      "calls": 4,
+      "cost": 0.028695,
+      "coverage": 0.4444444444444444,
+      "currency": "USD",
+      "fnr": 0.0,
+      "latency": {
+        "local_all": {
+          "count": 0,
+          "mean_ms": null,
+          "median_ms": null,
+          "p95_ms": null,
+          "total_ms": null
+        },
+        "remote_all_counterfactual": {
+          "count": 18,
+          "mean_ms": 3841.3888888888887,
+          "median_ms": 3517.0,
+          "p95_ms": 6913.0,
+          "total_ms": 69145.0
+        },
+        "remote_selected": {
+          "count": 4,
+          "mean_ms": 4782.25,
+          "median_ms": 4446.0,
+          "p95_ms": 6913.0,
+          "total_ms": 19129.0
+        },
+        "sequential_total_mean_ms": null
+      },
+      "mcc": 0.7745966692414834,
+      "missed_attack_rescues": 0,
+      "missed_rescue_risk": 0.0,
+      "pareto_optimal": true,
+      "policy": "flowgate-v0",
+      "precision": 0.8,
+      "recall": 1.0
+    },
+    {
+      "abstention_count": 9,
+      "attack_rescue_opportunities": 0,
+      "average_precision": 0.7208333333333332,
+      "budget": 5,
+      "call_rate": 0.2777777777777778,
+      "calls": 5,
+      "cost": 0.0355675,
+      "coverage": 0.5,
+      "currency": "USD",
+      "fnr": 0.0,
+      "latency": {
+        "local_all": {
+          "count": 0,
+          "mean_ms": null,
+          "median_ms": null,
+          "p95_ms": null,
+          "total_ms": null
+        },
+        "remote_all_counterfactual": {
+          "count": 18,
+          "mean_ms": 3841.3888888888887,
+          "median_ms": 3517.0,
+          "p95_ms": 6913.0,
+          "total_ms": 69145.0
+        },
+        "remote_selected": {
+          "count": 5,
+          "mean_ms": 4578.0,
+          "median_ms": 4051.0,
+          "p95_ms": 6913.0,
+          "total_ms": 22890.0
+        },
+        "sequential_total_mean_ms": null
+      },
+      "mcc": 0.8,
+      "missed_attack_rescues": 0,
+      "missed_rescue_risk": 0.0,
+      "pareto_optimal": true,
+      "policy": "flowgate-v0",
+      "precision": 0.8,
+      "recall": 1.0
+    },
+    {
+      "abstention_count": 9,
+      "attack_rescue_opportunities": 0,
+      "average_precision": 0.7208333333333332,
+      "budget": 6,
+      "call_rate": 0.3333333333333333,
+      "calls": 6,
+      "cost": 0.0423125,
+      "coverage": 0.5,
+      "currency": "USD",
+      "fnr": 0.0,
+      "latency": {
+        "local_all": {
+          "count": 0,
+          "mean_ms": null,
+          "median_ms": null,
+          "p95_ms": null,
+          "total_ms": null
+        },
+        "remote_all_counterfactual": {
+          "count": 18,
+          "mean_ms": 3841.3888888888887,
+          "median_ms": 3517.0,
+          "p95_ms": 6913.0,
+          "total_ms": 69145.0
+        },
+        "remote_selected": {
+          "count": 6,
+          "mean_ms": 4392.333333333333,
+          "median_ms": 3906.0,
+          "p95_ms": 6913.0,
+          "total_ms": 26354.0
+        },
+        "sequential_total_mean_ms": null
+      },
+      "mcc": 0.8,
+      "missed_attack_rescues": 0,
+      "missed_rescue_risk": 0.0,
+      "pareto_optimal": false,
+      "policy": "flowgate-v0",
+      "precision": 0.8,
+      "recall": 1.0
+    },
+    {
+      "abstention_count": 8,
+      "attack_rescue_opportunities": 0,
+      "average_precision": 0.7195238095238096,
+      "budget": 7,
+      "call_rate": 0.3888888888888889,
+      "calls": 7,
+      "cost": 0.049295000000000005,
+      "coverage": 0.5555555555555556,
+      "currency": "USD",
+      "fnr": 0.2,
+      "latency": {
+        "local_all": {
+          "count": 0,
+          "mean_ms": null,
+          "median_ms": null,
+          "p95_ms": null,
+          "total_ms": null
+        },
+        "remote_all_counterfactual": {
+          "count": 18,
+          "mean_ms": 3841.3888888888887,
+          "median_ms": 3517.0,
+          "p95_ms": 6913.0,
+          "total_ms": 69145.0
+        },
+        "remote_selected": {
+          "count": 7,
+          "mean_ms": 4392.0,
+          "median_ms": 4051.0,
+          "p95_ms": 6913.0,
+          "total_ms": 30744.0
+        },
+        "sequential_total_mean_ms": null
+      },
+      "mcc": 0.6,
+      "missed_attack_rescues": 0,
+      "missed_rescue_risk": 0.0,
+      "pareto_optimal": true,
+      "policy": "flowgate-v0",
+      "precision": 0.8,
+      "recall": 0.8
+    },
+    {
+      "abstention_count": 7,
+      "attack_rescue_opportunities": 0,
+      "average_precision": 0.7016666666666667,
+      "budget": 8,
+      "call_rate": 0.4444444444444444,
+      "calls": 8,
+      "cost": 0.056355,
+      "coverage": 0.6111111111111112,
+      "currency": "USD",
+      "fnr": 0.2,
+      "latency": {
+        "local_all": {
+          "count": 0,
+          "mean_ms": null,
+          "median_ms": null,
+          "p95_ms": null,
+          "total_ms": null
+        },
+        "remote_all_counterfactual": {
+          "count": 18,
+          "mean_ms": 3841.3888888888887,
+          "median_ms": 3517.0,
+          "p95_ms": 6913.0,
+          "total_ms": 69145.0
+        },
+        "remote_selected": {
+          "count": 8,
+          "mean_ms": 4259.125,
+          "median_ms": 3906.0,
+          "p95_ms": 6913.0,
+          "total_ms": 34073.0
+        },
+        "sequential_total_mean_ms": null
+      },
+      "mcc": 0.6333333333333333,
+      "missed_attack_rescues": 0,
+      "missed_rescue_risk": 0.0,
+      "pareto_optimal": true,
+      "policy": "flowgate-v0",
+      "precision": 0.8,
+      "recall": 0.8
+    },
+    {
+      "abstention_count": 6,
+      "attack_rescue_opportunities": 0,
+      "average_precision": 0.7016666666666667,
+      "budget": 9,
+      "call_rate": 0.5,
+      "calls": 9,
+      "cost": 0.06337500000000001,
+      "coverage": 0.6666666666666666,
+      "currency": "USD",
+      "fnr": 0.2,
+      "latency": {
+        "local_all": {
+          "count": 0,
+          "mean_ms": null,
+          "median_ms": null,
+          "p95_ms": null,
+          "total_ms": null
+        },
+        "remote_all_counterfactual": {
+          "count": 18,
+          "mean_ms": 3841.3888888888887,
+          "median_ms": 3517.0,
+          "p95_ms": 6913.0,
+          "total_ms": 69145.0
+        },
+        "remote_selected": {
+          "count": 9,
+          "mean_ms": 4136.0,
+          "median_ms": 3761.0,
+          "p95_ms": 6913.0,
+          "total_ms": 37224.0
+        },
+        "sequential_total_mean_ms": null
+      },
+      "mcc": 0.6571428571428571,
+      "missed_attack_rescues": 0,
+      "missed_rescue_risk": 0.0,
+      "pareto_optimal": true,
+      "policy": "flowgate-v0",
+      "precision": 0.8,
+      "recall": 0.8
+    },
+    {
+      "abstention_count": 5,
+      "attack_rescue_opportunities": 0,
+      "average_precision": 0.7027777777777777,
+      "budget": 10,
+      "call_rate": 0.5555555555555556,
+      "calls": 10,
+      "cost": 0.070355,
+      "coverage": 0.7222222222222222,
+      "currency": "USD",
+      "fnr": 0.3333333333333333,
+      "latency": {
+        "local_all": {
+          "count": 0,
+          "mean_ms": null,
+          "median_ms": null,
+          "p95_ms": null,
+          "total_ms": null
+        },
+        "remote_all_counterfactual": {
+          "count": 18,
+          "mean_ms": 3841.3888888888887,
+          "median_ms": 3517.0,
+          "p95_ms": 6913.0,
+          "total_ms": 69145.0
+        },
+        "remote_selected": {
+          "count": 10,
+          "mean_ms": 4110.1,
+          "median_ms": 3819.0,
+          "p95_ms": 6913.0,
+          "total_ms": 41101.0
+        },
+        "sequential_total_mean_ms": null
+      },
+      "mcc": 0.5367450401216932,
+      "missed_attack_rescues": 0,
+      "missed_rescue_risk": 0.0,
+      "pareto_optimal": true,
+      "policy": "flowgate-v0",
+      "precision": 0.8,
+      "recall": 0.6666666666666666
+    },
+    {
+      "abstention_count": 5,
+      "attack_rescue_opportunities": 0,
+      "average_precision": 0.8888888888888888,
+      "budget": 11,
+      "call_rate": 0.6111111111111112,
+      "calls": 11,
+      "cost": 0.077835,
+      "coverage": 0.7222222222222222,
+      "currency": "USD",
+      "fnr": 0.3333333333333333,
+      "latency": {
+        "local_all": {
+          "count": 0,
+          "mean_ms": null,
+          "median_ms": null,
+          "p95_ms": null,
+          "total_ms": null
+        },
+        "remote_all_counterfactual": {
+          "count": 18,
+          "mean_ms": 3841.3888888888887,
+          "median_ms": 3517.0,
+          "p95_ms": 6913.0,
+          "total_ms": 69145.0
+        },
+        "remote_selected": {
+          "count": 11,
+          "mean_ms": 4056.909090909091,
+          "median_ms": 3761.0,
+          "p95_ms": 6913.0,
+          "total_ms": 44626.0
+        },
+        "sequential_total_mean_ms": null
+      },
+      "mcc": 0.7200822998230956,
+      "missed_attack_rescues": 0,
+      "missed_rescue_risk": 0.0,
+      "pareto_optimal": true,
+      "policy": "flowgate-v0",
+      "precision": 1.0,
+      "recall": 0.6666666666666666
+    },
+    {
+      "abstention_count": 5,
+      "attack_rescue_opportunities": 0,
+      "average_precision": 0.8888888888888888,
+      "budget": 12,
+      "call_rate": 0.6666666666666666,
+      "calls": 12,
+      "cost": 0.08516,
+      "coverage": 0.7222222222222222,
+      "currency": "USD",
+      "fnr": 0.3333333333333333,
+      "latency": {
+        "local_all": {
+          "count": 0,
+          "mean_ms": null,
+          "median_ms": null,
+          "p95_ms": null,
+          "total_ms": null
+        },
+        "remote_all_counterfactual": {
+          "count": 18,
+          "mean_ms": 3841.3888888888887,
+          "median_ms": 3517.0,
+          "p95_ms": 6913.0,
+          "total_ms": 69145.0
+        },
+        "remote_selected": {
+          "count": 12,
+          "mean_ms": 3999.4166666666665,
+          "median_ms": 3643.0,
+          "p95_ms": 6913.0,
+          "total_ms": 47993.0
+        },
+        "sequential_total_mean_ms": null
+      },
+      "mcc": 0.7200822998230956,
+      "missed_attack_rescues": 0,
+      "missed_rescue_risk": 0.0,
+      "pareto_optimal": false,
+      "policy": "flowgate-v0",
+      "precision": 1.0,
+      "recall": 0.6666666666666666
+    },
+    {
+      "abstention_count": 5,
+      "attack_rescue_opportunities": 0,
+      "average_precision": 0.8888888888888888,
+      "budget": 13,
+      "call_rate": 0.7222222222222222,
+      "calls": 13,
+      "cost": 0.0925875,
+      "coverage": 0.7222222222222222,
+      "currency": "USD",
+      "fnr": 0.3333333333333333,
+      "latency": {
+        "local_all": {
+          "count": 0,
+          "mean_ms": null,
+          "median_ms": null,
+          "p95_ms": null,
+          "total_ms": null
+        },
+        "remote_all_counterfactual": {
+          "count": 18,
+          "mean_ms": 3841.3888888888887,
+          "median_ms": 3517.0,
+          "p95_ms": 6913.0,
+          "total_ms": 69145.0
+        },
+        "remote_selected": {
+          "count": 13,
+          "mean_ms": 3976.923076923077,
+          "median_ms": 3707.0,
+          "p95_ms": 6913.0,
+          "total_ms": 51700.0
+        },
+        "sequential_total_mean_ms": null
+      },
+      "mcc": 0.7200822998230956,
+      "missed_attack_rescues": 0,
+      "missed_rescue_risk": 0.0,
+      "pareto_optimal": false,
+      "policy": "flowgate-v0",
+      "precision": 1.0,
+      "recall": 0.6666666666666666
+    },
+    {
+      "abstention_count": 5,
+      "attack_rescue_opportunities": 0,
+      "average_precision": 0.8666666666666666,
+      "budget": 14,
+      "call_rate": 0.7777777777777778,
+      "calls": 14,
+      "cost": 0.10021999999999999,
+      "coverage": 0.7222222222222222,
+      "currency": "USD",
+      "fnr": 0.3333333333333333,
+      "latency": {
+        "local_all": {
+          "count": 0,
+          "mean_ms": null,
+          "median_ms": null,
+          "p95_ms": null,
+          "total_ms": null
+        },
+        "remote_all_counterfactual": {
+          "count": 18,
+          "mean_ms": 3841.3888888888887,
+          "median_ms": 3517.0,
+          "p95_ms": 6913.0,
+          "total_ms": 69145.0
+        },
+        "remote_selected": {
+          "count": 14,
+          "mean_ms": 3938.3571428571427,
+          "median_ms": 3616.0,
+          "p95_ms": 6913.0,
+          "total_ms": 55137.0
+        },
+        "sequential_total_mean_ms": null
+      },
+      "mcc": 0.7200822998230956,
+      "missed_attack_rescues": 0,
+      "missed_rescue_risk": 0.0,
+      "pareto_optimal": false,
+      "policy": "flowgate-v0",
+      "precision": 1.0,
+      "recall": 0.6666666666666666
+    },
+    {
+      "abstention_count": 4,
+      "attack_rescue_opportunities": 0,
+      "average_precision": 0.8666666666666666,
+      "budget": 15,
+      "call_rate": 0.8333333333333334,
+      "calls": 15,
+      "cost": 0.10707749999999999,
+      "coverage": 0.7777777777777778,
+      "currency": "USD",
+      "fnr": 0.3333333333333333,
+      "latency": {
+        "local_all": {
+          "count": 0,
+          "mean_ms": null,
+          "median_ms": null,
+          "p95_ms": null,
+          "total_ms": null
+        },
+        "remote_all_counterfactual": {
+          "count": 18,
+          "mean_ms": 3841.3888888888887,
+          "median_ms": 3517.0,
+          "p95_ms": 6913.0,
+          "total_ms": 69145.0
+        },
+        "remote_selected": {
+          "count": 15,
+          "mean_ms": 3909.733333333333,
+          "median_ms": 3525.0,
+          "p95_ms": 6913.0,
+          "total_ms": 58646.0
+        },
+        "sequential_total_mean_ms": null
+      },
+      "mcc": 0.7302967433402214,
+      "missed_attack_rescues": 0,
+      "missed_rescue_risk": 0.0,
+      "pareto_optimal": false,
+      "policy": "flowgate-v0",
+      "precision": 1.0,
+      "recall": 0.6666666666666666
+    },
+    {
+      "abstention_count": 4,
+      "attack_rescue_opportunities": 0,
+      "average_precision": 0.8666666666666666,
+      "budget": 16,
+      "call_rate": 0.8888888888888888,
+      "calls": 16,
+      "cost": 0.11409,
+      "coverage": 0.7777777777777778,
+      "currency": "USD",
+      "fnr": 0.3333333333333333,
+      "latency": {
+        "local_all": {
+          "count": 0,
+          "mean_ms": null,
+          "median_ms": null,
+          "p95_ms": null,
+          "total_ms": null
+        },
+        "remote_all_counterfactual": {
+          "count": 18,
+          "mean_ms": 3841.3888888888887,
+          "median_ms": 3517.0,
+          "p95_ms": 6913.0,
+          "total_ms": 69145.0
+        },
+        "remote_selected": {
+          "count": 16,
+          "mean_ms": 3905.75,
+          "median_ms": 3616.0,
+          "p95_ms": 6913.0,
+          "total_ms": 62492.0
+        },
+        "sequential_total_mean_ms": null
+      },
+      "mcc": 0.7302967433402214,
+      "missed_attack_rescues": 0,
+      "missed_rescue_risk": 0.0,
+      "pareto_optimal": false,
+      "policy": "flowgate-v0",
+      "precision": 1.0,
+      "recall": 0.6666666666666666
+    },
+    {
+      "abstention_count": 3,
+      "attack_rescue_opportunities": 0,
+      "average_precision": 0.8666666666666666,
+      "budget": 17,
+      "call_rate": 0.9444444444444444,
+      "calls": 17,
+      "cost": 0.121175,
+      "coverage": 0.8333333333333334,
+      "currency": "USD",
+      "fnr": 0.3333333333333333,
+      "latency": {
+        "local_all": {
+          "count": 0,
+          "mean_ms": null,
+          "median_ms": null,
+          "p95_ms": null,
+          "total_ms": null
+        },
+        "remote_all_counterfactual": {
+          "count": 18,
+          "mean_ms": 3841.3888888888887,
+          "median_ms": 3517.0,
+          "p95_ms": 6913.0,
+          "total_ms": 69145.0
+        },
+        "remote_selected": {
+          "count": 17,
+          "mean_ms": 3879.3529411764707,
+          "median_ms": 3525.0,
+          "p95_ms": 6913.0,
+          "total_ms": 65949.0
+        },
+        "sequential_total_mean_ms": null
+      },
+      "mcc": 0.7385489458759964,
+      "missed_attack_rescues": 0,
+      "missed_rescue_risk": 0.0,
+      "pareto_optimal": false,
+      "policy": "flowgate-v0",
+      "precision": 1.0,
+      "recall": 0.6666666666666666
+    },
+    {
+      "abstention_count": 3,
+      "attack_rescue_opportunities": 0,
+      "average_precision": 0.8666666666666666,
+      "budget": 18,
+      "call_rate": 1.0,
+      "calls": 18,
+      "cost": 0.128245,
+      "coverage": 0.8333333333333334,
+      "currency": "USD",
+      "fnr": 0.3333333333333333,
+      "latency": {
+        "local_all": {
+          "count": 0,
+          "mean_ms": null,
+          "median_ms": null,
+          "p95_ms": null,
+          "total_ms": null
+        },
+        "remote_all_counterfactual": {
+          "count": 18,
+          "mean_ms": 3841.3888888888887,
+          "median_ms": 3517.0,
+          "p95_ms": 6913.0,
+          "total_ms": 69145.0
+        },
+        "remote_selected": {
+          "count": 18,
+          "mean_ms": 3841.3888888888887,
+          "median_ms": 3517.0,
+          "p95_ms": 6913.0,
+          "total_ms": 69145.0
+        },
+        "sequential_total_mean_ms": null
+      },
+      "mcc": 0.7385489458759964,
+      "missed_attack_rescues": 0,
+      "missed_rescue_risk": 0.0,
+      "pareto_optimal": false,
+      "policy": "flowgate-v0",
+      "precision": 1.0,
+      "recall": 0.6666666666666666
+    },
+    {
+      "abstention_count": 14,
+      "attack_rescue_opportunities": 0,
+      "average_precision": 0.6666666666666666,
+      "budget": 0,
+      "call_rate": 0.0,
+      "calls": 0,
+      "cost": 0.0,
+      "coverage": 0.2222222222222222,
+      "currency": "USD",
+      "fnr": 0.0,
+      "latency": {
+        "local_all": {
+          "count": 0,
+          "mean_ms": null,
+          "median_ms": null,
+          "p95_ms": null,
+          "total_ms": null
+        },
+        "remote_all_counterfactual": {
+          "count": 18,
+          "mean_ms": 3841.3888888888887,
+          "median_ms": 3517.0,
+          "p95_ms": 6913.0,
+          "total_ms": 69145.0
+        },
+        "remote_selected": {
+          "count": 0,
+          "mean_ms": null,
+          "median_ms": null,
+          "p95_ms": null,
+          "total_ms": 0
+        },
+        "sequential_total_mean_ms": null
+      },
+      "mcc": 0.5773502691896258,
+      "missed_attack_rescues": 0,
+      "missed_rescue_risk": 0.0,
+      "pareto_optimal": true,
+      "policy": "never",
+      "precision": 0.6666666666666666,
+      "recall": 1.0
+    },
+    {
+      "abstention_count": 3,
+      "attack_rescue_opportunities": 0,
+      "average_precision": 0.8666666666666666,
+      "budget": 18,
+      "call_rate": 1.0,
+      "calls": 18,
+      "cost": 0.128245,
+      "coverage": 0.8333333333333334,
+      "currency": "USD",
+      "fnr": 0.3333333333333333,
+      "latency": {
+        "local_all": {
+          "count": 0,
+          "mean_ms": null,
+          "median_ms": null,
+          "p95_ms": null,
+          "total_ms": null
+        },
+        "remote_all_counterfactual": {
+          "count": 18,
+          "mean_ms": 3841.3888888888887,
+          "median_ms": 3517.0,
+          "p95_ms": 6913.0,
+          "total_ms": 69145.0
+        },
+        "remote_selected": {
+          "count": 18,
+          "mean_ms": 3841.3888888888887,
+          "median_ms": 3517.0,
+          "p95_ms": 6913.0,
+          "total_ms": 69145.0
+        },
+        "sequential_total_mean_ms": null
+      },
+      "mcc": 0.7385489458759964,
+      "missed_attack_rescues": 0,
+      "missed_rescue_risk": 0.0,
+      "pareto_optimal": false,
+      "policy": "always",
+      "precision": 1.0,
+      "recall": 0.6666666666666666
+    }
+  ],
+  "schema_version": "flowgate-pareto/1.1",
+  "seed": 7
+}
