@@ -1,0 +1,121 @@
+{
+  "blind_episode_ids": [
+    "FG-010f73484b",
+    "FG-2041a40303",
+    "FG-3bd571fe51",
+    "FG-4467052279",
+    "FG-862d098d07",
+    "FG-8a12fc5359",
+    "FG-8beaf357ae",
+    "FG-98c0f1802c",
+    "FG-a76c1edb32",
+    "FG-a7d434ea5f",
+    "FG-c2a407e09c",
+    "FG-c507d82b70",
+    "FG-d3d840c5bd",
+    "FG-f4c2c11862",
+    "FG-facc6b7516",
+    "FG-fb064d4004",
+    "FG-fcd20679bb",
+    "FG-fe48e6e940"
+  ],
+  "blind_label_commitment": "sha256:0f80b9bad94778bb8f267d54b2d0e0942fe0fd26f41b48632da01f7dcb0f124c",
+  "created_at": "2026-10-08T06:15:53.262495+00:00",
+  "decoding": {
+    "max_output_tokens": 700,
+    "temperature": 0,
+    "top_p": 1
+  },
+  "file_sha256": {
+    "configs/pilot.json": "sha256:7b6cc9e8a07e8e6435e84d6b1da7e88a0fd4dbb5766268ac986ae8455523c92d",
+    "data/generated/gpu/requests.jsonl": "sha256:1f6033716073e1d99c5bb532387703100911b8ba279029c790f4ded528fff81f",
+    "data/generated/manifest.json": "sha256:c1ba8142adb9c6b1ee6acb2f9a85b06a91068ea83e81c8103d724ec3a64ff14d",
+    "data/generated/private/blind_labels.jsonl": "sha256:0f80b9bad94778bb8f267d54b2d0e0942fe0fd26f41b48632da01f7dcb0f124c",
+    "data/generated/private/episodes.jsonl": "sha256:90eb70fbeecf66ccdcd13ce5993f019ecefa9e02df2573e1eb04563184ad39d8",
+    "data/generated/private/prompt_dev_labels.jsonl": "sha256:a78f94a18b8aefbd7b4b56443ffd477963d05e218baac02e37a98e439aac192e",
+    "data/generated/private/witnesses.jsonl": "sha256:aa9d0d9bb83cdfd31b1fdd110022c2522db16a27dc6877eb6c50427e896286fa",
+    "prompts/local_v1.txt": "sha256:245c5f8e76ee99f2590512f722bb7623beeb7ae0b7bbe2042311c92b3f9e292e",
+    "prompts/remote_v1.txt": "sha256:f94d26117d1425f0505c9e0f94fa37b57f26d8c3a1d6f3f146354b4817c65f82",
+    "prompts/remote_v2.txt": "sha256:4b51a8ae5745060679e501827cde9b4ea68a2bf29b0f173cc146ca2ee32fa5c9",
+    "schemas/model-output.schema.json": "sha256:e6b311e9babca1ab204db63c8c29a85dfebd3ddc6928aa3eadc8cc5f7320664a",
+    "schemas/run-record.schema.json": "sha256:c67308cc85a57726d3a71cb32904ba366e91aef2cd466447508348d2c5526c17",
+    "schemas/trusted-labels.schema.json": "sha256:5585dd15fc456389ddd74ba2232fc02dd50b8fcd2e9e3be977b66c8ff04a44c9",
+    "schemas/witness.schema.json": "sha256:993465a7861583b1174feef32e8ef8907691947aa362571f9218cb0dc1cdc6af",
+    "schemas/worker-input.schema.json": "sha256:8bb745773ba0132c0d02d84d25d50b20dfc42e40ffcceed2e2a633c46cc94274",
+    "scripts/capture_runtime.py": "sha256:d2317011a6ba2f778564964a45647d9bbb7faadcc8bca1b685bc8db34af672c0",
+    "src/flowgate/__init__.py": "sha256:2a4de1a85822a576dee31a58dee676503a4bc894ec47f1360218b9185136d576",
+    "src/flowgate/anonymize.py": "sha256:90e6dd870aa153f6559bdc1d0bd7362b1946b1feb4113ccfbe0e1d2b9ab55a77",
+    "src/flowgate/authz.py": "sha256:577cf97dca74a922233fb03f42de3264067b41455110fb8565e4dc931c492a94",
+    "src/flowgate/batch.py": "sha256:80d799c9616a39b8df8c3d44fb77ba38d0d6a97ed900c8fbf2aaca0ba6680f7a",
+    "src/flowgate/bundle.py": "sha256:1a69f2f4bf598ed1df5b93a281ace0d1a3de087a8f050df435eecc6e627cb722",
+    "src/flowgate/cli.py": "sha256:33f7afe2a8e7c1b7e9275798fc7b59e94723e380304f03828f5ae789afb97ce5",
+    "src/flowgate/contracts.py": "sha256:78806adf25df856fd8a17fa325ef0340400089044aa937ed4c7d617a66c3d3b8",
+    "src/flowgate/engineering.py": "sha256:643652195caf7fc1f9616048b8ea27e5ba75781fe9bde9337508b244330cb579",
+    "src/flowgate/evaluate.py": "sha256:61828a36b34002baf699e3c763962781cf43b6c7290815aef5951bf6c6a7e29d",
+    "src/flowgate/fixtures.py": "sha256:e3988915054f8fa84090e418e3ced6fa33cd9432e5016e48dee3b6318cb13e62",
+    "src/flowgate/freeze.py": "sha256:f292eb7efc81c7a64190679bf0a5cc12a6b3925a2c641b76bc920c4af186af37",
+    "src/flowgate/inference.py": "sha256:7d257817870576ad7e7bcf1a4ae4c9d6ee015e24faeb77034e3b368c227d7917",
+    "src/flowgate/io.py": "sha256:92e9caa636a7d590fbd322f35bee61332a4505d60d832e03a8b2e6bd557aaef9",
+    "src/flowgate/metrics.py": "sha256:8a6fb34c1b8a7244bdf3d0231407fc22d3b4f4b8fad83f31adfac89431d3618f",
+    "src/flowgate/models.py": "sha256:b518625dd444ea9cadb88b4186be2a749e75570914d0a4e54390cc2993d44c5d",
+    "src/flowgate/pareto.py": "sha256:d71311febdc95d80f2a19816d0773a6df05dea66b5e3f3a6751d2e32b4618bce",
+    "src/flowgate/privacy.py": "sha256:115ed0cab73f79d7200e869b0f5b5801fab88d512fa3ccd9d769d552f7cb09ae",
+    "src/flowgate/routing.py": "sha256:050322ed513f7db74234a59e88dfa4e49a8223f91b6079831ceacd9332f56fe6",
+    "src/flowgate/sealing.py": "sha256:7cf33e9f351f744b3271ae5f46a69dc906f4f20aedbe7f0ba09212572446d876",
+    "src/flowgate/witness.py": "sha256:d1c68931f47a964db49ee645dd1bf64d3d87007c2888db8c7b92605fd9c4bd55"
+  },
+  "models": {
+    "local": {
+      "model_id": "Qwen/Qwen2.5-7B-Instruct-AWQ",
+      "model_revision": "b25037543e9394b818fdfca67ab2a00ecc7dd641",
+      "quantization": "awq",
+      "role": "local",
+      "runtime": {
+        "environment": {
+          "VLLM_USE_FLASHINFER_SAMPLER": "0"
+        },
+        "vllm": "0.31.0"
+      },
+      "serving": {
+        "gpu_memory_utilization": 0.85,
+        "max_model_len": 8192
+      }
+    },
+    "remote": {
+      "model_id": "gpt-5.4-2026-03-05",
+      "model_revision": "gpt-5.4-2026-03-05",
+      "provider": "OpenAI",
+      "retention_setting": "Default abuse-monitoring logs retained up to 30 days; no ZDR/MAM; Chat Completions application-state retention none; checked 2026-10-08",
+      "role": "remote"
+    }
+  },
+  "note": "This manifest is an audit commitment, not cryptographic access control. Do not inspect blind_labels.jsonl until blind outputs are sealed.",
+  "pricing": {
+    "currency": "USD",
+    "input_per_million_tokens": 2.5,
+    "output_per_million_tokens": 15.0,
+    "snapshot": "https://developers.openai.com/api/docs/models/gpt-5.4 accessed 2026-10-08"
+  },
+  "privacy": {
+    "sanitizer_version": "privacy-v1-closed-details",
+    "worker_schema": "schemas/worker-input.schema.json"
+  },
+  "prompt_dev_episode_ids": [
+    "FG-13f0076c64",
+    "FG-16c3c1157e",
+    "FG-724f28a8e0",
+    "FG-7391a0f8c4",
+    "FG-a41be0b3da",
+    "FG-b6855eb8d0"
+  ],
+  "protocol_id": "flowgate-pilot-24-v1",
+  "routing": {
+    "budget_fraction": 0.25,
+    "call_budget": 4,
+    "evaluation_split": "blind",
+    "policy": "flowgate-v0",
+    "seed": 7
+  },
+  "schema_version": "flowgate-protocol-freeze/1.0",
+  "status": "frozen_before_blind_run"
+}

@@ -1,0 +1,29 @@
+{
+  "episode_count": 18,
+  "episode_ids": [
+    "FG-010f73484b",
+    "FG-2041a40303",
+    "FG-3bd571fe51",
+    "FG-4467052279",
+    "FG-862d098d07",
+    "FG-8a12fc5359",
+    "FG-8beaf357ae",
+    "FG-98c0f1802c",
+    "FG-a76c1edb32",
+    "FG-a7d434ea5f",
+    "FG-c2a407e09c",
+    "FG-c507d82b70",
+    "FG-d3d840c5bd",
+    "FG-f4c2c11862",
+    "FG-facc6b7516",
+    "FG-fb064d4004",
+    "FG-fcd20679bb",
+    "FG-fe48e6e940"
+  ],
+  "label_blind": true,
+  "output_sha256": "sha256:c9fdc9fec39130efe03c129c2e49d22cb2b34952eafade57c945656715e2e7cb",
+  "protocol_freeze_sha256": "sha256:16d6eda9f1d5872c9bae5c4f7cb3c0f43762569b936af6c6a5fb9e3640bfe79e",
+  "schema_version": "flowgate-split-export/1.0",
+  "source_sha256": "sha256:1f6033716073e1d99c5bb532387703100911b8ba279029c790f4ded528fff81f",
+  "split": "blind"
+}
