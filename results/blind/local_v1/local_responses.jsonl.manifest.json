@@ -1,0 +1,51 @@
+{
+  "backend": "openai",
+  "code_version": "sha256:60ae9a05f76cc04e5ad7c5a1098d069460abd3cfc26890db7f880dcfcb3f3eda",
+  "created_at": "2026-10-08T06:38:29.352913+00:00",
+  "decoding": {
+    "max_output_tokens": 700,
+    "temperature": 0,
+    "top_p": 1
+  },
+  "endpoint_origin": "http://127.0.0.1:8000",
+  "error_count": 0,
+  "input_sha256": "sha256:c9fdc9fec39130efe03c129c2e49d22cb2b34952eafade57c945656715e2e7cb",
+  "model_id": "Qwen/Qwen2.5-7B-Instruct-AWQ",
+  "model_revision": "b25037543e9394b818fdfca67ab2a00ecc7dd641",
+  "phase": "blind",
+  "pricing": null,
+  "prompt_sha256": "1f44f5d05078c915a9234a942e386a3ce9652f05e31e4a964386137b28776255",
+  "protocol_freeze_sha256": "sha256:16d6eda9f1d5872c9bae5c4f7cb3c0f43762569b936af6c6a5fb9e3640bfe79e",
+  "quantization": "awq",
+  "request_count": 18,
+  "run_id": "blind-local-v1",
+  "run_record_count": 18,
+  "runtime_metadata": {
+    "environment": {
+      "VLLM_USE_FLASHINFER_SAMPLER": "0"
+    },
+    "gpus": [
+      {
+        "driver_version": "591.86",
+        "memory_total_mib": 24576,
+        "name": "NVIDIA GeForce RTX 3090",
+        "uuid": "GPU-ea4bc111-fb71-e764-cc55-a7aea850bdf4"
+      }
+    ],
+    "machine": "x86_64",
+    "packages": {
+      "torch": "2.13.0+cu130",
+      "transformers": "5.17.0",
+      "vllm": "0.31.0"
+    },
+    "platform": "Linux-6.6.87.2-microsoft-standard-WSL2-x86_64-with-glibc2.43",
+    "python": "3.12.15"
+  },
+  "schema_version": "flowgate-run-manifest/1.0",
+  "serving_config": {
+    "gpu_memory_utilization": 0.85,
+    "max_model_len": 8192
+  },
+  "smoke_only": false,
+  "valid_response_count": 18
+}
